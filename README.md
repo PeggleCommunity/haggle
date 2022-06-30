@@ -10,8 +10,10 @@
 Haggle exposes a bunch of SexyFramework and Peggle functions in a wrapper to be used from outside of the game to do whatever you want with it!
 
 ## Compiling
-You will need:
-- Visual Studio 2022 (or prefered version) with C++ modules installed
+### Requirements
+- Visual Studio 2022 (or prefered version) with C++ modules installed  
+
+### Compile
 - Run `generate.bat` for VS2022 generation
   - edit `generate.bat` if needed for other IDEs, check [premake](https://premake.github.io/docs/Using-Premake/) for more info
 - Compile
