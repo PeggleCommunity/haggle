@@ -1,3 +1,8 @@
+newoption {
+	trigger = "example-mod",
+	description = "Adds the example-mod to the solution."
+ }
+
 workspace "Haggle"
 	startproject "Haggle"
 	location "./build/"
@@ -76,6 +81,7 @@ workspace "Haggle"
 			"./src/haggle/**",
 		}
 
+if _OPTIONS["example-mod"] then
 	project "Example-Mod"
 		targetname "example-mod"
 		language "c++"
@@ -105,8 +111,9 @@ workspace "Haggle"
 		files {
 			"./src/example-mod/**",
 		}
+end
 
-	group "Example-Mod Dependencies"
+	group "Dependencies"
 
 	project "MinHook"
 		targetname "MinHook"
