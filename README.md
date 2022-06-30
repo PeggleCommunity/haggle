@@ -2,5 +2,5 @@
 <p align="center"> For Peggle Deluxe (1.01 Steam) </p> 
 
 <p align="center">
-  <img width="596" height="331" src="/../example-mod.png">
+  <img width="596" height="331" src="/../assets/example-mod.png">
 </p>
