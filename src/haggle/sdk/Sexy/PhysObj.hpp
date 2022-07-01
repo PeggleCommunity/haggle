@@ -3,6 +3,11 @@
 //Size: 625
 namespace Sexy
 {
+	struct PhysObj_
+	{
+		char data[228];
+	};
+
 	class PhysObj
 	{
 	public:

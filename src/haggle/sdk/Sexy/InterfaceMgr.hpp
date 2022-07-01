@@ -15,8 +15,7 @@ namespace Sexy
 		static Sexy::InterfaceMgr* UpdateBalls();
 
 		static Sexy::InterfaceMgr* LoadGun(Sexy::InterfaceMgr* input = Sexy::InterfaceMgr::interface_mgr);
-
-		//Below have overloads that accept a Sexy::InterfaceMgr pointer or they use "this"
+		//Overload that uses this
 		static Sexy::InterfaceMgr* AddTopBalls(int count);
 		static Sexy::InterfaceMgr* AddTopBalls(Sexy::InterfaceMgr* input, int count);
 		static Sexy::InterfaceMgr* SetNumBalls(int count);

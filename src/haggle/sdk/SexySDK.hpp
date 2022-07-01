@@ -4,6 +4,7 @@
 #include "Sexy/ThunderballApp.hpp"
 #include "Sexy/Graphics.hpp"
 #include "Sexy/Image.hpp"
+#include "Sexy/FloatingText.hpp"
 #include "Sexy/InterfaceMgr.hpp"
 #include "Sexy/Board.hpp"
 #include "Sexy/LogicMgr.hpp"

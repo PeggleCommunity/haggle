@@ -5,6 +5,7 @@
 #include "PhysObj.hpp"
 #include "SoundMgr.hpp"
 #include "EffectMgr.hpp"
+#include "FloatingText.hpp"
 
 //Size: 924
 namespace Sexy
@@ -52,9 +53,8 @@ namespace Sexy
 		static int SetState(int a2);
 		static void ActivateFreeBall(bool a4);
 		static void SetWearHat(int a2);
-
-		//Sexy::FloatingText* return typedef
-		static char* AddStandardText(std::string string, float pos_x, float pos_y, int type);
+		static Sexy::FloatingText* AddStandardText(std::string string, float pos_x, float pos_y, int type);
+		static Sexy::FloatingText* AddStandardText(const char* string, float pos_x, float pos_y, int type); //overload for cstring
 
 	private:
 		static bool check_exists();

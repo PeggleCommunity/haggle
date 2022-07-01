@@ -28,6 +28,12 @@ void __fastcall Sexy__LogicMgr__BeginShot(Sexy::LogicMgr* this_, char* edx, bool
 	return Sexy__LogicMgr__BeginShot_(this_, edx, a2);
 }
 
+static char* (__fastcall* Sexy__LogicMgr__BeginTurn2_)(Sexy::LogicMgr*, char*);
+char* __fastcall Sexy__LogicMgr__BeginTurn2(Sexy::LogicMgr* this_, char* edx)
+{
+	return Sexy__LogicMgr__BeginTurn2_(this_, edx);
+}
+
 //Adds control over the otherwise broken powerups
 void unused_powerups(Sexy::PowerUp powerup)
 {
@@ -64,16 +70,16 @@ void __declspec(naked) unused_powerups_hook()
 void __declspec(naked) next_board_balls_hook()
 {
 	static constexpr std::uint32_t retn_addr = 0x0045DE61;
-	static constexpr int balls = 10;
-
 	__asm
 	{
-		mov eax, balls;
+		mov eax, 10;
+		add eax, controller::balls_next_board;
+		mov controller::balls_next_board, 0;
+
 		push retn_addr;
 		retn;
 	}
 }
-
 
 void Sexy::LogicMgr::setup()
 {
@@ -81,6 +87,7 @@ void Sexy::LogicMgr::setup()
 	MH_CreateHook((void*)0x0046EDF0, Sexy__LogicMgr__DoPowerup, (void**)&Sexy__LogicMgr__DoPowerup_);
 	MH_CreateHook((void*)0x0046F480, Sexy__LogicMgr__PegHit, (void**)&Sexy__LogicMgr__PegHit_);
 	MH_CreateHook((void*)0x0046AC70, Sexy__LogicMgr__BeginShot, (void**)&Sexy__LogicMgr__BeginShot_);
+	MH_CreateHook((void*)0x0044B5B0, Sexy__LogicMgr__BeginTurn2, (void**)&Sexy__LogicMgr__BeginTurn2_);
 
 	jump(0x0046F0DF, unused_powerups_hook);
 	jump(0x0045DE5C, next_board_balls_hook);
@@ -92,10 +99,10 @@ bool Sexy::LogicMgr::check_exists()
 	return true;
 }
 
-
 Sexy::LogicMgr* Sexy::LogicMgr::IncNumBalls(int top_count, int bottom_count, bool bottom)
 {
 	if (!Sexy::LogicMgr::check_exists()) return 0;
+	
 	return reinterpret_cast<Sexy::LogicMgr* (__thiscall*)(Sexy::LogicMgr*, int, int, bool)>(0x0045D880)
 		(Sexy::LogicMgr::logic_mgr, top_count, bottom_count, bottom);
 }
@@ -103,7 +110,8 @@ Sexy::LogicMgr* Sexy::LogicMgr::IncNumBalls(int top_count, int bottom_count, boo
 int __cdecl Sexy::LogicMgr::BeginShot(bool a2)
 {
 	if (!Sexy::LogicMgr::check_exists()) return 0;
-	return reinterpret_cast<int(__thiscall*)(Sexy::LogicMgr*, bool)>(0x0045D880) (Sexy::LogicMgr::logic_mgr, a2);
+
+	return reinterpret_cast<int(__thiscall*)(Sexy::LogicMgr*, bool)>(0x0045D880)(Sexy::LogicMgr::logic_mgr, a2);
 }
 
 void Sexy::LogicMgr::DoPowerup(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, int powerup, int a5)
@@ -133,11 +141,16 @@ void Sexy::LogicMgr::PegHit(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, bool a4)
 		(Sexy::LogicMgr::logic_mgr, ball, phys_obj, a4);
 }
 
-char* Sexy::LogicMgr::AddStandardText(std::string string, float pos_x, float pos_y, int unk)
+Sexy::FloatingText* Sexy::LogicMgr::AddStandardText(std::string string, float x_pos, float y_pos, int type)
 {
 	if (!Sexy::LogicMgr::check_exists()) return 0;
-	return reinterpret_cast<char* (__thiscall*)(Sexy::LogicMgr*, std::string&, float, float, int)>(0x00469EB0)
-		(Sexy::LogicMgr::logic_mgr, string, pos_x, pos_y, unk);
+	return reinterpret_cast<Sexy::FloatingText* (__thiscall*)(Sexy::LogicMgr*, std::string&, float, float, int)>(0x00469EB0)
+		(Sexy::LogicMgr::logic_mgr, string, x_pos, y_pos, type);
+}
+
+Sexy::FloatingText* Sexy::LogicMgr::AddStandardText(const char* string, float pos_x, float pos_y, int type)
+{
+	return Sexy::LogicMgr::AddStandardText(std::string(string), pos_x, pos_y, type);
 }
 
 void Sexy::LogicMgr::DoExploder(Sexy::Ball* ball, Sexy::PhysObj* phys_obj)

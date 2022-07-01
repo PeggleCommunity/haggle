@@ -1,5 +1,6 @@
 #pragma once
 
+
 //Size: 400
 namespace Sexy
 {
@@ -10,6 +11,7 @@ namespace Sexy
 
 		static void setup();
 		static bool check_exists();
+
 
 		static void SetPos(float a2, float a3);
 	};
