@@ -73,9 +73,6 @@ void __declspec(naked) next_board_balls_hook()
 	__asm
 	{
 		mov eax, 10;
-		add eax, controller::balls_next_board;
-		mov controller::balls_next_board, 0;
-
 		push retn_addr;
 		retn;
 	}
