@@ -5,7 +5,7 @@ newoption {
 
 workspace "Haggle"
 	startproject "Haggle"
-	location "./build/"
+	location "../build/"
 	targetdir "%{wks.location}/bin/%{cfg.buildcfg}-%{cfg.platform}/"
 	objdir "%{wks.location}/obj/%{prj.name}/%{cfg.buildcfg}-%{cfg.platform}/"
 	buildlog "%{wks.location}/obj/%{cfg.platform}/%{cfg.buildcfg}-%{prj.name}.log"
@@ -61,7 +61,7 @@ workspace "Haggle"
 		warnings "off"
 
 		pchheader "stdafx.hpp"
-		pchsource "./src/haggle/stdafx.cpp"
+		pchsource "../src/haggle/stdafx.cpp"
 		forceincludes "stdafx.hpp"
 
 		dependson {
@@ -73,12 +73,12 @@ workspace "Haggle"
 		}
 
 		includedirs {
-			"./src/haggle/",
-			"./deps/minhook/include/",
+			"../src/haggle/",
+			"../deps/minhook/include/",
 		}
 
 		files {
-			"./src/haggle/**",
+			"../src/haggle/**",
 		}
 
 if _OPTIONS["example-mod"] then
@@ -89,7 +89,7 @@ if _OPTIONS["example-mod"] then
 		warnings "off"
 
 		pchheader "stdafx.hpp"
-		pchsource "./src/example-mod/stdafx.cpp"
+		pchsource "../src/example-mod/stdafx.cpp"
 		forceincludes "stdafx.hpp"
 
 		dependson {
@@ -103,13 +103,13 @@ if _OPTIONS["example-mod"] then
 		}
 
 		includedirs {
-			"./src/example-mod/",
-			"./src/haggle/",
-			"./deps/minhook/include/",
+			"../src/example-mod/",
+			"../src/haggle/",
+			"../deps/minhook/include/",
 		}
 
 		files {
-			"./src/example-mod/**",
+			"../src/example-mod/**",
 		}
 end
 
@@ -122,9 +122,9 @@ end
 		kind "staticlib"
 
 		files {
-			"./deps/minhook/src/**",
+			"../deps/minhook/src/**",
 		}
 
 		includedirs {
-			"./deps/minhook/include/",
+			"../deps/minhook/include/",
 		}
