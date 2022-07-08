@@ -53,6 +53,7 @@ namespace Sexy
 		static int SetState(int a2);
 		static void ActivateFreeBall(bool a4);
 		static void SetWearHat(int a2);
+		static void SetGunAngle(float newAngle);
 		static Sexy::FloatingText* AddStandardText(std::string string, float pos_x, float pos_y, int type);
 		static Sexy::FloatingText* AddStandardText(const char* string, float pos_x, float pos_y, int type); //overload for cstring
 

@@ -179,3 +179,9 @@ int Sexy::LogicMgr::SetState(int a2)
 	if (!Sexy::LogicMgr::check_exists()) return 0;
 	return reinterpret_cast<int(__thiscall*)(Sexy::LogicMgr*, int)>(0x00436FB0)(Sexy::LogicMgr::logic_mgr, a2);
 }
+
+void Sexy::LogicMgr::SetGunAngle(float newAngle)
+{
+	if (!Sexy::LogicMgr::check_exists()) return;
+	reinterpret_cast<void(__thiscall*)(Sexy::LogicMgr*, float)>(0x00436FD0)(Sexy::LogicMgr::logic_mgr, newAngle);
+}

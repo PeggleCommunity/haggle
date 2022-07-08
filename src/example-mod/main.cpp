@@ -5,7 +5,10 @@ HMODULE self = 0;
 void init()
 {
 	bool shutdown = false;
-	int count = 10;
+	int count = 500;
+	float angle1 = 3.4f;
+	float angle2 = 5.7f;
+	bool isPointingLeft = false;
 
 	//Select which modules you will be using, do not activate all if
 	//you do not need them for saftey and efficency
@@ -37,8 +40,18 @@ void init()
 		//Inject in main menu and load a board, don't inject mid-game,
 		//it will not have the required data to activate the mod sdk
 
-		Sexy::SoundMgr::AddSound(Sexy::SOUND_AAH, 0.0f, 0, 1, 1, -1.0f);						//Plays a sound
-		Sexy::LogicMgr::AddStandardText(std::string("Haggle Mod SDK!"), 330.0f, 200.0f, 48);	//Shows text
+		// Sexy::SoundMgr::AddSound(Sexy::SOUND_AAH, 0.0f, 0, 1, 1, -1.0f);						//Plays a sound
+		Sexy::LogicMgr::AddStandardText(std::string("Modding Peggle Is Fun!"), 330.0f, 200.0f, 48);	//Shows text
+
+		float newAngle = angle1;
+		if (isPointingLeft)
+		{
+			newAngle = angle2;
+		}
+		isPointingLeft = !isPointingLeft;
+
+		Sexy::LogicMgr::SetGunAngle(newAngle);
+
 		--count;
 
 		if (count <= 0)
@@ -46,7 +59,7 @@ void init()
 			shutdown = true;
 		}
 
-		Sleep(10000);
+		Sleep(2000);
 	}
 
 	FreeLibraryAndExitThread(self, 0);
