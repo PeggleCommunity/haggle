@@ -104,11 +104,18 @@ Sexy::LogicMgr* Sexy::LogicMgr::IncNumBalls(int top_count, int bottom_count, boo
 		(Sexy::LogicMgr::logic_mgr, top_count, bottom_count, bottom);
 }
 
-int __cdecl Sexy::LogicMgr::BeginShot(bool a2)
+int Sexy::LogicMgr::BeginShot(bool doGetReplayPoint)
 {
 	if (!Sexy::LogicMgr::check_exists()) return 0;
 
-	return reinterpret_cast<int(__thiscall*)(Sexy::LogicMgr*, bool)>(0x0045D880)(Sexy::LogicMgr::logic_mgr, a2);
+	return reinterpret_cast<int(__thiscall*)(Sexy::LogicMgr*, bool)>(0x0046AC70)(Sexy::LogicMgr::logic_mgr, doGetReplayPoint);
+}
+
+void Sexy::LogicMgr::MouseDown(int xPos, int yPos, int mouseButtonId, bool b1, bool b2)
+{
+	if (!Sexy::LogicMgr::check_exists()) return;
+
+	return reinterpret_cast<void(__thiscall*)(Sexy::LogicMgr*, int, int, int, bool, bool)>(0x00472810)(Sexy::LogicMgr::logic_mgr, xPos, yPos, mouseButtonId, b1, b2);
 }
 
 void Sexy::LogicMgr::DoPowerup(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, int powerup, int a5)
@@ -184,4 +191,12 @@ void Sexy::LogicMgr::SetGunAngle(float newAngle)
 {
 	if (!Sexy::LogicMgr::check_exists()) return;
 	reinterpret_cast<void(__thiscall*)(Sexy::LogicMgr*, float)>(0x00436FD0)(Sexy::LogicMgr::logic_mgr, newAngle);
+}
+
+float Sexy::LogicMgr::DegreesToRadians(float angle)
+{
+	constexpr double PI = 3.141592653589793238;
+	constexpr float DEG_TO_RAD_SCALAR = PI / 180.0f;
+
+	return (270.0f + angle) * DEG_TO_RAD_SCALAR;
 }

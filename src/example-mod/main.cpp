@@ -5,10 +5,14 @@ HMODULE self = 0;
 void init()
 {
 	bool shutdown = false;
-	int count = 500;
-	float angle1 = 3.4f;
-	float angle2 = 5.7f;
-	bool isPointingLeft = false;
+	float anglesInDegrees[] = { 0.0f, -30.0f, 60.0f };
+	enum class PointingDirections
+	{
+		DOWN = 0,
+		LEFT = 1,
+		RIGHT = 2
+	};
+	PointingDirections pointDirection = PointingDirections::DOWN;
 
 	//Select which modules you will be using, do not activate all if
 	//you do not need them for saftey and efficency
@@ -18,7 +22,7 @@ void init()
 
 	if(MH_Initialize() == MH_OK);
 	{
-		//Sexy::Board::setup();
+		Sexy::Board::setup();
 		Sexy::LogicMgr::setup();
 		//Sexy::Ball::setup();
 		//Sexy::PhysObj::setup();
@@ -32,7 +36,7 @@ void init()
 	}
 
 	//Example Mod stuff
-	while (!shutdown)
+	while (true)
 	{
 		//Most of the stuff will only call if you are in game
 		//and have allocated the proper memory for usage
@@ -40,26 +44,42 @@ void init()
 		//Inject in main menu and load a board, don't inject mid-game,
 		//it will not have the required data to activate the mod sdk
 
-		// Sexy::SoundMgr::AddSound(Sexy::SOUND_AAH, 0.0f, 0, 1, 1, -1.0f);						//Plays a sound
-		Sexy::LogicMgr::AddStandardText(std::string("Modding Peggle Is Fun!"), 330.0f, 200.0f, 48);	//Shows text
-
-		float newAngle = angle1;
-		if (isPointingLeft)
+		float newAngleInDegrees = anglesInDegrees[static_cast<int>(PointingDirections::DOWN)];
+		switch (pointDirection)
 		{
-			newAngle = angle2;
+			case PointingDirections::DOWN:
+			{
+				newAngleInDegrees = anglesInDegrees[static_cast<int>(pointDirection)];
+				Sexy::LogicMgr::AddStandardText(std::string("DOWN!"), 330.0f, 200.0f, 48);	//Shows text
+				pointDirection = PointingDirections::LEFT;
+				break;
+			}
+			case PointingDirections::LEFT:
+			{
+				newAngleInDegrees = anglesInDegrees[static_cast<int>(pointDirection)];
+				Sexy::LogicMgr::AddStandardText(std::string("LEFT!"), 330.0f, 200.0f, 48);	//Shows text
+				pointDirection = PointingDirections::RIGHT;
+				break;
+			}
+			case PointingDirections::RIGHT:
+			{
+				newAngleInDegrees = anglesInDegrees[static_cast<int>(pointDirection)];
+				Sexy::LogicMgr::AddStandardText(std::string("RIGHT!"), 330.0f, 200.0f, 48);	//Shows text
+				pointDirection = PointingDirections::DOWN;
+				break;
+			}
+			default:
+			{
+				break;
+			}
 		}
-		isPointingLeft = !isPointingLeft;
 
-		Sexy::LogicMgr::SetGunAngle(newAngle);
+		Sexy::LogicMgr::SetGunAngle(Sexy::LogicMgr::DegreesToRadians(newAngleInDegrees));
+		Sleep(1 * 1000);  // Sleep for a bit to allow the game to handle the new gun angle.
+		Sexy::LogicMgr::MouseDown(100, 100, 1, false, false);
+		// Sexy::Board::KeyDown(0x0D);  // Simulate pressing the enter key (key code 0x0D) to shoot the ball.
 
-		--count;
-
-		if (count <= 0)
-		{
-			shutdown = true;
-		}
-
-		Sleep(2000);
+		Sleep(20 * 1000);
 	}
 
 	FreeLibraryAndExitThread(self, 0);
