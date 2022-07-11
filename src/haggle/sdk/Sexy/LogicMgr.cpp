@@ -93,6 +93,28 @@ void Sexy::LogicMgr::setup()
 bool Sexy::LogicMgr::check_exists()
 {
 	if (Sexy::LogicMgr::logic_mgr == 0x0) return false;
+
+	int* checkPtr = reinterpret_cast<int*>(0x00687394);  // ThunderballApp pointer (static)
+	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+	{
+		Sexy::LogicMgr::logic_mgr = nullptr;
+		return false;
+	}
+
+	checkPtr = reinterpret_cast<int*>(*checkPtr + 0x7B8);  // Board pointer (dynamic)
+	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+	{
+		Sexy::LogicMgr::logic_mgr = nullptr;
+		return false;
+	}
+
+	checkPtr = reinterpret_cast<int*>(*checkPtr + 0x154);  // LogicMgr pointer (dynamic)
+	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+	{
+		Sexy::LogicMgr::logic_mgr = nullptr;
+		return false;
+	}
+
 	return true;
 }
 
