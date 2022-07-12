@@ -1,5 +1,3 @@
-
-
 #include "logger/logger.hpp"
 
 std::initializer_list<std::string> ext_whitelist
@@ -24,45 +22,47 @@ void init()
 		PRINT_ERROR("No mods folder found!");
 		PRINT_INFO("Make a mods folder in your Peggle directory");
 	}
-
-	std::vector<std::string> files;
-	for (const auto& entry : std::filesystem::directory_iterator("./mods/"))
+	else
 	{
-		if (!entry.is_directory())
+		std::vector<std::string> files;
+		for (const auto& entry : std::filesystem::directory_iterator("./mods/"))
 		{
-			files.emplace_back(entry.path().string());
-		}
-	}
-
-	PRINT_INFO("Loading Mods...");
-	static int count = 0;
-	for (const auto& bin : files)
-	{
-		for (const auto& ext : ext_whitelist)
-		{
-			if(ends_with(bin, ext))
+			if (!entry.is_directory())
 			{
-				LoadLibraryA(bin.c_str());
-				PRINT_INFO("%s", bin.c_str());
-				++count;
+				files.emplace_back(entry.path().string());
 			}
 		}
-	}
 
-	if (count == 1)
-	{
-		PRINT_INFO("1 mod loaded");
-	}
-	else if (count > 1)
-	{
-		PRINT_INFO("%s mods loaded", count);
-	}
-	else if(count <= 0)
-	{
-		PRINT_WARNING("No mods loaded");
-	}
+		PRINT_INFO("Loading Mods...");
+		static int count = 0;
+		for (const auto& bin : files)
+		{
+			for (const auto& ext : ext_whitelist)
+			{
+				if (ends_with(bin, ext))
+				{
+					LoadLibraryA(bin.c_str());
+					PRINT_INFO("%s", bin.c_str());
+					++count;
+				}
+			}
+		}
 
-	PRINT_INFO("Ready!");
+		if (count == 1)
+		{
+			PRINT_INFO("1 mod loaded");
+		}
+		else if (count > 1)
+		{
+			PRINT_INFO("%d mods loaded", count);
+		}
+		else if (count <= 0)
+		{
+			PRINT_WARNING("No mods loaded");
+		}
+
+		PRINT_INFO("Ready!");
+	}
 }
 
 DWORD WINAPI OnAttachImpl(LPVOID lpParameter)
