@@ -144,7 +144,7 @@ bool Sexy::LogicMgr::TryPointerRefresh()
 		return false;
 	}
 
-	logic_mgr = reinterpret_cast<LogicMgr*>(checkPtr);
+	logic_mgr = reinterpret_cast<LogicMgr*>(*checkPtr);
 	return true;
 }
 
@@ -253,13 +253,19 @@ Sexy::LogicMgr::State Sexy::LogicMgr::GetState(void)
 	return static_cast<State>(*logicState);
 }
 
-void Sexy::LogicMgr::SetGunAngle(float newAngle)
+void Sexy::LogicMgr::SetGunAngleRadians(float newAngleRadians)
 {
 	if (!check_exists()) return;
-	reinterpret_cast<void(__thiscall*)(LogicMgr*, float)>(0x00436FD0)(logic_mgr, newAngle);
+	reinterpret_cast<void(__thiscall*)(LogicMgr*, float)>(0x00436FD0)(logic_mgr, newAngleRadians);
 }
 
-float Sexy::LogicMgr::GetGunAngle(void)
+void Sexy::LogicMgr::SetGunAngleDegrees(float newAngleDegrees)
+{
+	if (!check_exists()) return;
+	reinterpret_cast<void(__thiscall*)(LogicMgr*, float)>(0x00436FD0)(logic_mgr, DegreesToRadians(newAngleDegrees));
+}
+
+float Sexy::LogicMgr::GetGunAngleRadians(void)
 {
 	if (!check_exists()) return 0.0f;
 
@@ -273,19 +279,34 @@ float Sexy::LogicMgr::GetGunAngle(void)
 	return *gunAnglePtr;
 }
 
+float Sexy::LogicMgr::GetGunAngleDegrees(void)
+{
+	if (!check_exists()) return 0.0f;
+
+	float* gunAnglePtr = reinterpret_cast<float*>(logic_mgr + 0xE0);
+
+	if (gunAnglePtr == nullptr)
+	{
+		return 0.0f;
+	}
+
+	return RadiansToDegrees(*gunAnglePtr);
+}
+
 constexpr float DOWN_ROTATION_DEGREES = 270.0f;
 float Sexy::LogicMgr::DegreesToRadians(float angleDegrees)
 {
 	constexpr double PI = 3.141592653589793238;
 	constexpr float DEG_TO_RAD_SCALAR = PI / 180.0f;
 
-	return (DOWN_ROTATION_DEGREES + angleDegrees) * DEG_TO_RAD_SCALAR;
+	return std::fmodf(DOWN_ROTATION_DEGREES + angleDegrees, 360.0f) * DEG_TO_RAD_SCALAR;
 }
 
 float Sexy::LogicMgr::RadiansToDegrees(float angleRadians)
 {
 	constexpr double PI = 3.141592653589793238;
+	constexpr float DEG_TO_RAD_SCALAR = PI / 180.0f;
 	constexpr float RAD_TO_DEG_SCALAR = 180.0f / PI;
 
-	return angleRadians * RAD_TO_DEG_SCALAR - DOWN_ROTATION_DEGREES;
+	return std::fmodf(angleRadians * RAD_TO_DEG_SCALAR + DOWN_ROTATION_DEGREES, 360.0f) - 180.0f;
 }

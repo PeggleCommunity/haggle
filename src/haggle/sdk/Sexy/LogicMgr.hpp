@@ -70,8 +70,10 @@ namespace Sexy
 		static State GetState(void);
 		static void ActivateFreeBall(bool a4);
 		static void SetWearHat(int a2);
-		static void SetGunAngle(float newAngleRadians);
-		static float GetGunAngle(void);
+		static void SetGunAngleRadians(float newAngleRadians);
+		static void SetGunAngleDegrees(float newAngleDegrees);
+		static float GetGunAngleRadians(void);
+		static float GetGunAngleDegrees(void);
 
 		/** @brief Converts degrees to radians normalized to the gun's coordinate system.
 		*

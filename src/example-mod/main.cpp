@@ -1,3 +1,4 @@
+#include <random>
 #include "sdk/SexySDK.hpp"
 
 HMODULE self = 0;
@@ -15,6 +16,11 @@ void init()
 	FreeLibraryAndExitThread(self, 0);
 }
 
+
+/** @brief After a delay, sets the gun to a certain angle and shoots the ball.
+ * This continues on to the next angle out of three total angles, and loops back
+ * to the first angle after all three angles have been used.
+ */
 void Example_0(void)
 {
 	float anglesInDegrees[] = { 0.0f, -30.0f, 60.0f };
@@ -81,7 +87,7 @@ void Example_0(void)
 		}
 		}
 
-		Sexy::LogicMgr::SetGunAngle(Sexy::LogicMgr::DegreesToRadians(newAngleInDegrees));
+		Sexy::LogicMgr::SetGunAngleDegrees(newAngleInDegrees);
 		Sleep(1 * 1000);  // Sleep for a bit to allow the game to handle the new gun angle.
 		Sexy::LogicMgr::MouseDown(100, 100, 1, false, false);
 		// Sexy::Board::KeyDown(0x0D);  // Simulate pressing the enter key (key code 0x0D) to shoot the ball.
@@ -90,12 +96,21 @@ void Example_0(void)
 	}
 }
 
+/** @brief Swings the gun left and right, and shoots whenever the game is ready
+ * for the player to shoot.
+ */
 void Example_1(void)
 {
-	float angleIncrement = 2.5f;
-	constexpr int MOVE_DELAY_MS = 50;
+	float angleIncrement = 8.0f;
+	constexpr int MOVE_DELAY_MS = 1000 / 60;
 	constexpr float ANGLE_BOUNDS[] = { -93.0f, 93.0f };
 	bool isMovingLeft = false;
+
+	std::random_device rd;  //Will be used to obtain a seed for the random number engine
+	std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+	std::uniform_int_distribution<> distribDelayMs(1000, 2000);
+	unsigned int firstShotDelayCounter = 0;
+	unsigned int firstShotDelayMs = distribDelayMs(gen);
 
 	//Select which modules you will be using, do not activate all if
 	//you do not need them for saftey and efficiency
@@ -121,16 +136,23 @@ void Example_1(void)
 		//
 		//Inject in main menu and load a board, don't inject mid-game,
 		//it will not have the required data to activate the mod sdk
-		if (
-			Sexy::LogicMgr::GetState() == Sexy::LogicMgr::State::None ||
-			Sexy::LogicMgr::GetState() == Sexy::LogicMgr::State::LevelDone ||
-			Sexy::LogicMgr::GetState() == Sexy::LogicMgr::State::InitLevel ||
-			Sexy::LogicMgr::GetState() == Sexy::LogicMgr::State::CharacterDialog)
+		Sexy::LogicMgr::State logicState = Sexy::LogicMgr::GetState();
+		switch (logicState)
 		{
+		case Sexy::LogicMgr::State::PreShot:
+		case Sexy::LogicMgr::State::Shot:
+		case Sexy::LogicMgr::State::PostShot:
+		case Sexy::LogicMgr::State::TotalMiss:
+		case Sexy::LogicMgr::State::PostPostShot:
+		case Sexy::LogicMgr::State::ShotExtender:
+		case Sexy::LogicMgr::State::ZenBall:
+			break;
+		default:
+			firstShotDelayCounter = 0;  // Since we're not in a playing state, reset the delayed first shot counter.
 			continue;
 		}
 
-		float currentGunAngleDegrees = Sexy::LogicMgr::RadiansToDegrees(Sexy::LogicMgr::GetGunAngle());
+		float currentGunAngleDegrees = Sexy::LogicMgr::GetGunAngleDegrees();
 		if (isMovingLeft)
 		{
 			if (currentGunAngleDegrees - angleIncrement < ANGLE_BOUNDS[0])
@@ -156,10 +178,17 @@ void Example_1(void)
 			}
 		}
 
-		Sexy::LogicMgr::SetGunAngle(Sexy::LogicMgr::DegreesToRadians(currentGunAngleDegrees));
-		if (Sexy::LogicMgr::GetState() == Sexy::LogicMgr::State::PreShot)
+		Sexy::LogicMgr::SetGunAngleDegrees(currentGunAngleDegrees);
+		if (logicState == Sexy::LogicMgr::State::PreShot)
 		{
-			Sexy::LogicMgr::MouseDown(100, 100, 1, false, false);
+			if (firstShotDelayCounter >= firstShotDelayMs)
+			{
+				Sexy::LogicMgr::MouseDown(100, 100, 1, false, false);
+			}
+			else
+			{
+				firstShotDelayCounter += MOVE_DELAY_MS;
+			}
 		}
 
 		Sleep(MOVE_DELAY_MS);
