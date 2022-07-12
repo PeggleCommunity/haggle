@@ -2,7 +2,7 @@
 <p align="center"> For Peggle Deluxe (1.01 Steam) </p>
 
 <p align="center">
-  <img width="596" height="331" src="./docs/images/example-mod.png">
+  <img src="./docs/images/example-mod.png">
 </p>
 
 ## Haggle?
