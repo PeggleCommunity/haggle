@@ -39,6 +39,21 @@ namespace Sexy
 	class LogicMgr
 	{
 	public:
+		enum class State : int
+		{
+			None = 0,
+			PreShot = 1,
+			Shot = 2,
+			PostShot = 3,
+			TotalMiss = 4,
+			LevelDone = 5,
+			PostPostShot = 6,
+			ShotExtender = 7,
+			InitLevel = 8,
+			CharacterDialog = 9,
+			ZenBall = 10
+		};
+
 		static LogicMgr* logic_mgr;
 		static void setup();
 
@@ -51,13 +66,15 @@ namespace Sexy
 		static void PegHit(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, bool a4);
 		static void DoExploder(Sexy::Ball* ball, Sexy::PhysObj* phys_obj);
 		static bool BeginTurn2();
-		static int SetState(int a2);
+		static void SetState(State newState);
+		static State GetState(void);
 		static void ActivateFreeBall(bool a4);
 		static void SetWearHat(int a2);
 		static void SetGunAngle(float newAngleRadians);
+		static float GetGunAngle(void);
 
 		/** @brief Converts degrees to radians normalized to the gun's coordinate system.
-		* 
+		*
 		 * @details
 		 * 0 degrees == down
 		 * 90 degrees == right
@@ -76,10 +93,12 @@ namespace Sexy
 		 * is 180 degrees away, so that is why the available range has to be calculated as `+/-(180 - Sexy::GetAngleConstraint())`.
 		 */
 		static float DegreesToRadians(float angleDegrees);
+		static float RadiansToDegrees(float angleRadians);
 		static Sexy::FloatingText* AddStandardText(std::string string, float pos_x, float pos_y, int type);
 		static Sexy::FloatingText* AddStandardText(const char* string, float pos_x, float pos_y, int type); //overload for cstring
 
 	private:
 		static bool check_exists();
+		static bool TryPointerRefresh(void);
 	};
 }

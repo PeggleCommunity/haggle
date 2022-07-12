@@ -3,20 +3,20 @@
 
 Sexy::LogicMgr* Sexy::LogicMgr::logic_mgr;
 
-static char* (__fastcall * Sexy__LogicMgr__LogicMgr_)(Sexy::LogicMgr*, char*, char*);
+static char* (__fastcall* Sexy__LogicMgr__LogicMgr_)(Sexy::LogicMgr*, char*, char*);
 char* __fastcall Sexy__LogicMgr__LogicMgr(Sexy::LogicMgr* this_, char* edx, char* thunderball)
 {
 	Sexy::LogicMgr::logic_mgr = this_;
 	return Sexy__LogicMgr__LogicMgr_(this_, edx, thunderball);
 }
 
-static void (__fastcall* Sexy__LogicMgr__DoPowerup_)(Sexy::LogicMgr*, char*, Sexy::Ball*, Sexy::PhysObj*, int, int);
+static void(__fastcall* Sexy__LogicMgr__DoPowerup_)(Sexy::LogicMgr*, char*, Sexy::Ball*, Sexy::PhysObj*, int, int);
 void __fastcall Sexy__LogicMgr__DoPowerup(Sexy::LogicMgr* this_, char* edx, Sexy::Ball* a2, Sexy::PhysObj* a3, int powerup, int a5)
 {
 	return Sexy__LogicMgr__DoPowerup_(this_, edx, a2, a3, powerup, a5);
 }
 
-static void (__fastcall* Sexy__LogicMgr__PegHit_)(Sexy::LogicMgr*, char*, Sexy::Ball*, Sexy::PhysObj*, bool);
+static void(__fastcall* Sexy__LogicMgr__PegHit_)(Sexy::LogicMgr*, char*, Sexy::Ball*, Sexy::PhysObj*, bool);
 void __fastcall Sexy__LogicMgr__PegHit(Sexy::LogicMgr* this_, char* edx, Sexy::Ball* ball, Sexy::PhysObj* phys_obj, bool a4)
 {
 	return Sexy__LogicMgr__PegHit_(this_, edx, ball, phys_obj, a4);
@@ -92,86 +92,116 @@ void Sexy::LogicMgr::setup()
 
 bool Sexy::LogicMgr::check_exists()
 {
-	if (Sexy::LogicMgr::logic_mgr == 0x0) return false;
+	if (logic_mgr != nullptr)
+	{
+		return true;
+	}
 
 	int* checkPtr = reinterpret_cast<int*>(0x00687394);  // ThunderballApp pointer (static)
 	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
 	{
-		Sexy::LogicMgr::logic_mgr = nullptr;
+		logic_mgr = nullptr;
 		return false;
 	}
 
 	checkPtr = reinterpret_cast<int*>(*checkPtr + 0x7B8);  // Board pointer (dynamic)
 	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
 	{
-		Sexy::LogicMgr::logic_mgr = nullptr;
+		logic_mgr = nullptr;
 		return false;
 	}
 
 	checkPtr = reinterpret_cast<int*>(*checkPtr + 0x154);  // LogicMgr pointer (dynamic)
 	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
 	{
-		Sexy::LogicMgr::logic_mgr = nullptr;
+		logic_mgr = nullptr;
 		return false;
 	}
 
+	return TryPointerRefresh();  // The static LogicMgr pointer was null, but it looks like the LogicMgr exists in the game memory. Try to retrieve it.
+}
+
+bool Sexy::LogicMgr::TryPointerRefresh()
+{
+	int* checkPtr = reinterpret_cast<int*>(0x00687394);  // ThunderballApp pointer (static)
+	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+	{
+		logic_mgr = nullptr;
+		return false;
+	}
+
+	checkPtr = reinterpret_cast<int*>(*checkPtr + 0x7B8);  // Board pointer (dynamic)
+	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+	{
+		logic_mgr = nullptr;
+		return false;
+	}
+
+	checkPtr = reinterpret_cast<int*>(*checkPtr + 0x154);  // LogicMgr pointer (dynamic)
+	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+	{
+		logic_mgr = nullptr;
+		return false;
+	}
+
+	logic_mgr = reinterpret_cast<LogicMgr*>(checkPtr);
 	return true;
 }
 
 Sexy::LogicMgr* Sexy::LogicMgr::IncNumBalls(int top_count, int bottom_count, bool bottom)
 {
-	if (!Sexy::LogicMgr::check_exists()) return 0;
-	
-	return reinterpret_cast<Sexy::LogicMgr* (__thiscall*)(Sexy::LogicMgr*, int, int, bool)>(0x0045D880)
+	if (!check_exists()) return 0;
+
+	return reinterpret_cast<LogicMgr * (__thiscall*)(LogicMgr*, int, int, bool)>(0x0045D880)
 		(Sexy::LogicMgr::logic_mgr, top_count, bottom_count, bottom);
 }
 
 int Sexy::LogicMgr::BeginShot(bool doGetReplayPoint)
 {
-	if (!Sexy::LogicMgr::check_exists()) return 0;
+	if (!check_exists()) return 0;
 
-	return reinterpret_cast<int(__thiscall*)(Sexy::LogicMgr*, bool)>(0x0046AC70)(Sexy::LogicMgr::logic_mgr, doGetReplayPoint);
+	return reinterpret_cast<int(__thiscall*)(LogicMgr*, bool)>(0x0046AC70)(logic_mgr, doGetReplayPoint);
 }
 
 void Sexy::LogicMgr::MouseDown(int xPos, int yPos, int mouseButtonId, bool b1, bool b2)
 {
-	if (!Sexy::LogicMgr::check_exists()) return;
+	if (!check_exists()) return;
 
-	return reinterpret_cast<void(__thiscall*)(Sexy::LogicMgr*, int, int, int, bool, bool)>(0x00472810)(Sexy::LogicMgr::logic_mgr, xPos, yPos, mouseButtonId, b1, b2);
+	return reinterpret_cast<void(__thiscall*)(LogicMgr*, int, int, int, bool, bool)>(0x00472810)(logic_mgr, xPos, yPos, mouseButtonId, b1, b2);
 }
 
 void Sexy::LogicMgr::DoPowerup(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, int powerup, int a5)
 {
-	if (!Sexy::LogicMgr::check_exists()) return;
+	if (!check_exists()) return;
 
-	reinterpret_cast<void(__thiscall*)(Sexy::LogicMgr*, Sexy::Ball*, Sexy::PhysObj*, int, int)>(0x0046EDF0)
-		(Sexy::LogicMgr::logic_mgr, ball, phys_obj, powerup, a5);
+	reinterpret_cast<void(__thiscall*)(LogicMgr*, Sexy::Ball*, Sexy::PhysObj*, int, int)>(0x0046EDF0)
+		(logic_mgr, ball, phys_obj, powerup, a5);
 }
 
 void Sexy::LogicMgr::ActivatePowerup(int powerup, int a3)
 {
-	if (!Sexy::LogicMgr::check_exists()) return;
-	reinterpret_cast<void(__thiscall*)(Sexy::LogicMgr*, int, int)>(0x004612E0)(Sexy::LogicMgr::logic_mgr, powerup, a3);
+	if (!check_exists()) return;
+	reinterpret_cast<void(__thiscall*)(LogicMgr*, int, int)>(0x004612E0)(logic_mgr, powerup, a3);
 }
 
 std::int64_t Sexy::LogicMgr::DoMultiball(Sexy::Ball* a2, Sexy::PhysObj* a3)
 {
-	if (!Sexy::LogicMgr::check_exists()) return 0;
-	return reinterpret_cast<std::int64_t(__thiscall*)(Sexy::LogicMgr*, Sexy::Ball*, Sexy::PhysObj*)>(0x0046EAD0)(Sexy::LogicMgr::logic_mgr, a2, a3);
+	if (!check_exists()) return 0;
+	return reinterpret_cast<std::int64_t(__thiscall*)(LogicMgr*, Sexy::Ball*, Sexy::PhysObj*)>(0x0046EAD0)(logic_mgr, a2, a3);
 }
 
 void Sexy::LogicMgr::PegHit(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, bool a4)
 {
-	if (!Sexy::LogicMgr::check_exists()) return;
-	reinterpret_cast<std::int64_t(__thiscall*)(Sexy::LogicMgr*, Sexy::Ball*, Sexy::PhysObj*, bool)>(0x0046F480)
-		(Sexy::LogicMgr::logic_mgr, ball, phys_obj, a4);
+	if (!check_exists()) return;
+	reinterpret_cast<std::int64_t(__thiscall*)(LogicMgr*, Sexy::Ball*, Sexy::PhysObj*, bool)>(0x0046F480)
+		(logic_mgr, ball, phys_obj, a4);
 }
 
 Sexy::FloatingText* Sexy::LogicMgr::AddStandardText(std::string string, float x_pos, float y_pos, int type)
 {
-	if (!Sexy::LogicMgr::check_exists()) return 0;
-	return reinterpret_cast<Sexy::FloatingText* (__thiscall*)(Sexy::LogicMgr*, std::string&, float, float, int)>(0x00469EB0)
-		(Sexy::LogicMgr::logic_mgr, string, x_pos, y_pos, type);
+	if (!check_exists()) return 0;
+	return reinterpret_cast<Sexy::FloatingText * (__thiscall*)(LogicMgr*, std::string&, float, float, int)>(0x00469EB0)
+		(logic_mgr, string, x_pos, y_pos, type);
 }
 
 Sexy::FloatingText* Sexy::LogicMgr::AddStandardText(const char* string, float pos_x, float pos_y, int type)
@@ -181,44 +211,81 @@ Sexy::FloatingText* Sexy::LogicMgr::AddStandardText(const char* string, float po
 
 void Sexy::LogicMgr::DoExploder(Sexy::Ball* ball, Sexy::PhysObj* phys_obj)
 {
-	if (!Sexy::LogicMgr::check_exists()) return;
-	reinterpret_cast<void (__thiscall*)(Sexy::LogicMgr*, Sexy::Ball*, Sexy::PhysObj*)>(0x0045E330)(Sexy::LogicMgr::logic_mgr, ball, phys_obj);
+	if (!check_exists()) return;
+	reinterpret_cast<void(__thiscall*)(LogicMgr*, Sexy::Ball*, Sexy::PhysObj*)>(0x0045E330)(logic_mgr, ball, phys_obj);
 }
 
 bool Sexy::LogicMgr::BeginTurn2()
 {
-	if (!Sexy::LogicMgr::check_exists()) return false;
-	return reinterpret_cast<bool(__thiscall*)(Sexy::LogicMgr*)>(0x0044B5B0)(Sexy::LogicMgr::logic_mgr);
+	if (!check_exists()) return false;
+	return reinterpret_cast<bool(__thiscall*)(LogicMgr*)>(0x0044B5B0)(logic_mgr);
 }
 
 void Sexy::LogicMgr::ActivateFreeBall(bool a4)
 {
-	if (!Sexy::LogicMgr::check_exists()) return;
-	reinterpret_cast<void(__thiscall*)(Sexy::LogicMgr*, bool)>(0x00440580)(Sexy::LogicMgr::logic_mgr, a4);
+	if (!check_exists()) return;
+	reinterpret_cast<void(__thiscall*)(LogicMgr*, bool)>(0x00440580)(logic_mgr, a4);
 }
 
 void Sexy::LogicMgr::SetWearHat(int a2)
 {
-	if (!Sexy::LogicMgr::check_exists()) return;
-	reinterpret_cast<void(__thiscall*)(Sexy::LogicMgr*, int)>(0x0043D4D0)(Sexy::LogicMgr::logic_mgr, a2);
+	if (!check_exists()) return;
+	reinterpret_cast<void(__thiscall*)(LogicMgr*, int)>(0x0043D4D0)(logic_mgr, a2);
 }
 
-int Sexy::LogicMgr::SetState(int a2)
+void Sexy::LogicMgr::SetState(State newState)
 {
-	if (!Sexy::LogicMgr::check_exists()) return 0;
-	return reinterpret_cast<int(__thiscall*)(Sexy::LogicMgr*, int)>(0x00436FB0)(Sexy::LogicMgr::logic_mgr, a2);
+	if (!check_exists()) return;
+	reinterpret_cast<int(__thiscall*)(LogicMgr*, State)>(0x00436FB0)(logic_mgr, newState);
+}
+
+Sexy::LogicMgr::State Sexy::LogicMgr::GetState(void)
+{
+	if (!check_exists()) return State::None;
+
+	int* logicState = reinterpret_cast<int*>(logic_mgr + 0x04);
+
+	if (logicState == nullptr)
+	{
+		return State::None;
+	}
+
+	return static_cast<State>(*logicState);
 }
 
 void Sexy::LogicMgr::SetGunAngle(float newAngle)
 {
-	if (!Sexy::LogicMgr::check_exists()) return;
-	reinterpret_cast<void(__thiscall*)(Sexy::LogicMgr*, float)>(0x00436FD0)(Sexy::LogicMgr::logic_mgr, newAngle);
+	if (!check_exists()) return;
+	reinterpret_cast<void(__thiscall*)(LogicMgr*, float)>(0x00436FD0)(logic_mgr, newAngle);
 }
 
-float Sexy::LogicMgr::DegreesToRadians(float angle)
+float Sexy::LogicMgr::GetGunAngle(void)
+{
+	if (!check_exists()) return 0.0f;
+
+	float* gunAnglePtr = reinterpret_cast<float*>(logic_mgr + 0xE0);
+
+	if (gunAnglePtr == nullptr)
+	{
+		return 0.0f;
+	}
+
+	return *gunAnglePtr;
+}
+
+constexpr float DOWN_ROTATION_DEGREES = 270.0f;
+float Sexy::LogicMgr::DegreesToRadians(float angleDegrees)
 {
 	constexpr double PI = 3.141592653589793238;
 	constexpr float DEG_TO_RAD_SCALAR = PI / 180.0f;
 
-	return (270.0f + angle) * DEG_TO_RAD_SCALAR;
+	return (DOWN_ROTATION_DEGREES + angleDegrees) * DEG_TO_RAD_SCALAR;
+}
+
+float Sexy::LogicMgr::RadiansToDegrees(float angleRadians)
+{
+	constexpr double PI = 3.141592653589793238;
+	constexpr float RAD_TO_DEG_SCALAR = 180.0f / PI;
+
+	return angleRadians * RAD_TO_DEG_SCALAR - DOWN_ROTATION_DEGREES;
 }
