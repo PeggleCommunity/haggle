@@ -28,9 +28,9 @@ The Mod Loader performs this operation. Follow these steps to install the Mod Lo
       To easily find this location, follow these steps:
 
       <details>
-        <summary>Steam Mod Loader Install Location - Image</summary>
+        <summary><i>Steam Mod Loader Install Location - Image</i></summary>
         <p>
-          <img width="594" height="486" src="./docs/images/Steam_Loader_InstallLocation.png">
+          <img src="./docs/images/Steam_Loader_InstallLocation.png">
         </p>
       </details>
 
@@ -42,9 +42,9 @@ The Mod Loader performs this operation. Follow these steps to install the Mod Lo
    2. For the **EA launcher**, Peggle executes from the install location of Peggle.
       To easily find this location, follow these steps:
       <details>
-        <summary>EA Mod Loader Install Location - Image</summary>
+        <summary><i>EA Mod Loader Install Location - Image</i></summary>
         <p>
-          <img width="627" height="451" src="./docs/images/EA_InstallLocation.png">
+          <img src="./docs/images/EA_InstallLocation.png">
         </p>
       </details>
 
@@ -66,7 +66,7 @@ The Mod Loader performs this operation. Follow these steps to install the Mod Lo
    1. For **Steam**, you can find this location by right-clicking on Peggle in your Steam library, hover over "Manage", and click on "Browse local files".
 
       <details>
-        <summary>Steam Mod Folder Install Location - Image</summary>
+        <summary><i>Steam Mod Folder Install Location - Image</i></summary>
         <p>
           <img src="./docs/images/Steam_Mods_InstallLocation.png">
         </p>
@@ -79,7 +79,7 @@ The Mod Loader performs this operation. Follow these steps to install the Mod Lo
       Ensure that all of the mod files that were placed into the "mods" folder in the previous step have been loaded.
 
       <details>
-        <summary>Haggle Mod Loader with mod loaded successfully - Image</summary>
+        <summary><i>Haggle Mod Loader with mod loaded successfully - Image</i></summary>
         <p>
           <img src="./docs/images/Haggle_Mod_Loader_with_Example_Mod_loaded.png">
         </p>
