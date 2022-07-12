@@ -25,3 +25,9 @@ void Sexy::Board::Reload(Sexy::Board* input)
 	if (!Sexy::Board::check_exists()) return;
 	reinterpret_cast<void(__thiscall*)(Sexy::Board*)>(0x004090D0)(input);
 }
+
+void Sexy::Board::KeyDown(KeyCode keyCodePressed)
+{
+	if (!Sexy::Board::check_exists()) return;
+	reinterpret_cast<void(__thiscall*)(Sexy::Board*, KeyCode)>(0x00402930)(Sexy::Board::board, keyCodePressed);
+}

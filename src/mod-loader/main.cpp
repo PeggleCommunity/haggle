@@ -1,4 +1,5 @@
 #include "logger/logger.hpp"
+#include <sstream>
 
 std::initializer_list<std::string> ext_whitelist
 {
@@ -16,6 +17,10 @@ void init()
 {
 	logger::init("Haggle Mod Loader");
 	std::printf("----- Haggle Mod Loader -----\n");
+
+	std::stringstream dirDescription;
+	dirDescription << "In directory \"" << std::filesystem::absolute(std::filesystem::path("./")).string() << "\"";
+	PRINT_INFO("%s", dirDescription.str().c_str());
 
 	if (!std::filesystem::exists("./mods/"))
 	{
@@ -54,7 +59,7 @@ void init()
 		}
 		else if (count > 1)
 		{
-			PRINT_INFO("%d mods loaded", count);
+			PRINT_INFO("%i mods loaded", count);
 		}
 		else if (count <= 0)
 		{
