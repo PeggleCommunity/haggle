@@ -6,6 +6,6 @@ namespace Sexy
 	class ThunderballApp
 	{
 	public:
-		static ThunderballApp* thunderball;
+		static ThunderballApp& thunderball;
 	};
 };
