@@ -80,6 +80,11 @@ void callbacks::on_peg_hit(callback_<void __cdecl(Sexy::Ball*, Sexy::PhysObj*, b
 	callbacks::peg_hit_callbacks_[callbacks::type::peg_hit].emplace_back(callback);
 }
 
+void callbacks::on_begin_shot(callback_<void __cdecl(Sexy::LogicMgr*, char)> callback)
+{
+	callbacks::begin_shot_callbacks_[callbacks::type::begin_shot].emplace_back(callback);
+}
+
 void callbacks::once(callback_<void __cdecl()> callback)
 {
 	const std::lock_guard<std::mutex> lock(callbacks::mtx_);
