@@ -5,6 +5,7 @@ std::mutex callbacks::mtx_;
 std::vector<callback_<void __cdecl()>> callbacks::once_callbacks_;
 std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl()>>> callbacks::basic_callbacks_;
 std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::Ball*, Sexy::PhysObj*, bool)>>> callbacks::peg_hit_callbacks_;
+std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LogicMgr*, char)>>> callbacks::begin_shot_callbacks_;
 
 //Sexy::SexyAppBase::DoMainLoop
 void __declspec(naked) main_loop()
@@ -99,5 +100,13 @@ void callbacks::run_peg_hit_callbacks(Sexy::Ball* ball, Sexy::PhysObj* phys_obj,
 	for (const auto peg_hit_callback : callbacks::peg_hit_callbacks_[callbacks::type::peg_hit])
 	{
 		peg_hit_callback(ball, phys_obj, a4);
+	}
+}
+
+void callbacks::run_begin_shot_callbacks(Sexy::LogicMgr* logic_mgr, char a2)
+{
+	for (const auto begin_shot_callback : callbacks::begin_shot_callbacks_[callbacks::type::begin_shot])
+	{
+		begin_shot_callback(logic_mgr, a2);
 	}
 }

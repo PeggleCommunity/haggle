@@ -27,6 +27,7 @@ void __fastcall Sexy__LogicMgr__PegHit(Sexy::LogicMgr* this_, char* edx, Sexy::B
 static void(__fastcall* Sexy__LogicMgr__BeginShot_)(Sexy::LogicMgr*, char*, bool);
 void __fastcall Sexy__LogicMgr__BeginShot(Sexy::LogicMgr* this_, char* edx, bool a2)
 {
+	callbacks::run_begin_shot_callbacks(this_, a2);
 	return Sexy__LogicMgr__BeginShot_(this_, edx, a2);
 }
 
