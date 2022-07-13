@@ -185,7 +185,7 @@ void Sexy::LogicMgr::ActivateFreeBallCover(int a2)
 {
 	if (!check_exists()) return;
 
-	reinterpret_cast<void(__thiscall*)(LogicMgr*)>(0x00440700)(logic_mgr);
+	reinterpret_cast<void(__thiscall*)(LogicMgr*, int)>(0x00440700)(logic_mgr, a2);
 }
 
 void Sexy::LogicMgr::ActivatePowerup(int powerup, int a3)
