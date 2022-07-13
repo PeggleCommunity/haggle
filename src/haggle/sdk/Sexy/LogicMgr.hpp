@@ -61,7 +61,7 @@ namespace Sexy
 		static int BeginShot(bool doGetReplayPoint);
 		static void MouseDown(int xPos, int yPos, int mouseButtonId, bool b1, bool b2);
 		static void DoPowerup(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, int powerup, int a5);
-		void ActivateFreeBallCover(int a2);
+		static void ActivateFreeBallCover(int a2);
 		static void ActivatePowerup(int powerup, int a3);
 		static std::int64_t DoMultiball(Sexy::Ball* a2, Sexy::PhysObj* a3);
 		static void PegHit(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, bool a4);
