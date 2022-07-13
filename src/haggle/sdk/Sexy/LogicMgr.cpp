@@ -181,6 +181,13 @@ void Sexy::LogicMgr::DoPowerup(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, int po
 		(logic_mgr, ball, phys_obj, powerup, a5);
 }
 
+void Sexy::LogicMgr::ActivateFreeBallCover(int a2)
+{
+	if (!check_exists()) return;
+
+	reinterpret_cast<void(__thiscall*)(LogicMgr*)>(0x00440700)(logic_mgr);
+}
+
 void Sexy::LogicMgr::ActivatePowerup(int powerup, int a3)
 {
 	if (!check_exists()) return;
