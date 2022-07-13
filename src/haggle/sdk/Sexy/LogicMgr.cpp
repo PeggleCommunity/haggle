@@ -1,5 +1,6 @@
 #include "LogicMgr.hpp"
 #include "memory.hpp"
+#include "callbacks/callbacks.hpp"
 
 Sexy::LogicMgr* Sexy::LogicMgr::logic_mgr;
 
@@ -19,6 +20,7 @@ void __fastcall Sexy__LogicMgr__DoPowerup(Sexy::LogicMgr* this_, char* edx, Sexy
 static void(__fastcall* Sexy__LogicMgr__PegHit_)(Sexy::LogicMgr*, char*, Sexy::Ball*, Sexy::PhysObj*, bool);
 void __fastcall Sexy__LogicMgr__PegHit(Sexy::LogicMgr* this_, char* edx, Sexy::Ball* ball, Sexy::PhysObj* phys_obj, bool a4)
 {
+	callbacks::run_peg_hit_callbacks(ball, phys_obj, a4);
 	return Sexy__LogicMgr__PegHit_(this_, edx, ball, phys_obj, a4);
 }
 
@@ -31,6 +33,7 @@ void __fastcall Sexy__LogicMgr__BeginShot(Sexy::LogicMgr* this_, char* edx, bool
 static char* (__fastcall* Sexy__LogicMgr__BeginTurn2_)(Sexy::LogicMgr*, char*);
 char* __fastcall Sexy__LogicMgr__BeginTurn2(Sexy::LogicMgr* this_, char* edx)
 {
+	callbacks::run_basic_callbacks(callbacks::type::beginturn2);
 	return Sexy__LogicMgr__BeginTurn2_(this_, edx);
 }
 

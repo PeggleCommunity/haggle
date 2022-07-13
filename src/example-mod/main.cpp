@@ -1,5 +1,6 @@
 #include <random>
 #include "sdk/SexySDK.hpp"
+#include "callbacks/callbacks.hpp"
 
 HMODULE self = 0;
 
@@ -9,9 +10,17 @@ void Example_1(void);
 void init()
 {
 	// Example Mod stuff
+	callbacks::on_peg_hit([](Sexy::Ball* ball, Sexy::PhysObj* phys_obj, bool a4)
+	{
+		Sexy::PhysObj_* phys_obj_ = (Sexy::PhysObj_*)phys_obj;
+		double pos_x = ((double(__thiscall*)(Sexy::PhysObj*)) * (std::uint32_t*)(*(std::uint32_t*)phys_obj_->data + 120))(phys_obj);
+		double pos_y = ((double(__thiscall*)(Sexy::PhysObj*)) * (std::uint32_t*)(*(std::uint32_t*)phys_obj_->data + 124))(phys_obj);
+		Sexy::LogicMgr::AddStandardText("Peg Hit!", pos_x, pos_y, 50);
+	});
 
 	// Example_0();
 	Example_1();
+
 
 	FreeLibraryAndExitThread(self, 0);
 }
