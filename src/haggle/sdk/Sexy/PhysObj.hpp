@@ -8,7 +8,7 @@ namespace Sexy
 		char data[228];
 	};
 
-	class PhysObj
+	class __declspec(dllexport) PhysObj
 	{
 	public:
 		static void setup();

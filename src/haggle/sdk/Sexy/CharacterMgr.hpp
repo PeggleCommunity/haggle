@@ -3,7 +3,7 @@
 //Size: 152
 namespace Sexy
 {
-	class CharacterMgr
+	class __declspec(dllexport) CharacterMgr
 	{
 	public:
 		static CharacterMgr* character_mgr;

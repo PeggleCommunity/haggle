@@ -1,11 +1,11 @@
 #include "callbacks.hpp"
-#include "memory.hpp"
+#include "utils/memory.hpp"
 
 std::mutex callbacks::mtx_;
 std::vector<callback_<void __cdecl()>> callbacks::once_callbacks_;
 std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl()>>> callbacks::basic_callbacks_;
 std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::Ball*, Sexy::PhysObj*, bool)>>> callbacks::peg_hit_callbacks_;
-std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LogicMgr*, char)>>> callbacks::begin_shot_callbacks_;
+std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LogicMgr*, bool)>>> callbacks::begin_shot_callbacks_;
 
 //Sexy::SexyAppBase::DoMainLoop
 void __declspec(naked) main_loop()
@@ -80,7 +80,7 @@ void callbacks::on_peg_hit(callback_<void __cdecl(Sexy::Ball*, Sexy::PhysObj*, b
 	callbacks::peg_hit_callbacks_[callbacks::type::peg_hit].emplace_back(callback);
 }
 
-void callbacks::on_begin_shot(callback_<void __cdecl(Sexy::LogicMgr*, char)> callback)
+void callbacks::on_begin_shot(callback_<void __cdecl(Sexy::LogicMgr*, bool)> callback)
 {
 	callbacks::begin_shot_callbacks_[callbacks::type::begin_shot].emplace_back(callback);
 }
@@ -108,10 +108,10 @@ void callbacks::run_peg_hit_callbacks(Sexy::Ball* ball, Sexy::PhysObj* phys_obj,
 	}
 }
 
-void callbacks::run_begin_shot_callbacks(Sexy::LogicMgr* logic_mgr, char a2)
+void callbacks::run_begin_shot_callbacks(Sexy::LogicMgr* logic_mgr, bool doGetReplayPoint)
 {
 	for (const auto begin_shot_callback : callbacks::begin_shot_callbacks_[callbacks::type::begin_shot])
 	{
-		begin_shot_callback(logic_mgr, a2);
+		begin_shot_callback(logic_mgr, doGetReplayPoint);
 	}
 }

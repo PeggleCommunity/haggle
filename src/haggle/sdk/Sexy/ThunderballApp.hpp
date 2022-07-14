@@ -3,7 +3,7 @@
 //Size: 625
 namespace Sexy
 {
-	class ThunderballApp
+	class __declspec(dllexport) ThunderballApp
 	{
 	public:
 		static ThunderballApp& thunderball;

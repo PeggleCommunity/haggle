@@ -57,7 +57,7 @@ workspace "Haggle"
 	project "Haggle"
 		targetname "haggle-sdk"
 		language "c++"
-		kind "staticlib"
+		kind "sharedlib"
 		warnings "off"
 
 		pchheader "stdafx.hpp"

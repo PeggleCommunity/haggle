@@ -10,7 +10,7 @@
 //Size: 924
 namespace Sexy
 {
-	enum PowerUp : int
+	enum PowerupType : int
 	{
 		None,
 		SuperGuide,
@@ -36,7 +36,7 @@ namespace Sexy
 		char data[916];
 	};
 
-	class LogicMgr
+	class __declspec(dllexport) LogicMgr
 	{
 	public:
 		enum class State : int

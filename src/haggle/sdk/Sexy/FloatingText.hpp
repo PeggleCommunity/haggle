@@ -20,7 +20,7 @@ namespace Sexy
 	};
 
 
-	class FloatingText
+	class __declspec(dllexport) FloatingText
 	{
 	public:
 		static FloatingText* floating_text;

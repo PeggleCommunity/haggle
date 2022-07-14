@@ -5,7 +5,7 @@
 //Size: 372
 namespace Sexy
 {
-	class InterfaceMgr
+	class __declspec(dllexport) InterfaceMgr
 	{
 	public:
 		static InterfaceMgr* interface_mgr;

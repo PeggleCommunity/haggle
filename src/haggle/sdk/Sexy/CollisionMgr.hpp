@@ -2,7 +2,7 @@
 
 namespace Sexy
 {
-	class CollisionMgr
+	class __declspec(dllexport) CollisionMgr
 	{
 	public:
 		static CollisionMgr* collision_mgr;

@@ -2,7 +2,7 @@
 
 namespace Sexy
 {
-	class EffectMgr
+	class __declspec(dllexport) EffectMgr
 	{
 	public:
 		static EffectMgr* effect_mgr;

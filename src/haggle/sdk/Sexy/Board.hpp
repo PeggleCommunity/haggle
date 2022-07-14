@@ -6,7 +6,7 @@ namespace Sexy
 {
 	using KeyCode = unsigned int;
 
-	class Board
+	class __declspec(dllexport) Board
 	{
 	public:
 		static Board* board;

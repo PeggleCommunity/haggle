@@ -4,7 +4,7 @@
 //Size: 400
 namespace Sexy
 {
-	class Ball
+	class __declspec(dllexport) Ball
 	{
 	public:
 		static Ball* ball;

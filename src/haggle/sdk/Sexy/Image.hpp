@@ -2,7 +2,7 @@
 
 namespace Sexy
 {
-	class Image
+	class __declspec(dllexport) Image
 	{
 	public:
 	};

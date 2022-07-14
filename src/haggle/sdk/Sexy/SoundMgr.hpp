@@ -2,7 +2,7 @@
 
 namespace Sexy
 {
-	class SoundMgr
+	class __declspec(dllexport) SoundMgr
 	{
 	public:
 		static SoundMgr* sound_mgr;

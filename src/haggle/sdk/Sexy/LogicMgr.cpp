@@ -1,5 +1,5 @@
 #include "LogicMgr.hpp"
-#include "memory.hpp"
+#include "utils/memory.hpp"
 #include "callbacks/callbacks.hpp"
 
 Sexy::LogicMgr* Sexy::LogicMgr::logic_mgr;
@@ -25,10 +25,10 @@ void __fastcall Sexy__LogicMgr__PegHit(Sexy::LogicMgr* this_, char* edx, Sexy::B
 }
 
 static void(__fastcall* Sexy__LogicMgr__BeginShot_)(Sexy::LogicMgr*, char*, bool);
-void __fastcall Sexy__LogicMgr__BeginShot(Sexy::LogicMgr* this_, char* edx, bool a2)
+void __fastcall Sexy__LogicMgr__BeginShot(Sexy::LogicMgr* this_, char* edx, bool doGetReplayPoint)
 {
-	callbacks::run_begin_shot_callbacks(this_, a2);
-	return Sexy__LogicMgr__BeginShot_(this_, edx, a2);
+	callbacks::run_begin_shot_callbacks(this_, doGetReplayPoint);
+	return Sexy__LogicMgr__BeginShot_(this_, edx, doGetReplayPoint);
 }
 
 static char* (__fastcall* Sexy__LogicMgr__BeginTurn2_)(Sexy::LogicMgr*, char*);
@@ -39,16 +39,16 @@ char* __fastcall Sexy__LogicMgr__BeginTurn2(Sexy::LogicMgr* this_, char* edx)
 }
 
 //Adds control over the otherwise broken powerups
-void unused_powerups(Sexy::PowerUp powerup)
+void unused_powerups(Sexy::PowerupType powerup)
 {
 	switch (powerup)
 	{
-	case Sexy::PowerUp::TimeBomb:
+	case Sexy::PowerupType::TimeBomb:
 	{
 		break;
 	}
 
-	case Sexy::PowerUp::Nudge:
+	case Sexy::PowerupType::Nudge:
 	{
 		break;
 	}
