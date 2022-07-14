@@ -21,14 +21,16 @@ static void(__fastcall* Sexy__LogicMgr__PegHit_)(Sexy::LogicMgr*, char*, Sexy::B
 void __fastcall Sexy__LogicMgr__PegHit(Sexy::LogicMgr* this_, char* edx, Sexy::Ball* ball, Sexy::PhysObj* phys_obj, bool a4)
 {
 	callbacks::run_peg_hit_callbacks(ball, phys_obj, a4);
-	return Sexy__LogicMgr__PegHit_(this_, edx, ball, phys_obj, a4);
+	Sexy__LogicMgr__PegHit_(this_, edx, ball, phys_obj, a4);
+	callbacks::run_after_peg_hit_callbacks(ball, phys_obj, a4);
 }
 
 static void(__fastcall* Sexy__LogicMgr__BeginShot_)(Sexy::LogicMgr*, char*, bool);
 void __fastcall Sexy__LogicMgr__BeginShot(Sexy::LogicMgr* this_, char* edx, bool doGetReplayPoint)
 {
 	callbacks::run_begin_shot_callbacks(this_, doGetReplayPoint);
-	return Sexy__LogicMgr__BeginShot_(this_, edx, doGetReplayPoint);
+	Sexy__LogicMgr__BeginShot_(this_, edx, doGetReplayPoint);
+	callbacks::run_after_begin_shot_callbacks(this_, doGetReplayPoint);
 }
 
 static char* (__fastcall* Sexy__LogicMgr__BeginTurn2_)(Sexy::LogicMgr*, char*);

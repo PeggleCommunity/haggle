@@ -14,8 +14,10 @@ public:
 	{
 		main_loop,
 		peg_hit,
+		after_peg_hit,
 		beginturn2,
 		begin_shot,
+		after_begin_shot,
 	};
 		
 	static void init();
@@ -24,13 +26,17 @@ public:
 	static void on(const std::initializer_list<callbacks::type>& types, callback_<void __cdecl()> callback);
 
 	static void on_peg_hit(callback_<void __cdecl(Sexy::Ball*, Sexy::PhysObj*, bool)> callback);
+	static void after_peg_hit(callback_<void __cdecl(Sexy::Ball*, Sexy::PhysObj*, bool)> callback);
 	static void on_begin_shot(callback_<void __cdecl(Sexy::LogicMgr*, bool)> callback);
+	static void after_begin_shot(callback_<void __cdecl(Sexy::LogicMgr*, bool)> callback);
 
 	static void once(callback_<void __cdecl()> callback);
 
 	static void run_basic_callbacks(callbacks::type type);
 	static void run_peg_hit_callbacks(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, bool a4);
+	static void run_after_peg_hit_callbacks(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, bool a4);
 	static void run_begin_shot_callbacks(Sexy::LogicMgr* logic_mgr, bool doGetReplayPoint);
+	static void run_after_begin_shot_callbacks(Sexy::LogicMgr* logic_mgr, bool doGetReplayPoint);
 
 private:
 
