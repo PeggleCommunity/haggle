@@ -29,8 +29,11 @@ void init()
 	}
 	else
 	{
+		std::filesystem::path orig_path = std::filesystem::current_path();
+		std::filesystem::current_path("./mods/");
+
 		std::vector<std::string> files;
-		for (const auto& entry : std::filesystem::directory_iterator("./mods/"))
+		for (const auto& entry : std::filesystem::directory_iterator("./"))
 		{
 			if (!entry.is_directory())
 			{
@@ -47,11 +50,22 @@ void init()
 				if (ends_with(bin, ext))
 				{
 					LoadLibraryA(bin.c_str());
-					PRINT_INFO("%s", bin.c_str());
+
+					if (GetLastError() != 0)
+					{
+						PRINT_ERROR("%s errored! (%i)", bin.c_str(), GetLastError());
+					}
+					else
+					{
+						PRINT_INFO("%s loaded!", bin.c_str());
+					}
+
 					++count;
 				}
 			}
 		}
+
+		std::filesystem::current_path(orig_path);
 
 		if (count == 1)
 		{

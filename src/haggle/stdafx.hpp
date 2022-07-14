@@ -11,4 +11,4 @@
 #include "MinHook.h"
 
 //IDA Defs
-#include "defs.h"
+#include "utils/defs.h"
