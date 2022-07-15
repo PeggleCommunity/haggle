@@ -25,6 +25,7 @@ public:
 		just_beat_adventure_true,
 		just_beat_adventure_false,
 		do_to_menu,
+		do_options_dialog,
 	};
 		
 	static void init();
