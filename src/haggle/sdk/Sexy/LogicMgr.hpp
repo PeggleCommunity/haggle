@@ -97,7 +97,7 @@ namespace Sexy
 		 */
 		static float DegreesToRadians(float angleDegrees);
 		static float RadiansToDegrees(float angleRadians);
-		static Sexy::FloatingText* AddStandardText(std::string string, float pos_x, float pos_y, int type);
+		static Sexy::FloatingText* AddStandardText(std::string& string, float pos_x, float pos_y, int type);
 		static Sexy::FloatingText* AddStandardText(const char* string, float pos_x, float pos_y, int type); //overload for cstring
 
 	private:
