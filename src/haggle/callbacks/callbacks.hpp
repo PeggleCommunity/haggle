@@ -18,6 +18,12 @@ public:
 		beginturn2,
 		begin_shot,
 		after_begin_shot,
+		show_adventure_screen,
+		after_show_adventure_screen,
+		start_adventure_game,
+		after_start_adventure_game,
+		just_beat_adventure,
+		after_just_beat_adventure,
 	};
 		
 	static void init();

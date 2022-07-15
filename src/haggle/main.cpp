@@ -10,6 +10,7 @@ void init()
 	{
 		callbacks::init();	//Although not related to minhook starting, its useless without it
 
+		Sexy::ThunderballApp::setup();
 		Sexy::Board::setup();
 		Sexy::LogicMgr::setup();
 		Sexy::Ball::setup();
@@ -19,6 +20,7 @@ void init()
 		Sexy::EffectMgr::setup();
 		Sexy::CollisionMgr::setup();
 		Sexy::InterfaceMgr::setup();
+		Sexy::PlayerInfo::setup();
 
 		MH_EnableHook(MH_ALL_HOOKS);
 	}

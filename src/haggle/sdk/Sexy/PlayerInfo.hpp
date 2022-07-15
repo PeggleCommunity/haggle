@@ -1,13 +1,11 @@
 #pragma once
 
-//Size: 625
 namespace Sexy
 {
-	class __declspec(dllexport) ThunderballApp
+	class PlayerInfo
 	{
 	public:
-		static ThunderballApp* thunderball;
-
+		static PlayerInfo* player_info;
 		static void setup();
 		static bool check_exists();
 	};
