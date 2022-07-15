@@ -13,9 +13,9 @@ char* __fastcall Sexy__PlayerInfo__PlayerInfo(Sexy::PlayerInfo* this_, char* edx
 static bool (__fastcall* Sexy__PlayerInfo__JustBeatAdventure_)(Sexy::PlayerInfo*, char*);
 bool __fastcall Sexy__PlayerInfo__JustBeatAdventure(Sexy::PlayerInfo* this_, char* edx)
 {
-	callbacks::run_basic_callbacks(callbacks::type::just_beat_adventure);
 	auto retn = Sexy__PlayerInfo__JustBeatAdventure_(this_, edx);
-	callbacks::run_basic_callbacks(callbacks::type::after_just_beat_adventure);
+	if (retn) callbacks::run_basic_callbacks(callbacks::type::just_beat_adventure_true);
+	else if(!retn) callbacks::run_basic_callbacks(callbacks::type::just_beat_adventure_false);
 	return retn;
 }
 

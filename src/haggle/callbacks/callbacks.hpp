@@ -22,8 +22,8 @@ public:
 		after_show_adventure_screen,
 		start_adventure_game,
 		after_start_adventure_game,
-		just_beat_adventure,
-		after_just_beat_adventure,
+		just_beat_adventure_true,
+		just_beat_adventure_false,
 	};
 		
 	static void init();
