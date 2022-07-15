@@ -35,7 +35,14 @@ static int(__fastcall* Sexy__ThunderballApp__DoOptionsDialog_)(Sexy::Thunderball
 int __fastcall Sexy__ThunderballApp__DoOptionsDialog(Sexy::ThunderballApp* this_, char* edx)
 {
 	callbacks::run_basic_callbacks(callbacks::type::do_options_dialog);
-	Sexy__ThunderballApp__DoOptionsDialog_(this_, edx);
+	return Sexy__ThunderballApp__DoOptionsDialog_(this_, edx);
+}
+
+static int(__fastcall* Sexy__ThunderballApp__FinishOptionsDialog_)(Sexy::ThunderballApp*, char*, bool, bool);
+int __fastcall Sexy__ThunderballApp__FinishOptionsDialog(Sexy::ThunderballApp* this_, char* edx, bool a2, bool a3)
+{
+	callbacks::run_basic_callbacks(callbacks::type::finish_options_dialog);
+	return Sexy__ThunderballApp__FinishOptionsDialog_(this_, edx, a2, a3);
 }
 
 void Sexy::ThunderballApp::setup()
@@ -44,6 +51,7 @@ void Sexy::ThunderballApp::setup()
 	MH_CreateHook((void*)0x0042FF70, Sexy__ThunderballApp__StartAdventureGame, (void**)&Sexy__ThunderballApp__StartAdventureGame_);
 	MH_CreateHook((void*)0x0042D7A0, Sexy__ThunderballApp__DoToMenu, (void**)&Sexy__ThunderballApp__DoToMenu_);
 	MH_CreateHook((void*)0x0040C210, Sexy__ThunderballApp__DoOptionsDialog, (void**)&Sexy__ThunderballApp__DoOptionsDialog_);
+	MH_CreateHook((void*)0x0041C840, Sexy__ThunderballApp__FinishOptionsDialog, (void**)&Sexy__ThunderballApp__FinishOptionsDialog_);
 }
 
 bool Sexy::ThunderballApp::check_exists()
