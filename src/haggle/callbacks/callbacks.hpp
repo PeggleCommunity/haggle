@@ -24,6 +24,7 @@ public:
 		after_start_adventure_game,
 		just_beat_adventure_true,
 		just_beat_adventure_false,
+		do_to_menu,
 	};
 		
 	static void init();

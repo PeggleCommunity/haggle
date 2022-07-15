@@ -24,10 +24,18 @@ int __fastcall Sexy__ThunderballApp__StartAdventureGame(Sexy::ThunderballApp* th
 	return retn;
 }
 
+static void(__fastcall* Sexy__ThunderballApp__DoToMenu_)(Sexy::ThunderballApp*, char*);
+void __fastcall Sexy__ThunderballApp__DoToMenu(Sexy::ThunderballApp* this_, char* edx)
+{
+	callbacks::run_basic_callbacks(callbacks::type::do_to_menu);
+	Sexy__ThunderballApp__DoToMenu_(this_, edx);
+}
+
 void Sexy::ThunderballApp::setup()
 {
 	MH_CreateHook((void*)0x00429890, Sexy__ThunderballApp__ShowAdventureScreen, (void**)&Sexy__ThunderballApp__ShowAdventureScreen_);
 	MH_CreateHook((void*)0x0042FF70, Sexy__ThunderballApp__StartAdventureGame, (void**)&Sexy__ThunderballApp__StartAdventureGame_);
+	MH_CreateHook((void*)0x0042D7A0, Sexy__ThunderballApp__DoToMenu, (void**)&Sexy__ThunderballApp__DoToMenu_);
 }
 
 bool Sexy::ThunderballApp::check_exists()
