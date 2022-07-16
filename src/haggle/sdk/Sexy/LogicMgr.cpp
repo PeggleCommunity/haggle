@@ -106,7 +106,7 @@ void Sexy::LogicMgr::setup()
 	MH_CreateHook((void*)0x0046AC70, Sexy__LogicMgr__BeginShot, (void**)&Sexy__LogicMgr__BeginShot_);
 	MH_CreateHook((void*)0x0044B5B0, Sexy__LogicMgr__BeginTurn2, (void**)&Sexy__LogicMgr__BeginTurn2_);
 	MH_CreateHook((void*)0x0046C220, Sexy__LogicMgr__FinishInitLevelText, (void**)&Sexy__LogicMgr__FinishInitLevelText_);
-	MH_CreateHook((void*)0x000A4EF4, Sexy__LogicMgr__DoLevelDone, (void**)&Sexy__LogicMgr__DoLevelDone_);
+	MH_CreateHook((void*)0x0046A9C0, Sexy__LogicMgr__DoLevelDone, (void**)&Sexy__LogicMgr__DoLevelDone_);
 
 	jump(0x0046F0DF, unused_powerups_hook);
 	jump(0x0045DE5C, next_board_balls_hook);
