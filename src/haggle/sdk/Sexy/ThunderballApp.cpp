@@ -59,3 +59,9 @@ bool Sexy::ThunderballApp::check_exists()
 	if (Sexy::ThunderballApp::thunderball == 0x0) return false;
 	return true;
 }
+
+void Sexy::ThunderballApp::DoToMenu()
+{
+	if (!Sexy::ThunderballApp::check_exists()) return;
+	return reinterpret_cast<void(__thiscall*)(Sexy::ThunderballApp*)>(0x0042D7A0)(Sexy::ThunderballApp::thunderball);
+}

@@ -10,5 +10,7 @@ namespace Sexy
 
 		static void setup();
 		static bool check_exists();
+
+		static void DoToMenu();
 	};
 };
