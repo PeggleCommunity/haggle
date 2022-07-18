@@ -339,3 +339,9 @@ float Sexy::LogicMgr::RadiansToDegrees(float angleRadians)
 
 	return std::fmodf(angleRadians * RAD_TO_DEG_SCALAR + DOWN_ROTATION_DEGREES, 360.0f) - 180.0f;
 }
+
+void Sexy::LogicMgr::CalcCornerDisplay()
+{
+	if (!check_exists()) return;
+	reinterpret_cast<void(__thiscall*)(LogicMgr*)>(0x00448370)(logic_mgr);
+}

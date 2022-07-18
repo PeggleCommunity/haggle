@@ -31,3 +31,9 @@ void Sexy::Board::KeyDown(KeyCode keyCodePressed)
 	if (!Sexy::Board::check_exists()) return;
 	reinterpret_cast<void(__thiscall*)(Sexy::Board*, KeyCode)>(0x00402930)(Sexy::Board::board, keyCodePressed);
 }
+
+void Sexy::Board::SetSlowMo(bool a2, int a3)
+{
+	if (!Sexy::Board::check_exists()) return;
+	reinterpret_cast<void(__thiscall*)(Sexy::Board*, bool, int)>(0x004026F0)(Sexy::Board::board, a2, a3);
+}

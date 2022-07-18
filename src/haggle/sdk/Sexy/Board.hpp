@@ -16,5 +16,6 @@ namespace Sexy
 
 		static void Reload(Sexy::Board* board = Sexy::Board::board);
 		static void KeyDown(KeyCode keyCodePressed);
+		static void SetSlowMo(bool a2, int a3);
 	};
 };
