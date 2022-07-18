@@ -65,3 +65,9 @@ void Sexy::ThunderballApp::DoToMenu()
 	if (!Sexy::ThunderballApp::check_exists()) return;
 	return reinterpret_cast<void(__thiscall*)(Sexy::ThunderballApp*)>(0x0042D7A0)(Sexy::ThunderballApp::thunderball);
 }
+
+void Sexy::ThunderballApp::ShowLevelScreen(bool a2)
+{
+	if (!Sexy::ThunderballApp::check_exists()) return;
+	return reinterpret_cast<void(__thiscall*)(Sexy::ThunderballApp*, bool)>(0x0042D350)(Sexy::ThunderballApp::thunderball, a2);
+}
