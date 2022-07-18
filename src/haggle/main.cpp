@@ -21,6 +21,7 @@ void init()
 		Sexy::CollisionMgr::setup();
 		Sexy::InterfaceMgr::setup();
 		Sexy::PlayerInfo::setup();
+		Sexy::LevelScreen::setup();
 
 		MH_EnableHook(MH_ALL_HOOKS);
 	}
