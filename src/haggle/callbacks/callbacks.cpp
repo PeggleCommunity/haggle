@@ -6,6 +6,7 @@ std::vector<callback_<void __cdecl()>> callbacks::once_callbacks_;
 std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl()>>> callbacks::basic_callbacks_;
 std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::Ball*, Sexy::PhysObj*, bool)>>> callbacks::peg_hit_callbacks_;
 std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LogicMgr*, bool)>>> callbacks::begin_shot_callbacks_;
+std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LogicMgr*)>>> callbacks::begin_turn_2_callbacks_;
 
 //Sexy::SexyAppBase::DoMainLoop
 void __declspec(naked) main_loop()
@@ -82,17 +83,22 @@ void callbacks::on_peg_hit(callback_<void __cdecl(Sexy::Ball*, Sexy::PhysObj*, b
 
 void callbacks::after_peg_hit(callback_<void __cdecl(Sexy::Ball*, Sexy::PhysObj*, bool)> callback)
 {
-	callbacks::peg_hit_callbacks_[callbacks::type::peg_hit].emplace_back(callback);
+	callbacks::peg_hit_callbacks_[callbacks::type::after_peg_hit].emplace_back(callback);
 }
 
 void callbacks::on_begin_shot(callback_<void __cdecl(Sexy::LogicMgr*, bool)> callback)
 {
-	callbacks::begin_shot_callbacks_[callbacks::type::after_begin_shot].emplace_back(callback);
+	callbacks::begin_shot_callbacks_[callbacks::type::begin_shot].emplace_back(callback);
 }
 
 void callbacks::after_begin_shot(callback_<void __cdecl(Sexy::LogicMgr*, bool)> callback)
 {
 	callbacks::begin_shot_callbacks_[callbacks::type::after_begin_shot].emplace_back(callback);
+}
+
+void callbacks::after_begin_turn_2(callback_<void __cdecl(Sexy::LogicMgr*)> callback)
+{
+	callbacks::begin_turn_2_callbacks_[callbacks::type::after_begin_turn_2].emplace_back(callback);
 }
 
 void callbacks::once(callback_<void __cdecl()> callback)
@@ -139,5 +145,13 @@ void callbacks::run_after_begin_shot_callbacks(Sexy::LogicMgr* logic_mgr, bool d
 	for (const auto begin_shot_callback : callbacks::begin_shot_callbacks_[callbacks::type::after_begin_shot])
 	{
 		begin_shot_callback(logic_mgr, doGetReplayPoint);
+	}
+}
+
+void callbacks::run_after_begin_turn_2_callbacks(Sexy::LogicMgr* logic_mgr)
+{
+	for (const auto begin_turn_2_callback : callbacks::begin_turn_2_callbacks_[callbacks::type::after_begin_turn_2])
+	{
+		begin_turn_2_callback(logic_mgr);
 	}
 }

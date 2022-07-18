@@ -36,8 +36,9 @@ void __fastcall Sexy__LogicMgr__BeginShot(Sexy::LogicMgr* this_, char* edx, bool
 static char* (__fastcall* Sexy__LogicMgr__BeginTurn2_)(Sexy::LogicMgr*, char*);
 char* __fastcall Sexy__LogicMgr__BeginTurn2(Sexy::LogicMgr* this_, char* edx)
 {
-	callbacks::run_basic_callbacks(callbacks::type::beginturn2);
-	return Sexy__LogicMgr__BeginTurn2_(this_, edx);
+	auto retn = Sexy__LogicMgr__BeginTurn2_(this_, edx);
+	callbacks::run_after_begin_turn_2_callbacks(this_);
+	return retn;
 }
 
 static void (__fastcall* Sexy__LogicMgr__FinishInitLevelText_)(Sexy::LogicMgr*, char*);
@@ -52,6 +53,17 @@ void __fastcall Sexy__LogicMgr__DoLevelDone(Sexy::LogicMgr* this_, char* edx)
 {
 	callbacks::run_basic_callbacks(callbacks::type::do_level_done);
 	Sexy__LogicMgr__DoLevelDone_(this_, edx);
+}
+
+static bool(__fastcall* Sexy__LogicMgr__BeatLevel_)(Sexy::LogicMgr*, char*);
+bool __fastcall Sexy__LogicMgr__BeatLevel(Sexy::LogicMgr* this_, char* edx)
+{
+	auto retn = Sexy__LogicMgr__BeatLevel_(this_, edx);
+
+	if (retn) callbacks::run_basic_callbacks(callbacks::type::after_beat_level_true);
+	else if (!retn) callbacks::run_basic_callbacks(callbacks::type::after_beat_level_false);
+
+	return retn;
 }
 
 //Adds control over the otherwise broken powerups
@@ -107,6 +119,7 @@ void Sexy::LogicMgr::setup()
 	MH_CreateHook((void*)0x0044B5B0, Sexy__LogicMgr__BeginTurn2, (void**)&Sexy__LogicMgr__BeginTurn2_);
 	MH_CreateHook((void*)0x0046C220, Sexy__LogicMgr__FinishInitLevelText, (void**)&Sexy__LogicMgr__FinishInitLevelText_);
 	MH_CreateHook((void*)0x0046A9C0, Sexy__LogicMgr__DoLevelDone, (void**)&Sexy__LogicMgr__DoLevelDone_);
+	MH_CreateHook((void*)0x0043D530, Sexy__LogicMgr__BeatLevel, (void**)&Sexy__LogicMgr__BeatLevel_);
 
 	jump(0x0046F0DF, unused_powerups_hook);
 	jump(0x0045DE5C, next_board_balls_hook);
