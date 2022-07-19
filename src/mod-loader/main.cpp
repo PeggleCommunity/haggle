@@ -58,9 +58,8 @@ void init()
 					else
 					{
 						PRINT_INFO("%s loaded!", bin.c_str());
+						++count;
 					}
-
-					++count;
 				}
 			}
 		}
