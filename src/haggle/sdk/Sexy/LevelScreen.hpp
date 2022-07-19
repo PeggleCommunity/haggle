@@ -2,7 +2,7 @@
 
 namespace Sexy
 {
-	class LevelScreen
+	class __declspec(dllexport) LevelScreen
 	{
 	public:
 		static LevelScreen* level_screen;
