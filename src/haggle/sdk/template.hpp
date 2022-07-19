@@ -2,7 +2,7 @@
 
 namespace Sexy
 {
-	class Template
+	class __declspec(dllexport) Template
 	{
 	public:
 		static Template* temp;
