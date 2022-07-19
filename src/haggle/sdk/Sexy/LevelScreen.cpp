@@ -23,6 +23,6 @@ bool Sexy::LevelScreen::check_exists()
 
 int Sexy::LevelScreen::DoPlay(int a3)
 {
-	if (!Sexy::LevelScreen::check_exists()) return 0;
+	if (!Sexy::LevelScreen::check_exists()) return -1;
 	return reinterpret_cast<int(__thiscall*)(Sexy::LevelScreen*, int)>(0x00493530)(Sexy::LevelScreen::level_screen, a3);
 }
