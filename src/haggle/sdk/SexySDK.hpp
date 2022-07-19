@@ -17,3 +17,4 @@
 #include "Sexy/PlayerInfo.hpp"
 #include "Sexy/LevelScreen.hpp"
 #include "Sexy/StageMgr.hpp"
+#include "Sexy/MainMenu.hpp"
