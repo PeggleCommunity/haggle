@@ -36,6 +36,7 @@ void __fastcall Sexy__LogicMgr__BeginShot(Sexy::LogicMgr* this_, char* edx, bool
 static char* (__fastcall* Sexy__LogicMgr__BeginTurn2_)(Sexy::LogicMgr*, char*);
 char* __fastcall Sexy__LogicMgr__BeginTurn2(Sexy::LogicMgr* this_, char* edx)
 {
+	callbacks::run_basic_callbacks(callbacks::type::begin_turn_2);
 	auto retn = Sexy__LogicMgr__BeginTurn2_(this_, edx);
 	callbacks::run_after_begin_turn_2_callbacks(this_);
 	return retn;

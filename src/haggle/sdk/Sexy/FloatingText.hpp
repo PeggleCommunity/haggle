@@ -15,7 +15,7 @@ namespace Sexy
 		int unk_5;
 		char padding_2[12];
 		int unk_9;
-		float unk_10;
+		float float_offset_start;
 		char padding_3[156];
 	};
 
