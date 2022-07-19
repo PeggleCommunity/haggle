@@ -22,6 +22,7 @@ void init()
 		Sexy::InterfaceMgr::setup();
 		Sexy::PlayerInfo::setup();
 		Sexy::LevelScreen::setup();
+		Sexy::StageMgr::setup();
 
 		MH_EnableHook(MH_ALL_HOOKS);
 	}
