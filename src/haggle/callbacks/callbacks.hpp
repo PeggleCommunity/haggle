@@ -32,6 +32,7 @@ public:
 		do_level_done,
 		after_beat_level_true,
 		after_beat_level_false,
+		after_show_level_screen,
 	};
 		
 	static void init();

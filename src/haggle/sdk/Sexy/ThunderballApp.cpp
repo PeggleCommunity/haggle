@@ -45,6 +45,13 @@ int __fastcall Sexy__ThunderballApp__FinishOptionsDialog(Sexy::ThunderballApp* t
 	return Sexy__ThunderballApp__FinishOptionsDialog_(this_, edx, a2, a3);
 }
 
+static void(__fastcall* Sexy__ThunderballApp__ShowLevelScreen_)(Sexy::ThunderballApp*, char*, bool);
+void __fastcall Sexy__ThunderballApp__ShowLevelScreen(Sexy::ThunderballApp* this_, char* edx, bool a2)
+{
+	Sexy__ThunderballApp__ShowLevelScreen_(this_, edx, a2);
+	callbacks::run_basic_callbacks(callbacks::type::after_show_level_screen);
+}
+
 void Sexy::ThunderballApp::setup()
 {
 	MH_CreateHook((void*)0x00429890, Sexy__ThunderballApp__ShowAdventureScreen, (void**)&Sexy__ThunderballApp__ShowAdventureScreen_);
@@ -52,6 +59,7 @@ void Sexy::ThunderballApp::setup()
 	MH_CreateHook((void*)0x0042D7A0, Sexy__ThunderballApp__DoToMenu, (void**)&Sexy__ThunderballApp__DoToMenu_);
 	MH_CreateHook((void*)0x0040C210, Sexy__ThunderballApp__DoOptionsDialog, (void**)&Sexy__ThunderballApp__DoOptionsDialog_);
 	MH_CreateHook((void*)0x0041C840, Sexy__ThunderballApp__FinishOptionsDialog, (void**)&Sexy__ThunderballApp__FinishOptionsDialog_);
+	MH_CreateHook((void*)0x0042D350, Sexy__ThunderballApp__ShowLevelScreen, (void**)&Sexy__ThunderballApp__ShowLevelScreen_);
 }
 
 bool Sexy::ThunderballApp::check_exists()
