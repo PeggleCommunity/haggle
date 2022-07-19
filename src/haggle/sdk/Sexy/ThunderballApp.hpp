@@ -12,6 +12,7 @@ namespace Sexy
 		static bool check_exists();
 
 		static void DoToMenu();
-		static void ShowLevelScreen(bool a2);
+		static int ShowLevelScreen(bool a2);
+		static int ShowBoard(bool a2, bool a3);
 	};
 };
