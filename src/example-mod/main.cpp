@@ -18,7 +18,7 @@ void init()
 void Example_Callbacks(void)
 {
 	// Example generic callback
-	callbacks::on(callbacks::type::beginturn2, []()
+	callbacks::on(callbacks::type::begin_turn_2, []()
 	{
 		Sexy::LogicMgr::AddStandardText("Begin Turn!", 330.0f, 150.0f, 48);
 	});
