@@ -1,12 +1,13 @@
 #include "LevelScreen.hpp"
+#include "ThunderballApp.hpp"
 
 Sexy::LevelScreen* Sexy::LevelScreen::level_screen;
 
-static char* (__fastcall* Sexy__LevelScreen__LevelScreen_)(Sexy::LevelScreen*, char*);
-char* __fastcall Sexy__LevelScreen__LevelScreen(Sexy::LevelScreen* this_, char* edx)
+static char* (__fastcall* Sexy__LevelScreen__LevelScreen_)(Sexy::LevelScreen*, char*, Sexy::ThunderballApp*);
+char* __fastcall Sexy__LevelScreen__LevelScreen(Sexy::LevelScreen* this_, char* edx, Sexy::ThunderballApp* thunderball)
 {
 	Sexy::LevelScreen::level_screen = this_;
-	return Sexy__LevelScreen__LevelScreen_(this_, edx);
+	return Sexy__LevelScreen__LevelScreen_(this_, edx, thunderball);
 }
 
 void Sexy::LevelScreen::setup()
