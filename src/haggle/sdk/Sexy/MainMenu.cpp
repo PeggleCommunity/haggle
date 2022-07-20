@@ -1,4 +1,5 @@
 #include "MainMenu.hpp"
+<<<<<<< Updated upstream
 
 Sexy::MainMenu* Sexy::MainMenu::main_menu;
 
@@ -7,12 +8,27 @@ char* __fastcall Sexy__MainMenu__MainMenu(Sexy::MainMenu* this_, char* edx)
 {
 	Sexy::MainMenu::main_menu = this_;
 	return Sexy__MainMenu__MainMenu_(this_, edx);
+=======
+#include "callbacks/callbacks.hpp"
+
+Sexy::MainMenu* Sexy::MainMenu::main_menu;
+
+static void (__fastcall* Sexy__MainMenu__MainMenu_)(Sexy::MainMenu*, char*, Sexy::ThunderballApp* thunderball);
+void __fastcall Sexy__MainMenu__MainMenu(Sexy::MainMenu* this_, char* edx, Sexy::ThunderballApp* thunderball)
+{
+	Sexy::MainMenu::main_menu = this_;
+	Sexy__MainMenu__MainMenu_(this_, edx, thunderball);
+>>>>>>> Stashed changes
 }
 
 static void(__fastcall* Sexy__MainMenu__Update_)(Sexy::MainMenu*, char*);
 void __fastcall Sexy__MainMenu__Update(Sexy::MainMenu* this_, char* edx)
 {
 	Sexy__MainMenu__Update_(this_, edx);
+<<<<<<< Updated upstream
+=======
+	callbacks::run_after_main_menu_update(this_);
+>>>>>>> Stashed changes
 }
 
 void Sexy::MainMenu::setup()
