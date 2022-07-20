@@ -36,6 +36,11 @@ void Example_Callbacks(void)
 		double pos_y = ((double(__thiscall*)(Sexy::PhysObj*)) * (std::uint32_t*)(*(std::uint32_t*)phys_obj_->data + 124))(phys_obj);
 		Sexy::LogicMgr::AddStandardText("Peg Hit!", pos_x, pos_y, 50);
 	});
+
+	callbacks::on_load_level([](auto board, auto level_name)
+	{
+		std::printf("Loading Level: %s\n", level_name.c_str());
+	});
 }
 
 /** @brief Swings the gun left and right, and shoots whenever the game is ready

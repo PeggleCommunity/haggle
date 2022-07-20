@@ -8,6 +8,7 @@ std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::Bal
 std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LogicMgr*, bool)>>> callbacks::begin_shot_callbacks_;
 std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LogicMgr*)>>> callbacks::begin_turn_2_callbacks_;
 std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::MainMenu*)>>> callbacks::main_menu_update_callbacks_;
+std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::Board*, std::string&)>>> callbacks::load_level_callbacks_;
 
 //Sexy::SexyAppBase::DoMainLoop
 void __declspec(naked) main_loop()
@@ -107,6 +108,11 @@ void callbacks::after_main_menu_update(callback_<void __cdecl(Sexy::MainMenu*)> 
 	callbacks::main_menu_update_callbacks_[callbacks::type::after_main_menu_update].emplace_back(callback);
 }
 
+void callbacks::on_load_level(callback_<void __cdecl(Sexy::Board*, std::string&)> callback)
+{
+	callbacks::load_level_callbacks_[callbacks::type::load_level].emplace_back(callback);
+}
+
 void callbacks::once(callback_<void __cdecl()> callback)
 {
 	const std::lock_guard<std::mutex> lock(callbacks::mtx_);
@@ -162,10 +168,19 @@ void callbacks::run_after_begin_turn_2_callbacks(Sexy::LogicMgr* logic_mgr)
 	}
 }
 
-void callbacks::run_after_main_menu_update(Sexy::MainMenu* main_menu)
+void callbacks::run_after_main_menu_update_callbacks(Sexy::MainMenu* main_menu)
 {
 	for (const auto main_menu_update : callbacks::main_menu_update_callbacks_[callbacks::type::after_main_menu_update])
 	{
 		main_menu_update(main_menu);
 	}
 }
+
+void callbacks::run_load_level_callbacks(Sexy::Board* board, std::string& level_name)
+{
+	for (const auto load_level : callbacks::load_level_callbacks_[callbacks::type::load_level])
+	{
+		load_level(board, level_name);
+	}
+}
+
