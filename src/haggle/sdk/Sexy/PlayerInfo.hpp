@@ -2,7 +2,7 @@
 
 namespace Sexy
 {
-	class PlayerInfo
+	class __declspec(dllexport) PlayerInfo
 	{
 	public:
 		static PlayerInfo* player_info;
