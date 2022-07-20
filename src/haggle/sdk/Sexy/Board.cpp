@@ -20,10 +20,10 @@ bool Sexy::Board::check_exists()
 	return true;
 }
 
-void Sexy::Board::Reload(Sexy::Board* input)
+void Sexy::Board::Reload()
 {
 	if (!Sexy::Board::check_exists()) return;
-	reinterpret_cast<void(__thiscall*)(Sexy::Board*)>(0x004090D0)(input);
+	reinterpret_cast<void(__thiscall*)(Sexy::Board*)>(0x004090D0)(Sexy::Board::board);
 }
 
 void Sexy::Board::KeyDown(KeyCode keyCodePressed)
@@ -36,4 +36,10 @@ void Sexy::Board::SetSlowMo(bool a2, int a3)
 {
 	if (!Sexy::Board::check_exists()) return;
 	reinterpret_cast<void(__thiscall*)(Sexy::Board*, bool, int)>(0x004026F0)(Sexy::Board::board, a2, a3);
+}
+
+int Sexy::Board::Reset()
+{
+	if (!Sexy::Board::check_exists()) return -1;
+	return reinterpret_cast<int(__thiscall*)(Sexy::Board*)>(0x0042DA00)(Sexy::Board::board);
 }
