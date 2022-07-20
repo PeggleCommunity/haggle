@@ -33,6 +33,7 @@ public:
 		after_beat_level_true,
 		after_beat_level_false,
 		after_show_level_screen,
+		after_main_menu_update,
 	};
 		
 	static void init();
@@ -45,6 +46,7 @@ public:
 	static void on_begin_shot(callback_<void __cdecl(Sexy::LogicMgr*, bool)> callback);
 	static void after_begin_shot(callback_<void __cdecl(Sexy::LogicMgr*, bool)> callback);
 	static void after_begin_turn_2(callback_<void __cdecl(Sexy::LogicMgr*)> callback);
+	static void after_main_menu_update(callback_<void __cdecl(Sexy::MainMenu*)> callback);
 
 	static void once(callback_<void __cdecl()> callback);
 
@@ -54,6 +56,7 @@ public:
 	static void run_begin_shot_callbacks(Sexy::LogicMgr* logic_mgr, bool doGetReplayPoint);
 	static void run_after_begin_shot_callbacks(Sexy::LogicMgr* logic_mgr, bool doGetReplayPoint);
 	static void run_after_begin_turn_2_callbacks(Sexy::LogicMgr* logic_mgr);
+	static void run_after_main_menu_update(Sexy::MainMenu* logic_mgr);
 
 private:
 
@@ -64,4 +67,5 @@ private:
 	static std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::Ball*, Sexy::PhysObj*, bool)>>> peg_hit_callbacks_;
 	static std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LogicMgr*, bool)>>> begin_shot_callbacks_;
 	static std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LogicMgr*)>>> begin_turn_2_callbacks_;
+	static std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::MainMenu*)>>> main_menu_update_callbacks_;
 };
