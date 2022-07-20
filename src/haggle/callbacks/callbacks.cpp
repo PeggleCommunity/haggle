@@ -7,6 +7,7 @@ std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl()>>> call
 std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::Ball*, Sexy::PhysObj*, bool)>>> callbacks::peg_hit_callbacks_;
 std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LogicMgr*, bool)>>> callbacks::begin_shot_callbacks_;
 std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LogicMgr*)>>> callbacks::begin_turn_2_callbacks_;
+std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::MainMenu*)>>> callbacks::main_menu_update_callbacks_;
 
 //Sexy::SexyAppBase::DoMainLoop
 void __declspec(naked) main_loop()
@@ -101,6 +102,11 @@ void callbacks::after_begin_turn_2(callback_<void __cdecl(Sexy::LogicMgr*)> call
 	callbacks::begin_turn_2_callbacks_[callbacks::type::after_begin_turn_2].emplace_back(callback);
 }
 
+void callbacks::after_main_menu_update(callback_<void __cdecl(Sexy::MainMenu*)> callback)
+{
+	callbacks::main_menu_update_callbacks_[callbacks::type::after_main_menu_update].emplace_back(callback);
+}
+
 void callbacks::once(callback_<void __cdecl()> callback)
 {
 	const std::lock_guard<std::mutex> lock(callbacks::mtx_);
@@ -153,5 +159,13 @@ void callbacks::run_after_begin_turn_2_callbacks(Sexy::LogicMgr* logic_mgr)
 	for (const auto begin_turn_2_callback : callbacks::begin_turn_2_callbacks_[callbacks::type::after_begin_turn_2])
 	{
 		begin_turn_2_callback(logic_mgr);
+	}
+}
+
+void callbacks::run_after_main_menu_update(Sexy::MainMenu* main_menu)
+{
+	for (const auto main_menu_update : callbacks::main_menu_update_callbacks_[callbacks::type::after_main_menu_update])
+	{
+		main_menu_update(main_menu);
 	}
 }
