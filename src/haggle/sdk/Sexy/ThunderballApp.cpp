@@ -83,5 +83,5 @@ int Sexy::ThunderballApp::ShowLevelScreen(bool a2)
 int Sexy::ThunderballApp::ShowBoard(bool a2, bool a3)
 {
 	if (!Sexy::ThunderballApp::check_exists()) return -1;
-	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool, bool)>(0x0042D350)(Sexy::ThunderballApp::thunderball, a2, a3);
+	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool, bool)>(0x0042F860)(Sexy::ThunderballApp::thunderball, a2, a3);
 }
