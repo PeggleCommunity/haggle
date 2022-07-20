@@ -13,7 +13,7 @@ static void(__fastcall* Sexy__MainMenu__Update_)(Sexy::MainMenu*, char*);
 void __fastcall Sexy__MainMenu__Update(Sexy::MainMenu* this_, char* edx)
 {
 	Sexy__MainMenu__Update_(this_, edx);
-	callbacks::run_after_main_menu_update(this_);
+	callbacks::run_after_main_menu_update_callbacks(this_);
 }
 
 void Sexy::MainMenu::setup()
