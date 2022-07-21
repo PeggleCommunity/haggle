@@ -7,6 +7,8 @@ std::initializer_list<std::string> ext_whitelist
 	".asi",
 };
 
+std::vector<std::pair<HMODULE, std::string>> loaded;
+
 bool ends_with(std::string const& value, std::string const& ending)
 {
 	if (ending.size() > value.size()) return false;
@@ -18,14 +20,11 @@ void init()
 	logger::init("Haggle Mod Loader");
 	std::printf("----- Haggle Mod Loader -----\n");
 
-	std::stringstream dirDescription;
-	dirDescription << "In directory \"" << std::filesystem::absolute(std::filesystem::path("./")).string() << "\"";
-	PRINT_INFO("%s", dirDescription.str().c_str());
-
 	if (!std::filesystem::exists("./mods/"))
 	{
 		PRINT_ERROR("No mods folder found!");
 		PRINT_INFO("Make a mods folder in your Peggle directory");
+		PRINT_INFO("Peggle Directory: %s", std::filesystem::absolute(std::filesystem::path("./")).string().c_str());
 	}
 	else
 	{
@@ -42,14 +41,13 @@ void init()
 		}
 
 		PRINT_INFO("Loading Mods...");
-		static int count = 0;
 		for (const auto& bin : files)
 		{
 			for (const auto& ext : ext_whitelist)
 			{
 				if (ends_with(bin, ext))
 				{
-					LoadLibraryA(bin.c_str());
+					auto handle = LoadLibraryA(bin.c_str());
 
 					if (GetLastError() != 0)
 					{
@@ -57,8 +55,30 @@ void init()
 					}
 					else
 					{
-						PRINT_INFO("%s loaded!", bin.c_str());
-						++count;
+						//If using the new haggle version function
+						std::string version_string = "v%i.%i.%i";
+
+						int major = 0;
+						int minor = 0;
+						int patch = 0;
+
+						/*
+						auto major_proc = GetProcAddress(handle, "haggle_major_version");
+						auto minor_proc = GetProcAddress(handle, "haggle_minor_version");
+						auto patch_proc = GetProcAddress(handle, "haggle_patch_version");
+
+						if (major_proc && minor_proc && patch_proc)
+						{
+							major = ((int(*)(void))major_proc)();
+							minor = ((int(*)(void))minor_proc)();
+							patch = ((int(*)(void))patch_proc)();
+						}
+						*/
+
+						version_string = logger::va(version_string.c_str(), major, minor, patch);
+
+						PRINT_INFO("%s loaded! (%s)", bin.c_str(), version_string.c_str());
+						loaded.emplace_back(handle, bin);
 					}
 				}
 			}
@@ -66,18 +86,27 @@ void init()
 
 		std::filesystem::current_path(orig_path);
 
-		if (count == 1)
+		if (loaded.size() >= 1)
 		{
-			PRINT_INFO("1 mod loaded");
+			PRINT_INFO("%i mods loaded", loaded.size());
 		}
-		else if (count > 1)
-		{
-			PRINT_INFO("%i mods loaded", count);
-		}
-		else if (count <= 0)
+		else if (loaded.size() <= 0)
 		{
 			PRINT_WARNING("No mods loaded");
 		}
+
+		/*
+		for (auto dll : loaded)
+		{
+			//If using the new haggle init method
+			auto init_proc = GetProcAddress(dll.first, "haggle_initalize");
+			if (init_proc) ((void(*)(void))init_proc)();
+			else PRINT_WARNING("No initalize import for %s", dll.second.c_str());
+		}
+		*/
+
+		files.clear();
+		loaded.clear();
 
 		PRINT_INFO("Ready!");
 	}
