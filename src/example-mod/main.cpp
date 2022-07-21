@@ -42,7 +42,7 @@ void Example_Callbacks(void)
 		std::printf("Loading Level: %s\n", level_name.c_str());
 	});
 
-	callbacks::on_doplay([](auto level_screen, auto a3)
+	callbacks::do_play([](auto level_screen, auto a3)
 	{
 		// this is pretty disgusting, but this is what we have until we map out the struct
 		uint32_t stage = *(uint32_t*)(&level_screen + 651) + 1;  // offset to stage index

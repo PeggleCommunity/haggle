@@ -35,7 +35,7 @@ public:
 		after_show_level_screen,
 		after_main_menu_update,
 		load_level,
-		doplay,
+		do_play,
 	};
 		
 	static void init();
@@ -50,7 +50,7 @@ public:
 	static void after_begin_turn_2(callback_<void __cdecl(Sexy::LogicMgr*)> callback);
 	static void after_main_menu_update(callback_<void __cdecl(Sexy::MainMenu*)> callback);
 	static void on_load_level(callback_<void __cdecl(Sexy::Board*, std::string&)> callback);
-	static void on_doplay(callback_<void __cdecl(Sexy::LevelScreen*, unsigned int)> callback);
+	static void do_play(callback_<void __cdecl(Sexy::LevelScreen*, unsigned int)> callback);
 
 	static void once(callback_<void __cdecl()> callback);
 
@@ -62,7 +62,7 @@ public:
 	static void run_after_begin_turn_2_callbacks(Sexy::LogicMgr* logic_mgr);
 	static void run_after_main_menu_update_callbacks(Sexy::MainMenu* logic_mgr);
 	static void run_load_level_callbacks(Sexy::Board* board, std::string& level_name);
-	static void run_doplay_callbacks(Sexy::LevelScreen* level_screen, unsigned int a3);
+	static void run_do_play_callbacks(Sexy::LevelScreen* level_screen, unsigned int a3);
 
 private:
 
@@ -75,5 +75,5 @@ private:
 	static std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LogicMgr*)>>> begin_turn_2_callbacks_;
 	static std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::MainMenu*)>>> main_menu_update_callbacks_;
 	static std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::Board*, std::string&)>>> load_level_callbacks_;
-	static std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LevelScreen*, unsigned int)>>> doplay_callbacks_;
+	static std::unordered_map<callbacks::type, std::vector<callback_<void __cdecl(Sexy::LevelScreen*, unsigned int)>>> do_play_callbacks_;
 };

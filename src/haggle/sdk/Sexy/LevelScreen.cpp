@@ -15,9 +15,9 @@ static unsigned int(__fastcall* Sexy__LevelScreen__DoPlay_)(Sexy::LevelScreen*, 
 unsigned int __fastcall Sexy__LevelScreen__DoPlay(Sexy::LevelScreen* this_, char* edx, unsigned int a3)
 {
 	Sexy::LevelScreen::level_screen = this_;
-	auto _ = Sexy__LevelScreen__DoPlay_(this_, edx, a3);
-	callbacks::run_doplay_callbacks(this_, a3);
-	return _;
+	auto retn = Sexy__LevelScreen__DoPlay_(this_, edx, a3);
+	callbacks::run_do_play_callbacks(this_, a3);
+	return retn;
 }
 
 void Sexy::LevelScreen::setup()
