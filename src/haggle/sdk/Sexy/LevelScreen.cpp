@@ -1,5 +1,6 @@
 #include "LevelScreen.hpp"
 #include "ThunderballApp.hpp"
+#include "callbacks/callbacks.hpp"
 
 Sexy::LevelScreen* Sexy::LevelScreen::level_screen;
 
@@ -10,9 +11,19 @@ char* __fastcall Sexy__LevelScreen__LevelScreen(Sexy::LevelScreen* this_, char* 
 	return Sexy__LevelScreen__LevelScreen_(this_, edx, thunderball);
 }
 
+static unsigned int(__fastcall* Sexy__LevelScreen__DoPlay_)(Sexy::LevelScreen*, char*, unsigned int);
+unsigned int __fastcall Sexy__LevelScreen__DoPlay(Sexy::LevelScreen* this_, char* edx, unsigned int a3)
+{
+	Sexy::LevelScreen::level_screen = this_;
+	auto retn = Sexy__LevelScreen__DoPlay_(this_, edx, a3);
+	callbacks::run_do_play_callbacks(this_, a3);
+	return retn;
+}
+
 void Sexy::LevelScreen::setup()
 {
 	MH_CreateHook((void*)0x004AF150, Sexy__LevelScreen__LevelScreen, (void**)&Sexy__LevelScreen__LevelScreen_);
+	MH_CreateHook((void*)0x00493530, Sexy__LevelScreen__DoPlay, (void**)&Sexy__LevelScreen__DoPlay_);
 }
 
 bool Sexy::LevelScreen::check_exists()
