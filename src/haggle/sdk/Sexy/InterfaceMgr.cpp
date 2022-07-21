@@ -41,10 +41,10 @@ Sexy::InterfaceMgr* Sexy::InterfaceMgr::UpdateBalls()
 	return reinterpret_cast<Sexy::InterfaceMgr*(__thiscall*)(Sexy::InterfaceMgr*)>(0x00443CF0)(Sexy::InterfaceMgr::interface_mgr);
 }
 
-Sexy::InterfaceMgr* Sexy::InterfaceMgr::LoadGun(Sexy::InterfaceMgr* input)
+Sexy::InterfaceMgr* Sexy::InterfaceMgr::LoadGun()
 {
-	if (input == 0x0) return 0;
-	return reinterpret_cast<Sexy::InterfaceMgr*(__thiscall*)(Sexy::InterfaceMgr*)>(0x0043C9B0)(input);
+	if (Sexy::InterfaceMgr::interface_mgr == 0x0) return 0;
+	return reinterpret_cast<Sexy::InterfaceMgr*(__thiscall*)(Sexy::InterfaceMgr*)>(0x0043C9B0)(Sexy::InterfaceMgr::interface_mgr);
 }
 
 Sexy::InterfaceMgr* Sexy::InterfaceMgr::AddTopBalls(int count)
