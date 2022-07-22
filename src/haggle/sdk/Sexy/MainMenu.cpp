@@ -16,10 +16,18 @@ void __fastcall Sexy__MainMenu__Update(Sexy::MainMenu* this_, char* edx)
 	callbacks::run_after_main_menu_update_callbacks(this_);
 }
 
+static void(__fastcall* Sexy__MainMenu__StartGame_)(Sexy::MainMenu*, char*);
+void __fastcall Sexy__MainMenu__StartGame(Sexy::MainMenu* this_, char* edx)
+{
+	Sexy__MainMenu__StartGame_(this_, edx);
+	callbacks::run_after_start_game_callbacks(this_);
+}
+
 void Sexy::MainMenu::setup()
 {
 	MH_CreateHook((void*)0x004A79E0, Sexy__MainMenu__MainMenu, (void**)&Sexy__MainMenu__MainMenu_);
 	MH_CreateHook((void*)0x004AF680, Sexy__MainMenu__Update, (void**)&Sexy__MainMenu__Update_);
+	MH_CreateHook((void*)0x004A9190, Sexy__MainMenu__StartGame, (void**)&Sexy__MainMenu__StartGame_);
 }
 
 bool Sexy::MainMenu::check_exists()
