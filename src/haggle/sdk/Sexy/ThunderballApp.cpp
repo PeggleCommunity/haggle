@@ -85,3 +85,9 @@ int Sexy::ThunderballApp::ShowBoard(bool a2, bool a3)
 	if (!Sexy::ThunderballApp::check_exists()) return -1;
 	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool, bool)>(0x0042F860)(Sexy::ThunderballApp::thunderball, a2, a3);
 }
+
+int Sexy::ThunderballApp::ShowBoard(Sexy::ThunderballApp* thunderball, bool a2, bool a3)
+{
+	if (!thunderball) return -1;
+	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool, bool)>(0x0042F860)(thunderball, a2, a3);
+}
