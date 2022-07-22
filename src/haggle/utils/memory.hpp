@@ -22,3 +22,8 @@ template <typename T> void set(std::uint32_t address, T value)
 	*reinterpret_cast<T*>(address) = value;
 	VirtualProtect(reinterpret_cast<void*>(address), sizeof(T), protecc, &protecc);
 }
+
+static void retn(std::uint32_t address)
+{
+	set(address, 0xC3);
+};

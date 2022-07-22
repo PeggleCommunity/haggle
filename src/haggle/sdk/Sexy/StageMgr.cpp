@@ -26,3 +26,10 @@ int Sexy::StageMgr::GetRandomLevel(Sexy::PlayerInfo* a2, int* a3, int* a4, bool 
 	return reinterpret_cast<int(__thiscall*)(Sexy::StageMgr*, Sexy::PlayerInfo*, int*, int*, bool, int)>(0x004592B0)
 		(Sexy::StageMgr::stage_mgr, a2, a3, a4, a5, a6);
 }
+
+int Sexy::StageMgr::GetRandomLevel(Sexy::StageMgr* stage_mgr, Sexy::PlayerInfo* a2, int* a3, int* a4, bool a5, int a6)
+{
+	if (!stage_mgr) return 0;
+	return reinterpret_cast<int(__thiscall*)(Sexy::StageMgr*, Sexy::PlayerInfo*, int*, int*, bool, int)>(0x004592B0)
+		(stage_mgr, a2, a3, a4, a5, a6);
+}
