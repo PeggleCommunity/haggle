@@ -2,8 +2,16 @@
 
 set mod_loader_path="C:\ProgramData\PopCap Games\Peggle\"
 set mods_path="C:\Program Files (x86)\Steam\steamapps\common\Peggle Deluxe\mods"
-xcopy "dsound.dll" %mod_loader_path% /y /q
+set legacy_loader=%mod_loader_path%\dsound.dll
+xcopy "d3d8.dll" %mod_loader_path% /y /q
 cls
+
+IF EXIST %legacy_loader% (
+    echo Found legacy loader!
+    echo Deleting old version...
+    del %legacy_loader%
+    echo.
+)
 
 echo Haggle installed to %mod_loader_path%
 echo.
