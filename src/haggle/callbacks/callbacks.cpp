@@ -115,9 +115,14 @@ void callbacks::on_load_level(callback_<void __cdecl(Sexy::Board*, std::string&)
 	callbacks::load_level_callbacks_[callbacks::type::load_level].emplace_back(callback);
 }
 
-void callbacks::do_play(callback_<void __cdecl(Sexy::LevelScreen*, unsigned int)> callback)
+void callbacks::on_do_play(callback_<void __cdecl(Sexy::LevelScreen*, unsigned int)> callback)
 {
 	callbacks::do_play_callbacks_[callbacks::type::do_play].emplace_back(callback);
+}
+
+void callbacks::after_do_play(callback_<void __cdecl(Sexy::LevelScreen*, unsigned int)> callback)
+{
+	callbacks::do_play_callbacks_[callbacks::type::after_do_play].emplace_back(callback);
 }
 
 void callbacks::after_start_game(callback_<void __cdecl(Sexy::MainMenu*)> callback)
@@ -199,6 +204,14 @@ void callbacks::run_load_level_callbacks(Sexy::Board* board, std::string& level_
 void callbacks::run_do_play_callbacks(Sexy::LevelScreen* level_screen, unsigned int a3)
 {
 	for (const auto doplay : callbacks::do_play_callbacks_[callbacks::type::do_play])
+	{
+		doplay(level_screen, a3);
+	}
+}
+
+void callbacks::run_after_do_play_callbacks(Sexy::LevelScreen* level_screen, unsigned int a3)
+{
+	for (const auto doplay : callbacks::do_play_callbacks_[callbacks::type::after_do_play])
 	{
 		doplay(level_screen, a3);
 	}

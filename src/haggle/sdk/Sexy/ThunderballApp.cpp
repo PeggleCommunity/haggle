@@ -48,6 +48,7 @@ int __fastcall Sexy__ThunderballApp__FinishOptionsDialog(Sexy::ThunderballApp* t
 static void(__fastcall* Sexy__ThunderballApp__ShowLevelScreen_)(Sexy::ThunderballApp*, char*, bool);
 void __fastcall Sexy__ThunderballApp__ShowLevelScreen(Sexy::ThunderballApp* this_, char* edx, bool a2)
 {
+	callbacks::run_basic_callbacks(callbacks::type::show_level_screen);
 	Sexy__ThunderballApp__ShowLevelScreen_(this_, edx, a2);
 	callbacks::run_basic_callbacks(callbacks::type::after_show_level_screen);
 }
