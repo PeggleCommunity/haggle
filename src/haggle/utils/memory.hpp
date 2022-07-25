@@ -27,3 +27,11 @@ static void retn(std::uint32_t address)
 {
 	set(address, 0xC3);
 };
+
+
+template <typename T> static void retn_value(std::uint32_t address, T value)
+{
+	set(address, 0xB8);
+	set(address + 1, std::uint32_t(value));
+	retn(address + 5);
+}
