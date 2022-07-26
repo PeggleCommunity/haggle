@@ -19,7 +19,7 @@ void __fastcall Sexy__InterfaceMgr__DrawBack(Sexy::InterfaceMgr* this_, char* ed
 static void(__fastcall* Sexy__InterfaceMgr__DrawOnePlayer_)(Sexy::InterfaceMgr*, char*, Sexy::Graphics*);
 void __fastcall Sexy__InterfaceMgr__DrawOnePlayer(Sexy::InterfaceMgr* this_, char* edx, Sexy::Graphics* graphics)
 {
-	//return Sexy__InterfaceMgr__DrawOnePlayer_(this_, edx, graphics);
+	return Sexy__InterfaceMgr__DrawOnePlayer_(this_, edx, graphics);
 }
 
 void Sexy::InterfaceMgr::setup()
