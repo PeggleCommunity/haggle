@@ -12,3 +12,12 @@
 
 //IDA Defs
 #include "utils/defs.h"
+
+enum class PeggleVersion : int
+{
+	Unknown = -1,
+	Deluxe101,
+	NightsDeluxe10
+};
+
+extern PeggleVersion version;

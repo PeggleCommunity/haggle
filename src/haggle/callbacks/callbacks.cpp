@@ -17,42 +17,54 @@ void __declspec(naked) main_loop()
 {
 	static constexpr auto hook_type = callbacks::type::main_loop;
 
-	__asm
+	switch (version)
 	{
-		push esi;
-		mov esi, ecx;
-		cmp byte ptr[esi + 341h], 0;
-		jnz short loc_52A625;
+		case PeggleVersion::Deluxe101:
+		{
+			__asm
+			{
+				push esi;
+				mov esi, ecx;
+				cmp byte ptr[esi + 341h], 0;
+				jnz short loc_52A625;
 
-	loc_52A600:
-		cmp byte ptr[esi + 342h], 0;
-		jz short loc_52A610;
-		mov byte ptr[esi + 342h], 0;
+			loc_52A600:
+				cmp byte ptr[esi + 342h], 0;
+				jz short loc_52A610;
+				mov byte ptr[esi + 342h], 0;
 
-	loc_52A610:
-		mov eax, [esi];
-		mov edx, [eax + 180h];
-		mov ecx, esi;
+			loc_52A610:
+				mov eax, [esi];
+				mov edx, [eax + 180h];
+				mov ecx, esi;
 
-		pushad;
-		push hook_type;
-		call callbacks::run_basic_callbacks;
-		add esp, 0x04;
-		popad;
+				pushad;
+				push hook_type;
+				call callbacks::run_basic_callbacks;
+				add esp, 0x04;
+				popad;
 
-		call edx;
-		cmp byte ptr[esi + 341h], 0;
-		jz short loc_52A600;
+				call edx;
+				cmp byte ptr[esi + 341h], 0;
+				jz short loc_52A600;
 
-	loc_52A625:
-		pop esi;
-		retn;
+			loc_52A625:
+				pop esi;
+				retn;
+			}
+		} break;
 	}
 }
 
 void callbacks::init()
 {
-	jump(0x0052A5F0, main_loop);
+	switch (version)
+	{
+		case PeggleVersion::Deluxe101:
+		{
+			jump(0x0052A5F0, main_loop);
+		} break;
+	}
 
 	callbacks::on(type::main_loop, []() -> void
 	{

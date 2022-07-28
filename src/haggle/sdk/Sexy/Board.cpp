@@ -20,8 +20,14 @@ int __fastcall Sexy__Board__LoadLevel(Sexy::Board* this_, char* edx, std::string
 
 void Sexy::Board::setup()
 {
-	MH_CreateHook((void*)0x004238A0, Sexy__Board__Board, (void**)&Sexy__Board__Board_);
-	MH_CreateHook((void*)0x0042AAE0, Sexy__Board__LoadLevel, (void**)&Sexy__Board__LoadLevel_);
+	switch (version)
+	{
+		case PeggleVersion::Deluxe101:
+		{
+			MH_CreateHook((void*)0x004238A0, Sexy__Board__Board, (void**)&Sexy__Board__Board_);
+			MH_CreateHook((void*)0x0042AAE0, Sexy__Board__LoadLevel, (void**)&Sexy__Board__LoadLevel_);
+		} break;
+	}
 }
 
 bool Sexy::Board::check_exists()

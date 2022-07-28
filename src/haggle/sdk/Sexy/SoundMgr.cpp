@@ -11,7 +11,13 @@ char* __fastcall Sexy__SoundMgr__SoundMgr(Sexy::SoundMgr* this_, char* edx)
 
 void Sexy::SoundMgr::setup()
 {
-	MH_CreateHook((void*)0x0045F1D0, Sexy__SoundMgr__SoundMgr, (void**)&Sexy__SoundMgr__SoundMgr_);
+	switch (version)
+	{
+		case PeggleVersion::Deluxe101:
+		{
+			MH_CreateHook((void*)0x0045F1D0, Sexy__SoundMgr__SoundMgr, (void**)&Sexy__SoundMgr__SoundMgr_);
+		} break;
+	}
 }
 
 bool Sexy::SoundMgr::check_exists()

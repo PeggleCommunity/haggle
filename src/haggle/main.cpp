@@ -1,11 +1,27 @@
-#include <random>
 #include "sdk/SexySDK.hpp"
 #include "callbacks/callbacks.hpp"
 
 HMODULE self = 0;
+PeggleVersion version = PeggleVersion::Unknown;
 
 void init()
 {
+	if (!strcmp(reinterpret_cast<char*>(0x005D675C), "Peggle Deluxe "))
+	{
+		version = PeggleVersion::Deluxe101;
+		std::printf("[ HAGGLE ]: Detected Peggle Deluxe 1.01\n");
+	}
+	else if (!strcmp(reinterpret_cast<char*>(0x006851D0), "Peggle Nights"))
+	{
+		version = PeggleVersion::NightsDeluxe10;
+		std::printf("[ HAGGLE ]: Detected Peggle Nights Deluxe 1.0\n");
+	}
+	else
+	{
+		version = PeggleVersion::Unknown;
+		std::printf("[ HAGGLE ]: Unable to detect game!\n");
+	}
+
 	if (MH_Initialize() == MH_OK);
 	{
 		callbacks::init();	//Although not related to minhook starting, its useless without it

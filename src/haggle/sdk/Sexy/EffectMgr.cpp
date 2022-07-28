@@ -3,7 +3,7 @@
 Sexy::EffectMgr* Sexy::EffectMgr::effect_mgr;
 
 static char* (__fastcall* Sexy__EffectMgr__EffectMgr_)(Sexy::EffectMgr*, char*);
-char* __fastcall Sexy__Template__Template(Sexy::EffectMgr* this_, char* edx)
+char* __fastcall Sexy__EffectMgr__EffectMgr(Sexy::EffectMgr* this_, char* edx)
 {
 	Sexy::EffectMgr::effect_mgr = this_;
 	return Sexy__EffectMgr__EffectMgr_(this_, edx);
@@ -11,7 +11,13 @@ char* __fastcall Sexy__Template__Template(Sexy::EffectMgr* this_, char* edx)
 
 void Sexy::EffectMgr::setup()
 {
-	MH_CreateHook((void*)0x004471E0, Sexy__Template__Template, (void**)&Sexy__EffectMgr__EffectMgr_);
+	switch (version)
+	{
+		case PeggleVersion::Deluxe101:
+		{
+			MH_CreateHook((void*)0x004471E0, Sexy__EffectMgr__EffectMgr, (void**)&Sexy__EffectMgr__EffectMgr_);
+		} break;
+	}
 }
 
 bool Sexy::EffectMgr::check_exists()

@@ -24,9 +24,15 @@ void __fastcall Sexy__InterfaceMgr__DrawOnePlayer(Sexy::InterfaceMgr* this_, cha
 
 void Sexy::InterfaceMgr::setup()
 {
-	MH_CreateHook((void*)0x004515A0, Sexy__InterfaceMgr__InterfaceMgr, (void**)&Sexy__InterfaceMgr__InterfaceMgr_);
-	MH_CreateHook((void*)0x00447F60, Sexy__InterfaceMgr__DrawBack, (void**)&Sexy__InterfaceMgr__DrawBack_);
-	MH_CreateHook((void*)0x004474B0, Sexy__InterfaceMgr__DrawOnePlayer, (void**)&Sexy__InterfaceMgr__DrawOnePlayer_);
+	switch (version)
+	{
+		case PeggleVersion::Deluxe101:
+		{
+			MH_CreateHook((void*)0x004515A0, Sexy__InterfaceMgr__InterfaceMgr, (void**)&Sexy__InterfaceMgr__InterfaceMgr_);
+			MH_CreateHook((void*)0x00447F60, Sexy__InterfaceMgr__DrawBack, (void**)&Sexy__InterfaceMgr__DrawBack_);
+			MH_CreateHook((void*)0x004474B0, Sexy__InterfaceMgr__DrawOnePlayer, (void**)&Sexy__InterfaceMgr__DrawOnePlayer_);
+		} break;
+	}
 }
 
 bool Sexy::InterfaceMgr::check_exists()

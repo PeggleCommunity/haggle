@@ -11,7 +11,13 @@ char* __fastcall Sexy__StageMgr__StageMgr(Sexy::StageMgr* this_, char* edx)
 
 void Sexy::StageMgr::setup()
 {
-	MH_CreateHook((void*)0x00461940, Sexy__StageMgr__StageMgr, (void**)&Sexy__StageMgr__StageMgr_);
+	switch (version)
+	{
+		case PeggleVersion::Deluxe101:
+		{
+			MH_CreateHook((void*)0x00461940, Sexy__StageMgr__StageMgr, (void**)&Sexy__StageMgr__StageMgr_);
+		} break;
+	}
 }
 
 bool Sexy::StageMgr::check_exists()
