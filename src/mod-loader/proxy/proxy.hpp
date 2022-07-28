@@ -4,7 +4,7 @@
 
 #include <Windows.h>
 
-#define EXPORT(X) extern "C" __declspec(naked) __declspec(dllexport) void X() { proxy::get("d3d8.dll", __FUNCTION__); __asm { jmp eax } }
+#define EXPORT(X) extern "C" __declspec(naked) __declspec(dllexport) void X() { proxy::get("ddraw.dll", __FUNCTION__); __asm { jmp eax } }
 
 class proxy final
 {
