@@ -50,7 +50,7 @@ workspace "Mod Loader"
 		symbols "on"
 
 project "Mod Loader"
-		targetname "d3d8"
+		targetname "ddraw"
 		language "c++"
 		cppdialect "c++17"
 		kind "sharedlib"
