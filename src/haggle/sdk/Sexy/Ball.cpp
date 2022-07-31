@@ -38,6 +38,6 @@ void Sexy::Ball::SetPos(float a2, float a3)
 		} break;
 	}
 
-	if (!Sexy::Ball::check_exists() && !address) return;
+	if (!Sexy::Ball::check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(Sexy::Ball*, float, float)>(address)(Sexy::Ball::ball, a2, a3);
 }
