@@ -37,7 +37,7 @@ void Sexy::SoundMgr::AddSound(int a2, float a3, int a4, int a5, int a6, float a7
 		break;
 	}
 
-	if (!Sexy::SoundMgr::check_exists()) return;
+	if (!Sexy::SoundMgr::check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(Sexy::SoundMgr*, int, float, int, int, int, float)>
 		(address)(Sexy::SoundMgr::sound_mgr, a2, a3, a4, a5, a6, a7);
 }
@@ -53,6 +53,6 @@ int Sexy::SoundMgr::FadeMusic(int a2)
 		break;
 	}
 
-	if (!Sexy::SoundMgr::check_exists()) return 0;
+	if (!Sexy::SoundMgr::check_exists() || !address) return 0;
 	return reinterpret_cast<int(__thiscall*)(Sexy::SoundMgr*, int)>(address)(Sexy::SoundMgr::sound_mgr, a2);
 }

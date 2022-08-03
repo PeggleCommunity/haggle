@@ -52,7 +52,7 @@ Sexy::InterfaceMgr* Sexy::InterfaceMgr::UpdateBalls()
 		break;
 	}
 
-	if (!Sexy::InterfaceMgr::check_exists()) return 0;
+	if (!Sexy::InterfaceMgr::check_exists() || !address) return 0;
 	return reinterpret_cast<Sexy::InterfaceMgr*(__thiscall*)(Sexy::InterfaceMgr*)>(address)(Sexy::InterfaceMgr::interface_mgr);
 }
 
@@ -67,7 +67,7 @@ Sexy::InterfaceMgr* Sexy::InterfaceMgr::LoadGun()
 		break;
 	}
 
-	if (Sexy::InterfaceMgr::interface_mgr == 0x0) return 0;
+	if (!Sexy::InterfaceMgr::check_exists() || !address) return 0;
 	return reinterpret_cast<Sexy::InterfaceMgr*(__thiscall*)(Sexy::InterfaceMgr*)>(address)(Sexy::InterfaceMgr::interface_mgr);
 }
 

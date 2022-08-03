@@ -37,6 +37,6 @@ void Sexy::EffectMgr::AddPyramid(float a2, float a3)
 		break;
 	}
 
-	if (!Sexy::EffectMgr::check_exists()) return;
+	if (!Sexy::EffectMgr::check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(Sexy::EffectMgr*, float, float)>(address)(Sexy::EffectMgr::effect_mgr, a2, a3);
 }

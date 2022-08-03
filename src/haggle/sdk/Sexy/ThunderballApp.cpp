@@ -86,7 +86,7 @@ void Sexy::ThunderballApp::DoToMenu()
 		break;
 	}
 
-	if (!Sexy::ThunderballApp::check_exists()) return;
+	if (!Sexy::ThunderballApp::check_exists() || !address) return;
 	return reinterpret_cast<void(__thiscall*)(Sexy::ThunderballApp*)>(address)(Sexy::ThunderballApp::thunderball);
 }
 
@@ -101,7 +101,7 @@ int Sexy::ThunderballApp::ShowLevelScreen(bool a2)
 		break;
 	}
 
-	if (!Sexy::ThunderballApp::check_exists()) return -1;
+	if (!Sexy::ThunderballApp::check_exists() || !address) return -1;
 	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool)>(address)(Sexy::ThunderballApp::thunderball, a2);
 }
 

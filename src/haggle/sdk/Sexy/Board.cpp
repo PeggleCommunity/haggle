@@ -47,7 +47,7 @@ void Sexy::Board::Reload()
 		break;
 	}
 
-	if (!Sexy::Board::check_exists()) return;
+	if (!Sexy::Board::check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(Sexy::Board*)>(address)(Sexy::Board::board);
 }
 
@@ -62,7 +62,7 @@ void Sexy::Board::KeyDown(KeyCode keyCodePressed)
 		break;
 	}
 
-	if (!Sexy::Board::check_exists()) return;
+	if (!Sexy::Board::check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(Sexy::Board*, KeyCode)>(address)(Sexy::Board::board, keyCodePressed);
 }
 
@@ -77,7 +77,7 @@ void Sexy::Board::SetSlowMo(bool a2, int a3)
 		break;
 	}
 
-	if (!Sexy::Board::check_exists()) return;
+	if (!Sexy::Board::check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(Sexy::Board*, bool, int)>(address)(Sexy::Board::board, a2, a3);
 }
 

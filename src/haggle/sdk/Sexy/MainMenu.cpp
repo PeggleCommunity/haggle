@@ -53,6 +53,6 @@ void Sexy::MainMenu::StartGame()
 		break;
 	}
 
-	if (!Sexy::MainMenu::check_exists()) return;
+	if (!Sexy::MainMenu::check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(Sexy::MainMenu*)>(address)(Sexy::MainMenu::main_menu);
 }

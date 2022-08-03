@@ -50,6 +50,6 @@ int Sexy::LevelScreen::DoPlay(int a3)
 		break;
 	}
 
-	if (!Sexy::LevelScreen::check_exists()) return -1;
+	if (!Sexy::LevelScreen::check_exists() || !address) return -1;
 	return reinterpret_cast<int(__thiscall*)(Sexy::LevelScreen*, int)>(address)(Sexy::LevelScreen::level_screen, a3);
 }
