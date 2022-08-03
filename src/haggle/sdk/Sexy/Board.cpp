@@ -83,15 +83,16 @@ void Sexy::Board::SetSlowMo(bool a2, int a3)
 
 int Sexy::Board::Reset()
 {
-	std::uint32_t address;
+	std::uint32_t address = 0x0;
 
 	switch (version)
 	{
-	case PeggleVersion::Deluxe101:
-		address = 0x0042DA00;
-		break;
+		case PeggleVersion::Deluxe101:
+		{
+			address = 0x0042DA00;
+		} break;
 	}
 
-	if (!Sexy::Board::check_exists()) return -1;
+	if (!Sexy::Board::check_exists() || !address) return -1;
 	return reinterpret_cast<int(__thiscall*)(Sexy::Board*)>(address)(Sexy::Board::board);
 }

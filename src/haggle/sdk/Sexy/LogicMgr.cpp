@@ -217,7 +217,7 @@ Sexy::LogicMgr* Sexy::LogicMgr::IncNumBalls(int top_count, int bottom_count, boo
 		} break;
 	}
 
-	if (!check_exists() && !address) return 0;
+	if (!check_exists() || !address) return 0;
 	return reinterpret_cast<LogicMgr * (__thiscall*)(LogicMgr*, int, int, bool)>(address)
 		(Sexy::LogicMgr::logic_mgr, top_count, bottom_count, bottom);
 }
@@ -234,7 +234,7 @@ int Sexy::LogicMgr::BeginShot(bool doGetReplayPoint)
 		} break;
 	}
 
-	if (!check_exists() && !address) return 0;
+	if (!check_exists() || !address) return 0;
 	return reinterpret_cast<int(__thiscall*)(LogicMgr*, bool)>(address)(logic_mgr, doGetReplayPoint);
 }
 
@@ -250,7 +250,7 @@ void Sexy::LogicMgr::MouseDown(int xPos, int yPos, int mouseButtonId, bool b1, b
 		} break;
 	}
 
-	if (!check_exists() && !address) return;
+	if (!check_exists() || !address) return;
 	return reinterpret_cast<void(__thiscall*)(LogicMgr*, int, int, int, bool, bool)>(address)(logic_mgr, xPos, yPos, mouseButtonId, b1, b2);
 }
 
@@ -266,7 +266,7 @@ void Sexy::LogicMgr::DoPowerup(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, int po
 		} break;
 	}
 
-	if (!check_exists() && !address) return;
+	if (!check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(LogicMgr*, Sexy::Ball*, Sexy::PhysObj*, int, int)>(address)
 		(logic_mgr, ball, phys_obj, powerup, a5);
 }
@@ -283,7 +283,7 @@ void Sexy::LogicMgr::ActivateFreeBallCover(int a2)
 		} break;
 	}
 
-	if (!check_exists() && !address) return;
+	if (!check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(LogicMgr*, int)>(address)(logic_mgr, a2);
 }
 
@@ -299,7 +299,7 @@ void Sexy::LogicMgr::ActivatePowerup(int powerup, int a3)
 		} break;
 	}
 
-	if (!check_exists() && !address) return;
+	if (!check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(LogicMgr*, int, int)>(address)(logic_mgr, powerup, a3);
 }
 
@@ -315,7 +315,7 @@ std::int64_t Sexy::LogicMgr::DoMultiball(Sexy::Ball* a2, Sexy::PhysObj* a3)
 		} break;
 	}
 
-	if (!check_exists() && !address) return 0;
+	if (!check_exists() || !address) return 0;
 	return reinterpret_cast<std::int64_t(__thiscall*)(LogicMgr*, Sexy::Ball*, Sexy::PhysObj*)>(address)(logic_mgr, a2, a3);
 }
 
@@ -331,7 +331,7 @@ void Sexy::LogicMgr::PegHit(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, bool a4)
 		} break;
 	}
 
-	if (!check_exists() && !address) return;
+	if (!check_exists() || !address) return;
 	reinterpret_cast<std::int64_t(__thiscall*)(LogicMgr*, Sexy::Ball*, Sexy::PhysObj*, bool)>(address)
 		(logic_mgr, ball, phys_obj, a4);
 }
@@ -348,7 +348,7 @@ Sexy::FloatingText* Sexy::LogicMgr::AddStandardText(std::string& string, float x
 		} break;
 	}
 
-	if (!check_exists() && !address) return 0;
+	if (!check_exists() || !address) return 0;
 	return reinterpret_cast<Sexy::FloatingText * (__thiscall*)(LogicMgr*, std::string&, float, float, int)>(address)
 		(logic_mgr, string, x_pos, y_pos, type);
 }
@@ -370,7 +370,7 @@ void Sexy::LogicMgr::DoExploder(Sexy::Ball* ball, Sexy::PhysObj* phys_obj)
 		} break;
 	}
 
-	if (!check_exists() && !address) return;
+	if (!check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(LogicMgr*, Sexy::Ball*, Sexy::PhysObj*)>(address)(logic_mgr, ball, phys_obj);
 }
 
@@ -386,7 +386,7 @@ bool Sexy::LogicMgr::BeginTurn2()
 		} break;
 	}
 
-	if (!check_exists() && !address) return false;
+	if (!check_exists() || !address) return false;
 	return reinterpret_cast<bool(__thiscall*)(LogicMgr*)>(address)(logic_mgr);
 }
 
@@ -402,7 +402,7 @@ void Sexy::LogicMgr::ActivateFreeBall(bool a4)
 		} break;
 	}
 
-	if (!check_exists() && !address) return;
+	if (!check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(LogicMgr*, bool)>(address)(logic_mgr, a4);
 }
 
@@ -418,7 +418,7 @@ void Sexy::LogicMgr::SetWearHat(int a2)
 		} break;
 	}
 
-	if (!check_exists() && !address) return;
+	if (!check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(LogicMgr*, int)>(address)(logic_mgr, a2);
 }
 
@@ -434,7 +434,7 @@ void Sexy::LogicMgr::SetState(State newState)
 		} break;
 	}
 
-	if (!check_exists() && !address) return;
+	if (!check_exists() || !address) return;
 	reinterpret_cast<int(__thiscall*)(LogicMgr*, State)>(address)(logic_mgr, newState);
 }
 
@@ -474,7 +474,7 @@ void Sexy::LogicMgr::SetGunAngle(float newAngleDegrees)
 		} break;
 	}
 
-	if (!check_exists() && !address) return;
+	if (!check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(LogicMgr*, float)>(address)(logic_mgr, newAngleDegrees);
 }
 
@@ -536,6 +536,6 @@ void Sexy::LogicMgr::CalcCornerDisplay()
 		} break;
 	}
 
-	if (!check_exists() && !address) return;
+	if (!check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(LogicMgr*)>(address)(logic_mgr);
 }
