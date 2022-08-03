@@ -11,7 +11,13 @@ char* __fastcall Sexy__FloatingText__FloatingText(Sexy::FloatingText* this_, cha
 
 void Sexy::FloatingText::setup()
 {
-	MH_CreateHook((void*)0x0, Sexy__FloatingText__FloatingText, (void**)&Sexy__FloatingText__FloatingText_);
+	switch (version)
+	{
+		case PeggleVersion::Deluxe101:
+		{
+			MH_CreateHook((void*)0x0, Sexy__FloatingText__FloatingText, (void**)&Sexy__FloatingText__FloatingText_);
+		} break;
+	}
 }
 
 bool Sexy::FloatingText::check_exists()

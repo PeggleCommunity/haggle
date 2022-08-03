@@ -104,5 +104,6 @@ namespace Sexy
 	private:
 		static bool check_exists();
 		static bool TryPointerRefresh(void);
+		static void SetGunAngle(float newAngleDegrees);
 	};
 }
