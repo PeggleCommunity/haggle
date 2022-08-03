@@ -77,24 +77,50 @@ bool Sexy::ThunderballApp::check_exists()
 
 void Sexy::ThunderballApp::DoToMenu()
 {
+	std::uint32_t address;
+
+	switch (version)
+	{
+	case PeggleVersion::Deluxe101:
+		address = 0x0042D7A0;
+		break;
+	}
+
 	if (!Sexy::ThunderballApp::check_exists()) return;
-	return reinterpret_cast<void(__thiscall*)(Sexy::ThunderballApp*)>(0x0042D7A0)(Sexy::ThunderballApp::thunderball);
+	return reinterpret_cast<void(__thiscall*)(Sexy::ThunderballApp*)>(address)(Sexy::ThunderballApp::thunderball);
 }
 
 int Sexy::ThunderballApp::ShowLevelScreen(bool a2)
 {
-	if (!Sexy::ThunderballApp::check_exists()) return -1;
-	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool)>(0x0042D350)(Sexy::ThunderballApp::thunderball, a2);
-}
+	std::uint32_t address;
 
-int Sexy::ThunderballApp::ShowBoard(bool a2, bool a3)
-{
+	switch (version)
+	{
+	case PeggleVersion::Deluxe101:
+		address = 0x0042D350;
+		break;
+	}
+
 	if (!Sexy::ThunderballApp::check_exists()) return -1;
-	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool, bool)>(0x0042F860)(Sexy::ThunderballApp::thunderball, a2, a3);
+	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool)>(address)(Sexy::ThunderballApp::thunderball, a2);
 }
 
 int Sexy::ThunderballApp::ShowBoard(Sexy::ThunderballApp* thunderball, bool a2, bool a3)
 {
+	std::uint32_t address;
+
+	switch (version)
+	{
+	case PeggleVersion::Deluxe101:
+		address = 0x0042F860;
+		break;
+	}
+
 	if (!thunderball) return -1;
-	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool, bool)>(0x0042F860)(thunderball, a2, a3);
+	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool, bool)>(address)(thunderball, a2, a3);
+}
+
+int Sexy::ThunderballApp::ShowBoard(bool a2, bool a3)
+{
+	return Sexy::ThunderballApp::ShowBoard(Sexy::ThunderballApp::thunderball, a2, a3);
 }

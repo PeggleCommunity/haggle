@@ -41,6 +41,15 @@ bool Sexy::LevelScreen::check_exists()
 
 int Sexy::LevelScreen::DoPlay(int a3)
 {
+	std::uint32_t address;
+
+	switch (version)
+	{
+	case PeggleVersion::Deluxe101:
+		address = 0x00493530;
+		break;
+	}
+
 	if (!Sexy::LevelScreen::check_exists()) return -1;
-	return reinterpret_cast<int(__thiscall*)(Sexy::LevelScreen*, int)>(0x00493530)(Sexy::LevelScreen::level_screen, a3);
+	return reinterpret_cast<int(__thiscall*)(Sexy::LevelScreen*, int)>(address)(Sexy::LevelScreen::level_screen, a3);
 }

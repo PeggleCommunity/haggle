@@ -44,6 +44,15 @@ bool Sexy::MainMenu::check_exists()
 
 void Sexy::MainMenu::StartGame()
 {
+	std::uint32_t address;
+
+	switch (version)
+	{
+	case PeggleVersion::Deluxe101:
+		address = 0x004A9190;
+		break;
+	}
+
 	if (!Sexy::MainMenu::check_exists()) return;
-	reinterpret_cast<void(__thiscall*)(Sexy::MainMenu*)>(0x004A9190)(Sexy::MainMenu::main_menu);
+	reinterpret_cast<void(__thiscall*)(Sexy::MainMenu*)>(address)(Sexy::MainMenu::main_menu);
 }
