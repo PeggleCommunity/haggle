@@ -264,6 +264,11 @@ void Sexy::LogicMgr::DoPowerup(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, int po
 		{
 			address = 0x0046EDF0;
 		} break;
+
+		case PeggleVersion::NightsDeluxe10:
+		{
+			address = 0x0046E9C0;
+		} break;
 	}
 
 	if (!check_exists() || !address) return;
@@ -346,6 +351,11 @@ Sexy::FloatingText* Sexy::LogicMgr::AddStandardText(std::string& string, float x
 		{
 			address = 0x00469EB0;
 		} break;
+
+		case PeggleVersion::NightsDeluxe10:
+		{
+			address = 0x00468DD0;
+		} break;
 	}
 
 	if (!check_exists() || !address) return 0;
@@ -383,6 +393,11 @@ bool Sexy::LogicMgr::BeginTurn2()
 		case PeggleVersion::Deluxe101:
 		{
 			address = 0x0044B5B0;
+		} break;
+
+		case PeggleVersion::NightsDeluxe10:
+		{
+			address = 0x0046B950;
 		} break;
 	}
 

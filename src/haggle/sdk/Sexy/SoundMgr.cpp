@@ -35,6 +35,10 @@ void Sexy::SoundMgr::AddSound(int a2, float a3, int a4, int a5, int a6, float a7
 	case PeggleVersion::Deluxe101:
 		address = 0x00458F30;
 		break;
+
+	case PeggleVersion::NightsDeluxe10:
+		address = 0x00478A50;
+		break;
 	}
 
 	if (!Sexy::SoundMgr::check_exists() || !address) return;
