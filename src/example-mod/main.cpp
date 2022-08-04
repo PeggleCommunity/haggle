@@ -42,12 +42,11 @@ void Example_Callbacks(void)
 		std::printf("Loading Level: %s\n", level_name.c_str());
 	});
 
-	callbacks::on_do_play([](auto level_screen, auto a3)
+	// use after_do_play when fetching current stage and level, as the call updates the struct (you can use on_do_play to technically get the previous level
+	callbacks::after_do_play([](auto level_screen, auto a3)
 	{
-		// this is pretty disgusting, but this is what we have until we map out the struct
-		uint32_t stage = *(uint32_t*)(&level_screen + 651) + 1;  // offset to stage index
-		uint32_t level = *(uint32_t*)(&level_screen + 652) + 1;  // offset to level index
-		std::printf("Loading Level: %d-%d\n", stage, level);
+		Sexy::LevelScreen_* test = (Sexy::LevelScreen_*)level_screen;
+		std::printf("Loading Level: %d-%d\n", test->unk->stage + 1, test->unk->level + 1);
 	});
 }
 
