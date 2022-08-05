@@ -139,57 +139,7 @@ bool Sexy::LogicMgr::check_exists()
 		return true;
 	}
 
-	switch (version)
-	{
-		case PeggleVersion::Deluxe101:
-		{
-			int* checkPtr = reinterpret_cast<int*>(0x00687394);  // ThunderballApp pointer (static)
-			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-			{
-				logic_mgr = nullptr;
-				return false;
-			}
-
-			checkPtr = reinterpret_cast<int*>(*checkPtr + 0x7B8);  // Board pointer (dynamic)
-			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-			{
-				logic_mgr = nullptr;
-				return false;
-			}
-
-			checkPtr = reinterpret_cast<int*>(*checkPtr + 0x154);  // LogicMgr pointer (dynamic)
-			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-			{
-				logic_mgr = nullptr;
-				return false;
-			}
-		} break;
-		case PeggleVersion::NightsDeluxe10:
-		{
-			int* checkPtr = reinterpret_cast<int*>(0x006CEF34);  // ThunderballApp pointer (static)
-			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-			{
-				logic_mgr = nullptr;
-				return false;
-			}
-
-			checkPtr = reinterpret_cast<int*>(*checkPtr + 0x868);  // Board pointer (dynamic)
-			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-			{
-				logic_mgr = nullptr;
-				return false;
-			}
-
-			checkPtr = reinterpret_cast<int*>(*checkPtr + 0x720);  // LogicMgr pointer (dynamic)
-			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-			{
-				logic_mgr = nullptr;
-				return false;
-			}
-		} break;
-	}
-
-	return TryPointerRefresh();  // The static LogicMgr pointer was null, but it looks like the LogicMgr exists in the game memory. Try to retrieve it.
+	return TryPointerRefresh();  // The static LogicMgr pointer was null. Try to find the dynamic LogicMgr object in memory.
 }
 
 bool Sexy::LogicMgr::TryPointerRefresh()
@@ -221,11 +171,39 @@ bool Sexy::LogicMgr::TryPointerRefresh()
 				return false;
 			}
 		} break;
+		case PeggleVersion::NightsDeluxe10:
+		{
+			checkPtr = reinterpret_cast<int*>(0x006CEF34);  // ThunderballApp pointer (static)
+			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+			{
+				logic_mgr = nullptr;
+				return false;
+			}
+
+			checkPtr = reinterpret_cast<int*>(*checkPtr + 0x868);  // Board pointer (dynamic)
+			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+			{
+				logic_mgr = nullptr;
+				return false;
+			}
+
+			checkPtr = reinterpret_cast<int*>(*checkPtr + 0x720);  // LogicMgr pointer (dynamic)
+			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+			{
+				logic_mgr = nullptr;
+				return false;
+			}
+		} break;
 	}
 
-	if (!checkPtr) return false;
+	if (checkPtr == nullptr)
+	{
+		return false;
+	}
+
 	logic_mgr = reinterpret_cast<LogicMgr*>(*checkPtr);
-	return logic_mgr != 0;
+
+	return logic_mgr != nullptr;
 }
 
 Sexy::LogicMgr* Sexy::LogicMgr::IncNumBalls(int top_count, int bottom_count, bool bottom)
@@ -270,6 +248,10 @@ void Sexy::LogicMgr::MouseDown(int xPos, int yPos, int mouseButtonId, bool b1, b
 		case PeggleVersion::Deluxe101:
 		{
 			address = 0x00472810;
+		} break;
+		case PeggleVersion::NightsDeluxe10:
+		{
+			address = 0x00473280;
 		} break;
 	}
 
@@ -480,14 +462,29 @@ Sexy::LogicMgr::State Sexy::LogicMgr::GetState(void)
 {
 	if (!check_exists()) return State::None;
 
-	int* logicState = reinterpret_cast<int*>(logic_mgr + 0x04);
-
-	if (logicState == nullptr)
+	switch (version)
 	{
-		return State::None;
-	}
+		case PeggleVersion::Deluxe101:
+		{
+			int* logicState = reinterpret_cast<int*>(logic_mgr + 0x04);
 
-	return static_cast<State>(*logicState);
+			if (logicState == nullptr)
+			{
+				return State::None;
+			}
+
+			return static_cast<State>(*logicState);
+		}
+		case PeggleVersion::NightsDeluxe10:
+		{
+			LogicMgr_Nights10_& nightsLogicMgr = *reinterpret_cast<LogicMgr_Nights10_*>(logic_mgr);
+			return nightsLogicMgr.state;
+		}
+		default:
+		{
+			return State::None;
+		}
+	}
 }
 
 void Sexy::LogicMgr::SetGunAngleRadians(float newAngleRadians)
@@ -510,9 +507,14 @@ void Sexy::LogicMgr::SetGunAngle(float newAngleDegrees)
 		{
 			address = 0x00436FD0;
 		} break;
+		case PeggleVersion::NightsDeluxe10:
+		{
+			address = 0x00469B10;
+		} break;
 	}
 
 	if (!check_exists() || !address) return;
+
 	reinterpret_cast<void(__thiscall*)(LogicMgr*, float)>(address)(logic_mgr, newAngleDegrees);
 }
 
@@ -520,28 +522,58 @@ float Sexy::LogicMgr::GetGunAngleRadians(void)
 {
 	if (!check_exists()) return 0.0f;
 
-	float* gunAnglePtr = reinterpret_cast<float*>(logic_mgr + 0xE0);
-
-	if (gunAnglePtr == nullptr)
+	switch (version)
 	{
-		return 0.0f;
-	}
+		case PeggleVersion::Deluxe101:
+		{
+			float* gunAnglePtr = reinterpret_cast<float*>(logic_mgr + 0xE0);
 
-	return *gunAnglePtr;
+			if (gunAnglePtr == nullptr)
+			{
+				return 0.0f;
+			}
+
+			return *gunAnglePtr;
+		}
+		case PeggleVersion::NightsDeluxe10:
+		{
+			LogicMgr_Nights10_& nightsLogicMgr = *reinterpret_cast<LogicMgr_Nights10_*>(logic_mgr);
+			return nightsLogicMgr.gunAngleRadians;
+		}
+		default:
+		{
+			return 0.0f;
+		}
+	}
 }
 
 float Sexy::LogicMgr::GetGunAngleDegrees(void)
 {
 	if (!check_exists()) return 0.0f;
 
-	float* gunAnglePtr = reinterpret_cast<float*>(logic_mgr + 0xE0);
-
-	if (gunAnglePtr == nullptr)
+	switch (version)
 	{
-		return 0.0f;
-	}
+		case PeggleVersion::Deluxe101:
+		{
+			float* gunAnglePtr = reinterpret_cast<float*>(logic_mgr + 0xE0);
 
-	return RadiansToDegrees(*gunAnglePtr);
+			if (gunAnglePtr == nullptr)
+			{
+				return 0.0f;
+			}
+
+			return RadiansToDegrees(*gunAnglePtr);
+		}
+		case PeggleVersion::NightsDeluxe10:
+		{
+			LogicMgr_Nights10_& nightsLogicMgr = *reinterpret_cast<LogicMgr_Nights10_*>(logic_mgr);
+			return RadiansToDegrees(nightsLogicMgr.gunAngleRadians);
+		}
+		default:
+		{
+			return 0.0f;
+		}
+	}
 }
 
 constexpr float DOWN_ROTATION_DEGREES = 270.0f;

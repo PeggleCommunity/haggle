@@ -1,4 +1,5 @@
 #include <random>
+#include <cstdio>
 #include "sdk/SexySDK.hpp"
 #include "callbacks/callbacks.hpp"
 
@@ -11,7 +12,7 @@ void init()
 {
 	// Example Mod stuff
 
-	Example_Callbacks();
+	// Example_Callbacks();
 	Example_AutoShoot();
 }
 
@@ -55,8 +56,10 @@ void Example_Callbacks(void)
  */
 void Example_AutoShoot(void)
 {
+	std::printf("[ EXAMPLE MOD ]: Starting Example_AutoShoot\n");
 	callbacks::on(callbacks::type::main_loop, []()
 	{
+		// std::printf("[ EXAMPLE MOD ]: Main Loop Callback triggered\n");
 		static float angleIncrement = 8.0f;
 		static constexpr int MOVE_DELAY_MS = 1000 / 60;  // Update at a rate of 60 FPS.
 		static constexpr float ANGLE_BOUNDS[] = { -93.0f, 93.0f };
@@ -66,7 +69,7 @@ void Example_AutoShoot(void)
 		static std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
 		static std::uniform_int_distribution<> distribDelayMs(1000, 2000);
 		static unsigned int firstShotDelayCounter = 0;
-		static unsigned int firstShotDelayMs = distribDelayMs(gen);
+		static unsigned int firstShotDelayMs = distribDelayMs(gen);  // Randomize the time at which the first shot is fired off.
 
 		Sexy::LogicMgr::State logicState = Sexy::LogicMgr::GetState();
 		switch (logicState)
@@ -83,6 +86,8 @@ void Example_AutoShoot(void)
 			firstShotDelayCounter = 0;  // Since we're not in a playing state, reset the delayed first shot counter.
 			return;
 		}
+
+		std::printf("[ EXAMPLE MOD ]: Running the auto-move behavior.\n");
 
 		float currentGunAngleDegrees = Sexy::LogicMgr::GetGunAngleDegrees();
 		if (isMovingLeft)
@@ -115,6 +120,7 @@ void Example_AutoShoot(void)
 		{
 			if (firstShotDelayCounter >= firstShotDelayMs)
 			{
+				std::printf("[ EXAMPLE MOD ]: Shooting!\n");
 				Sexy::LogicMgr::MouseDown(100, 100, 1, false, false);
 			}
 			else
@@ -123,6 +129,7 @@ void Example_AutoShoot(void)
 			}
 		}
 	});
+	std::printf("[ EXAMPLE MOD ]: Done with startup work.\n");
 }
 
 DWORD WINAPI OnAttachImpl(LPVOID lpParameter)

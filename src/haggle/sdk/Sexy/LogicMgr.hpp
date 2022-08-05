@@ -95,8 +95,8 @@ namespace Sexy
 			std::int32_t numOrangePegsHitThisShot;
 			std::int32_t numGreenPegsHitThisShot;
 			std::uint8_t unk_2[0xEC - 0x50 - sizeof numGreenPegsHitThisShot];
-			float shotAngleRadians;
-			std::uint8_t unk_3[0x1AC - 0x0EC - sizeof shotAngleRadians];
+			float gunAngleRadians;
+			std::uint8_t unk_3[0x1AC - 0x0EC - sizeof gunAngleRadians];
 			PlayerId playerCurrentlyInControl;
 			std::uint8_t unk_4[0x208 - 0x1AC - sizeof playerCurrentlyInControl];
 			// Begin player data
