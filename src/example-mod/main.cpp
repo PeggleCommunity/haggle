@@ -137,7 +137,7 @@ DWORD WINAPI OnAttach(LPVOID lpParameter)
 	{
 		return OnAttachImpl(lpParameter);
 	}
-	__except (0)
+	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
 		FreeLibraryAndExitThread((HMODULE)lpParameter, 0xDECEA5ED);
 	}

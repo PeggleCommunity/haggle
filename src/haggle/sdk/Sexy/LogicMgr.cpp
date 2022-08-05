@@ -364,7 +364,7 @@ void Sexy::LogicMgr::PegHit(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, bool a4)
 		(logic_mgr, ball, phys_obj, a4);
 }
 
-Sexy::FloatingText* Sexy::LogicMgr::AddStandardText(std::string& string, float x_pos, float y_pos, int type)
+Sexy::FloatingText* Sexy::LogicMgr::AddStandardText(const std::string& string, float x_pos, float y_pos, int type)
 {
 	std::uint32_t address = 0x0;
 
@@ -382,7 +382,7 @@ Sexy::FloatingText* Sexy::LogicMgr::AddStandardText(std::string& string, float x
 	}
 
 	if (!check_exists() || !address) return 0;
-	return reinterpret_cast<Sexy::FloatingText * (__thiscall*)(LogicMgr*, std::string&, float, float, int)>(address)
+	return reinterpret_cast<Sexy::FloatingText * (__thiscall*)(LogicMgr*, const std::string&, float, float, int)>(address)
 		(logic_mgr, string, x_pos, y_pos, type);
 }
 
