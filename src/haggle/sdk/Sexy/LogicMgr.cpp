@@ -164,6 +164,29 @@ bool Sexy::LogicMgr::check_exists()
 				return false;
 			}
 		} break;
+		case PeggleVersion::NightsDeluxe10:
+		{
+			int* checkPtr = reinterpret_cast<int*>(0x006CEF34);  // ThunderballApp pointer (static)
+			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+			{
+				logic_mgr = nullptr;
+				return false;
+			}
+
+			checkPtr = reinterpret_cast<int*>(*checkPtr + 0x868);  // Board pointer (dynamic)
+			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+			{
+				logic_mgr = nullptr;
+				return false;
+			}
+
+			checkPtr = reinterpret_cast<int*>(*checkPtr + 0x720);  // LogicMgr pointer (dynamic)
+			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+			{
+				logic_mgr = nullptr;
+				return false;
+			}
+		} break;
 	}
 
 	return TryPointerRefresh();  // The static LogicMgr pointer was null, but it looks like the LogicMgr exists in the game memory. Try to retrieve it.

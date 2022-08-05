@@ -58,7 +58,7 @@ void Example_AutoShoot(void)
 	callbacks::on(callbacks::type::main_loop, []()
 	{
 		static float angleIncrement = 8.0f;
-		static constexpr int MOVE_DELAY_MS = 1000 / 60;
+		static constexpr int MOVE_DELAY_MS = 1000 / 60;  // Update at a rate of 60 FPS.
 		static constexpr float ANGLE_BOUNDS[] = { -93.0f, 93.0f };
 		static bool isMovingLeft = false;
 
