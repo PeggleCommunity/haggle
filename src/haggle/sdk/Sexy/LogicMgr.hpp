@@ -103,28 +103,29 @@ namespace Sexy
 			std::int32_t playerScore[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
 			std::int32_t playerRemainingBallCount[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
 			CharacterId playerCharacter[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
-			std::uint8_t unk_5[0x224 - 0x21C - sizeof playerCharacter[0]];
 			#pragma pack(1)
 			struct PlayerNameDataType
 			{
+				std::uint32_t unk_0;
 				static constexpr std::int32_t NAME_STRING_LENGTH = 16;  ///< Use this to make sure you don't read or write outside of the char array.
 				char nameString[NAME_STRING_LENGTH];
 				std::int32_t nameLength;
-				std::uint32_t unk_0;
+				std::uint32_t nameMaximumLength;
 			} playerNameData[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
 			PowerupType playerMainPowerup[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];  // This is usually determined by which character the player selects.
-			std::uint8_t unk_6[0x270 - 0x25C - sizeof playerMainPowerup[0]];
+			std::uint8_t unk_5[0x270 - 0x25C - sizeof playerMainPowerup[0]];
 			std::int32_t playerSuperGuideUsesRemaining[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
 			std::int32_t playerFlipperTurnsRemaining[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
-			std::int32_t unk_7[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
+			std::int32_t unk_6[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
 			std::int32_t playerPyramidTurnsRemaining[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
-			std::int32_t unk_8[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
+			std::int32_t unk_7[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
 			std::int32_t playerSpookyBallUsesRemaining[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
 			std::int32_t playerZenShotUsesRemaining[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
-			std::uint8_t unk_9[0x2C8 - 0x2A4 - sizeof playerZenShotUsesRemaining[0]];
+			std::uint8_t unk_8[0x2C8 - 0x2A4 - sizeof playerZenShotUsesRemaining[0]];
 			std::int32_t playerFireballUsesRemaining[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
-			std::int32_t unk_10[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
+			std::int32_t unk_9[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
 			std::int32_t playerElectroboltUsesRemaining[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
+			std::int32_t unk_10;
 			#pragma pack(1)
 			struct PlayerShotDataType
 			{
@@ -152,7 +153,7 @@ namespace Sexy
 				std::int32_t duelMegaShotBonusCount;
 				std::uint8_t unk_4[0x360 - 0x34C - sizeof duelMegaShotBonusCount];
 			} playerShotData[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
-			std::uint8_t unk_11[0x3EC - 0x3D8 - sizeof PlayerShotDataType::unk_3[0]];
+			std::uint8_t unk_11[0x3EC - 0x3C8 - sizeof PlayerShotDataType::unk_4 - sizeof PlayerShotDataType::duelMegaShotBonusCount];
 			// The "peg remover" is the effect when a shot ends and the hit pegs get removed one at a time in a trailing path.
 			std::int32_t pegRemoverPositionX;
 			std::int32_t pegRemoverPositionY;

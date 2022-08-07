@@ -499,6 +499,8 @@ void Sexy::LogicMgr::SetGunAngleDegrees(float newAngleDegrees)
 
 void Sexy::LogicMgr::SetGunAngle(float newAngleDegrees)
 {
+	if (!check_exists()) return;
+
 	std::uint32_t address = 0x0;
 
 	switch (version)
@@ -510,10 +512,27 @@ void Sexy::LogicMgr::SetGunAngle(float newAngleDegrees)
 		case PeggleVersion::NightsDeluxe10:
 		{
 			address = 0x00469B10;
+			// std::uint32_t preCallStackPtr = 0;  // MSVC expects ESI to cache the stack pointer before the call to do a stack check. We use this variable to store it since Peggle Nights needs to use ESI for the LogicMgr pointer.
+			__asm
+			{
+				mov esi, logic_mgr  // Nights' code does not automatically move register ECX (`this` pointer) into ESI (possibly due to optimizations).
+				// mov preCallStackPtr, esp
+				// Begin normal `__thiscall` calling convention without overwriting ESI.
+				push ecx
+				movss xmm0, dword ptr [newAngleDegrees]
+				movss dword ptr [esp],xmm0
+				mov ecx, dword ptr [logic_mgr]
+				call dword ptr [address]
+				// Restore cached call stack pointer for stack check.
+				// mov esi, preCallStackPtr
+				// cmp esi, esp
+				// call __RTC_CheckEsp  // TODO: cannot manually call the stack validation function. What do?
+			}
+			return;
 		} break;
 	}
 
-	if (!check_exists() || !address) return;
+	if (!address) return;
 
 	reinterpret_cast<void(__thiscall*)(LogicMgr*, float)>(address)(logic_mgr, newAngleDegrees);
 }

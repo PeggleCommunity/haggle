@@ -87,7 +87,7 @@ void Example_AutoShoot(void)
 			return;
 		}
 
-		std::printf("[ EXAMPLE MOD ]: Running the auto-move behavior.\n");
+		// std::printf("[ EXAMPLE MOD ]: Running the auto-move behavior.\n");
 
 		float currentGunAngleDegrees = Sexy::LogicMgr::GetGunAngleDegrees();
 		if (isMovingLeft)
@@ -120,8 +120,8 @@ void Example_AutoShoot(void)
 		{
 			if (firstShotDelayCounter >= firstShotDelayMs)
 			{
-				std::printf("[ EXAMPLE MOD ]: Shooting!\n");
-				Sexy::LogicMgr::MouseDown(100, 100, 1, false, false);
+				// std::printf("[ EXAMPLE MOD ]: Shooting!\n");
+				// Sexy::LogicMgr::MouseDown(100, 100, 1, false, false);
 			}
 			else
 			{
