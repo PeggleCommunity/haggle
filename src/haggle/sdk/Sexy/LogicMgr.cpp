@@ -83,7 +83,7 @@ void Sexy::LogicMgr::setup()
 			MH_CreateHook((void*)0x0043D530, Sexy__LogicMgr__BeatLevel, (void**)&Sexy__LogicMgr__BeatLevel_);
 		} break;
 
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe100:
 		{
 			MH_CreateHook((void*)0x00466C30, Sexy__LogicMgr__LogicMgr, (void**)&Sexy__LogicMgr__LogicMgr_);
 			MH_CreateHook((void*)0x0046E9C0, Sexy__LogicMgr__DoPowerup, (void**)&Sexy__LogicMgr__DoPowerup_);
