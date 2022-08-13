@@ -12,7 +12,7 @@ void init()
 {
 	// Example Mod stuff
 
-	// Example_Callbacks();
+	Example_Callbacks();
 	Example_AutoShoot();
 }
 
@@ -120,8 +120,9 @@ void Example_AutoShoot(void)
 		{
 			if (firstShotDelayCounter >= firstShotDelayMs)
 			{
-				// std::printf("[ EXAMPLE MOD ]: Shooting!\n");
-				// Sexy::LogicMgr::MouseDown(100, 100, 1, false, false);
+				/// @TODO: Fix for Nights 1.01 - Fix calling convention for MouseDown.
+				std::printf("[ EXAMPLE MOD ]: Shooting!\n");
+				Sexy::LogicMgr::MouseDown(100, 100, 1, false, false);
 			}
 			else
 			{

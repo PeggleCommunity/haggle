@@ -86,7 +86,7 @@ namespace Sexy
 		};
 
 		#pragma pack(1)  // Force compiler to pack struct in single bytes.
-		struct LogicMgr_Nights10_
+		struct LogicMgr_Nights101_
 		{
 			std::int32_t* unk_0;  // vtable
 			LogicMgr::State state;
@@ -98,7 +98,7 @@ namespace Sexy
 			float gunAngleRadians;
 			std::uint8_t unk_3[0x1AC - 0x0EC - sizeof gunAngleRadians];
 			PlayerId playerCurrentlyInControl;
-			std::uint8_t unk_4[0x208 - 0x1AC - sizeof playerCurrentlyInControl];
+			std::uint8_t unk_4[0x200 - 0x1AC - sizeof playerCurrentlyInControl];
 			// Begin player data
 			std::int32_t playerScore[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];
 			std::int32_t playerRemainingBallCount[static_cast<int>(PlayerId::MAX_PLAYER_COUNT)];

@@ -53,7 +53,11 @@ void __declspec(naked) main_loop()
 				retn;
 			}
 		} break;
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe100:
+		{
+
+		} break;
+		case PeggleVersion::NightsDeluxe101:
 		{
 			__asm
 			{
@@ -98,7 +102,11 @@ void callbacks::init()
 		{
 			jump(0x0052A5F0, main_loop);
 		} break;
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe100:
+		{
+
+		} break;
+		case PeggleVersion::NightsDeluxe101:
 		{
 			jump(0x004FA170, main_loop);
 		} break;

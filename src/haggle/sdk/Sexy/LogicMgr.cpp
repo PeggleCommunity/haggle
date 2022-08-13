@@ -171,7 +171,30 @@ bool Sexy::LogicMgr::TryPointerRefresh()
 				return false;
 			}
 		} break;
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe100:
+		{
+			checkPtr = reinterpret_cast<int*>(0x006CBE04);  // ThunderballApp pointer (static)
+			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+			{
+				logic_mgr = nullptr;
+				return false;
+			}
+
+			checkPtr = reinterpret_cast<int*>(*checkPtr + 0x864);  // Board pointer (dynamic)
+			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+			{
+				logic_mgr = nullptr;
+				return false;
+			}
+
+			checkPtr = reinterpret_cast<int*>(*checkPtr + 0x720);  // LogicMgr pointer (dynamic)
+			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
+			{
+				logic_mgr = nullptr;
+				return false;
+			}
+		} break;
+		case PeggleVersion::NightsDeluxe101:
 		{
 			checkPtr = reinterpret_cast<int*>(0x006CEF34);  // ThunderballApp pointer (static)
 			if (reinterpret_cast<int*>(*checkPtr) == nullptr)
@@ -249,9 +272,28 @@ void Sexy::LogicMgr::MouseDown(int xPos, int yPos, int mouseButtonId, bool b1, b
 		{
 			address = 0x00472810;
 		} break;
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe101:
 		{
-			address = 0x00473280;
+			/// @TODO: fix calling convention
+			// address = 0x00473280;
+			/*
+			* __asm
+			* {
+			*   75019420  mov         esi,esp
+			*   75019422  movzx       edx,byte ptr [b2]
+			*   75019426  push        edx
+			*   75019427  movzx       eax,byte ptr [b1]
+			*   7501942B  push        eax
+			*   7501942C  mov         ecx,dword ptr [mouseButtonId]
+			*   7501942F  push        ecx
+			*   75019430  mov         edx,dword ptr [yPos]
+			*   75019433  push        edx
+			*   75019434  mov         eax,dword ptr [xPos]
+			*   75019437  push        eax
+			*   75019438  mov         ecx,dword ptr [Sexy::LogicMgr::logic_mgr (750F88DCh)]
+			*   7501943E  call        dword ptr [address]
+			* }
+			*/
 		} break;
 	}
 
@@ -270,7 +312,7 @@ void Sexy::LogicMgr::DoPowerup(Sexy::Ball* ball, Sexy::PhysObj* phys_obj, int po
 			address = 0x0046EDF0;
 		} break;
 
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe100:
 		{
 			address = 0x0046E9C0;
 		} break;
@@ -357,7 +399,7 @@ Sexy::FloatingText* Sexy::LogicMgr::AddStandardText(const std::string& string, f
 			address = 0x00469EB0;
 		} break;
 
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe100:
 		{
 			address = 0x00468DD0;
 		} break;
@@ -400,7 +442,7 @@ bool Sexy::LogicMgr::BeginTurn2()
 			address = 0x0044B5B0;
 		} break;
 
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe100:
 		{
 			address = 0x0046B950;
 		} break;
@@ -475,9 +517,9 @@ Sexy::LogicMgr::State Sexy::LogicMgr::GetState(void)
 
 			return static_cast<State>(*logicState);
 		}
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe101:
 		{
-			LogicMgr_Nights10_& nightsLogicMgr = *reinterpret_cast<LogicMgr_Nights10_*>(logic_mgr);
+			LogicMgr_Nights101_& nightsLogicMgr = *reinterpret_cast<LogicMgr_Nights101_*>(logic_mgr);
 			return nightsLogicMgr.state;
 		}
 		default:
@@ -509,24 +551,18 @@ void Sexy::LogicMgr::SetGunAngle(float newAngleDegrees)
 		{
 			address = 0x00436FD0;
 		} break;
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe101:
 		{
 			address = 0x00469B10;
-			// std::uint32_t preCallStackPtr = 0;  // MSVC expects ESI to cache the stack pointer before the call to do a stack check. We use this variable to store it since Peggle Nights needs to use ESI for the LogicMgr pointer.
 			__asm
 			{
 				mov esi, logic_mgr  // Nights' code does not automatically move register ECX (`this` pointer) into ESI (possibly due to optimizations).
-				// mov preCallStackPtr, esp
 				// Begin normal `__thiscall` calling convention without overwriting ESI.
 				push ecx
 				movss xmm0, dword ptr [newAngleDegrees]
 				movss dword ptr [esp],xmm0
 				mov ecx, dword ptr [logic_mgr]
 				call dword ptr [address]
-				// Restore cached call stack pointer for stack check.
-				// mov esi, preCallStackPtr
-				// cmp esi, esp
-				// call __RTC_CheckEsp  // TODO: cannot manually call the stack validation function. What do?
 			}
 			return;
 		} break;
@@ -554,9 +590,9 @@ float Sexy::LogicMgr::GetGunAngleRadians(void)
 
 			return *gunAnglePtr;
 		}
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe101:
 		{
-			LogicMgr_Nights10_& nightsLogicMgr = *reinterpret_cast<LogicMgr_Nights10_*>(logic_mgr);
+			LogicMgr_Nights101_& nightsLogicMgr = *reinterpret_cast<LogicMgr_Nights101_*>(logic_mgr);
 			return nightsLogicMgr.gunAngleRadians;
 		}
 		default:
@@ -583,9 +619,9 @@ float Sexy::LogicMgr::GetGunAngleDegrees(void)
 
 			return RadiansToDegrees(*gunAnglePtr);
 		}
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe101:
 		{
-			LogicMgr_Nights10_& nightsLogicMgr = *reinterpret_cast<LogicMgr_Nights10_*>(logic_mgr);
+			LogicMgr_Nights101_& nightsLogicMgr = *reinterpret_cast<LogicMgr_Nights101_*>(logic_mgr);
 			return RadiansToDegrees(nightsLogicMgr.gunAngleRadians);
 		}
 		default:
