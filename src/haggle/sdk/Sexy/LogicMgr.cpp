@@ -67,50 +67,6 @@ bool __fastcall Sexy__LogicMgr__BeatLevel(Sexy::LogicMgr* this_, char* edx)
 	return retn;
 }
 
-//Adds control over the otherwise broken powerups
-void unused_powerups(Sexy::PowerupType powerup)
-{
-	switch (powerup)
-	{
-		case Sexy::PowerupType::TimeBomb:
-		{
-			break;
-		}
-
-		case Sexy::PowerupType::Nudge:
-		{
-			break;
-		}
-	}
-}
-
-void __declspec(naked) unused_powerups_hook()
-{
-	static constexpr std::uint32_t retn_addr = 0x0046F0E6;
-	__asm
-	{
-		pushad;
-		push eax;
-		call unused_powerups;
-		add esp, 0x04;
-		popad;
-
-		push retn_addr;
-		retn;
-	}
-}
-
-void __declspec(naked) next_board_balls_hook()
-{
-	static constexpr std::uint32_t retn_addr = 0x0045DE61;
-	__asm
-	{
-		mov eax, 10;
-		push retn_addr;
-		retn;
-	}
-}
-
 void Sexy::LogicMgr::setup()
 {
 	switch (version)
@@ -125,9 +81,20 @@ void Sexy::LogicMgr::setup()
 			MH_CreateHook((void*)0x0046C220, Sexy__LogicMgr__FinishInitLevelText, (void**)&Sexy__LogicMgr__FinishInitLevelText_);
 			MH_CreateHook((void*)0x0046A9C0, Sexy__LogicMgr__DoLevelDone, (void**)&Sexy__LogicMgr__DoLevelDone_);
 			MH_CreateHook((void*)0x0043D530, Sexy__LogicMgr__BeatLevel, (void**)&Sexy__LogicMgr__BeatLevel_);
+		} break;
 
-			jump(0x0046F0DF, unused_powerups_hook);
-			jump(0x0045DE5C, next_board_balls_hook);
+		case PeggleVersion::NightsDeluxe10:
+		{
+			MH_CreateHook((void*)0x00466C30, Sexy__LogicMgr__LogicMgr, (void**)&Sexy__LogicMgr__LogicMgr_);
+			MH_CreateHook((void*)0x0046E9C0, Sexy__LogicMgr__DoPowerup, (void**)&Sexy__LogicMgr__DoPowerup_);
+			MH_CreateHook((void*)0x004701B0, Sexy__LogicMgr__PegHit, (void**)&Sexy__LogicMgr__PegHit_);
+
+			MH_CreateHook((void*)0x0046C230, Sexy__LogicMgr__BeginShot, (void**)&Sexy__LogicMgr__BeginShot_);
+			MH_CreateHook((void*)0x0046B950, Sexy__LogicMgr__BeginTurn2, (void**)&Sexy__LogicMgr__BeginTurn2_);
+			//MH_CreateHook((void*)0x0046C220, Sexy__LogicMgr__FinishInitLevelText, (void**)&Sexy__LogicMgr__FinishInitLevelText_);
+			MH_CreateHook((void*)0x0046BE60, Sexy__LogicMgr__DoLevelDone, (void**)&Sexy__LogicMgr__DoLevelDone_);
+			MH_CreateHook((void*)0x0046BA90, Sexy__LogicMgr__BeatLevel, (void**)&Sexy__LogicMgr__BeatLevel_);
+
 		} break;
 	}
 }

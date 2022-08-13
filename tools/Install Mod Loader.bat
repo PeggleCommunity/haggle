@@ -3,7 +3,7 @@
 set mod_loader_path="C:\ProgramData\PopCap Games\Peggle\"
 set mods_path="C:\Program Files (x86)\Steam\steamapps\common\Peggle Deluxe\mods"
 set legacy_loader=%mod_loader_path%\dsound.dll
-xcopy "d3d8.dll" %mod_loader_path% /y /q
+xcopy "ddraw.dll" %mod_loader_path% /y /q
 cls
 
 IF EXIST %legacy_loader% (
@@ -26,7 +26,9 @@ set choice=
 set /p choice=Open Mods folder? Y/N: 
 if not '%choice%'=='' set choice=%choice:~0,1%
 if '%choice%'=='y' goto open
+if '%choice%'=='Y' goto open
 if '%choice%'=='n' goto close
+if '%choice%'=='N' goto close
 
 :close
 exit

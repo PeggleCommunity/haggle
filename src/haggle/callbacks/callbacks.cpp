@@ -55,7 +55,38 @@ void __declspec(naked) main_loop()
 		} break;
 		case PeggleVersion::NightsDeluxe100:
 		{
+			__asm
+			{
+				push esi;
+				mov esi, ecx;
+				cmp byte ptr[esi + 341h], 0;
+				jnz short loc_54CC05;
+				lea esp, [esp + 0];
 
+			loc_54CBE0:
+				cmp byte ptr[esi + 342h], 0;
+				jz short loc_54CBF0;
+				mov byte ptr[esi + 342h], 0;
+
+			loc_54CBF0:
+				mov eax, [esi];
+				mov edx, [eax + 188h];
+				mov ecx, esi;
+
+				pushad;
+				push hook_type;
+				call callbacks::run_basic_callbacks;
+				add esp, 0x04;
+				popad;
+
+				call edx;
+				cmp byte ptr[esi + 341h], 0;
+				jz short loc_54CBE0;
+
+			loc_54CC05:
+				pop esi;
+				retn;
+			}
 		} break;
 		case PeggleVersion::NightsDeluxe101:
 		{
@@ -104,7 +135,7 @@ void callbacks::init()
 		} break;
 		case PeggleVersion::NightsDeluxe100:
 		{
-
+			jump(0x0054CBD0, main_loop);
 		} break;
 		case PeggleVersion::NightsDeluxe101:
 		{
