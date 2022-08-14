@@ -17,10 +17,10 @@ To run a mod, you must perform the following steps:
 ### Installing the Mod Loader
 When Haggle mods are used with Peggle, they are loaded into the Peggle executable code on startup.
 The Mod Loader performs this operation. Follow these steps to install the Mod Loader.
-1. Obtain the Mod Loader `dsound.dll` file:
+1. Obtain the Mod Loader `ddraw.dll` file:
    1. Download from the [Haggle Github releases page](https://github.com/PeggleCommunity/haggle/releases) or
    2. Compile from the [`mod-loader` project files](src/mod-loader/). Refer to the [Compiling](#compiling) section for details.
-2. Copy the `dsound.dll` file into the directory that the Peggle executable is run from.
+2. Copy the `ddraw.dll` file into the directory that the Peggle executable is run from.
    1. For **Steam**, Peggle executes from a location like `C:\ProgramData\PopCap Games\Peggle` (drive letter may vary).
       Note that the install location for Steam games is not the same as this ProgramData location.
       The Mod Loader must be placed inside this ProgramData location due to Steam's DRM check.
@@ -59,7 +59,7 @@ The Mod Loader performs this operation. Follow these steps to install the Mod Lo
       At this point, the Mod Loader will complain about not finding a mod folder if no mods have been installed yet.
       Refer to the section on [installing mods into the mod folder](#installing-mods-into-the-mods-folder).
 
-*Note: you can temporarily disable mods by renaming the `dsound.dll` file (e.g. rename it to `_dsound.dll`).*
+*Note: you can temporarily disable mods by renaming the `ddraw.dll` file (e.g. rename it to `_ddraw.dll`).*
 
 ### Installing mods into the mods folder
 1. Create a folder called "mods" in the Peggle installation directory.
@@ -72,8 +72,9 @@ The Mod Loader performs this operation. Follow these steps to install the Mod Lo
         </p>
       </details>
    2. For the **EA launcher**, you can find this location by following the same steps in the [Installing the Mod Loader](#installing-the-mod-loader) section for the EA launcher.
-2. Place the mod's file(s) into the created folder. A mod file will usually have a `.dll` or `.asi` extension.
-3. Test that the mod has been installed correctly.
+2. Place the Haggle SDK's file into the mods folder. The file is called `haggle-sdk.dll`.
+3. Place the mod's file(s) into the mods folder. A mod file will usually have a `.dll` or `.asi` extension.
+4. Test that the mod has been installed correctly.
    1. Launch Peggle, having already completed the [Installing the Mod Loader](#installing-the-mod-loader) step.
    2. In the Haggle Mod Loader window, the Mod Loader identifies which mods it loads.
       Ensure that all of the mod files that were placed into the "mods" folder in the previous step have been loaded.

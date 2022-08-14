@@ -53,8 +53,7 @@ void __declspec(naked) main_loop()
 				retn;
 			}
 		} break;
-
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe100:
 		{
 			__asm
 			{
@@ -89,6 +88,40 @@ void __declspec(naked) main_loop()
 				retn;
 			}
 		} break;
+		case PeggleVersion::NightsDeluxe101:
+		{
+			__asm
+			{
+				push esi;
+				mov esi, ecx;
+				cmp byte ptr[esi + 341h], 0;
+				jnz short loc_4FA1A5;
+
+			loc_4FA180:
+				cmp byte ptr[esi + 342h], 0;
+				jz short loc_4FA190;
+				mov byte ptr[esi + 342h], 0;
+
+			loc_4FA190:
+				mov eax, [esi];
+				mov edx, [eax + 188h];
+				mov ecx, esi;
+
+				pushad;
+				push hook_type;
+				call callbacks::run_basic_callbacks;
+				add esp, 0x04;
+				popad;
+
+				call edx;
+				cmp byte ptr[esi + 341h], 0;
+				jz short loc_4FA180;
+
+			loc_4FA1A5:
+				pop esi;
+				retn;
+			}
+		} break;
 	}
 }
 
@@ -100,10 +133,13 @@ void callbacks::init()
 		{
 			jump(0x0052A5F0, main_loop);
 		} break;
-
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe100:
 		{
 			jump(0x0054CBD0, main_loop);
+		} break;
+		case PeggleVersion::NightsDeluxe101:
+		{
+			jump(0x004FA170, main_loop);
 		} break;
 	}
 

@@ -13,8 +13,13 @@ void init()
 	}
 	else if (!strcmp(reinterpret_cast<char*>(0x006851D0), "Peggle Nights"))
 	{
-		version = PeggleVersion::NightsDeluxe10;
-		std::printf("[ HAGGLE ]: Detected Peggle Nights Deluxe 1.0\n");
+		version = PeggleVersion::NightsDeluxe100;
+		std::printf("[ HAGGLE ]: Detected Peggle Nights Deluxe 1.00\n");
+	}
+	else if (!strcmp(reinterpret_cast<char*>(0x006873F0), "Peggle Nights Deluxe"))
+	{
+		version = PeggleVersion::NightsDeluxe101;
+		std::printf("[ HAGGLE ]: Detected Peggle Nights Deluxe 1.01\n");
 	}
 	else
 	{
