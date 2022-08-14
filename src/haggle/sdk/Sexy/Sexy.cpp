@@ -44,7 +44,7 @@ int Sexy::Assets::get(Asset asset)
 
 		} break;
 
-		case PeggleVersion::NightsDeluxe10:
+		case PeggleVersion::NightsDeluxe100:
 		{
 
 		} break;
