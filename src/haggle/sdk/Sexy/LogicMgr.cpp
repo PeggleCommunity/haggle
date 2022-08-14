@@ -99,6 +99,12 @@ void Sexy::LogicMgr::setup()
 	}
 }
 
+Sexy::LogicMgr* Sexy::LogicMgr::GetLogicMgr()
+{
+	TryPointerRefresh();
+	return logic_mgr;
+}
+
 bool Sexy::LogicMgr::check_exists()
 {
 	if (logic_mgr != nullptr)

@@ -167,6 +167,7 @@ namespace Sexy
 
 		static LogicMgr* logic_mgr;
 		static void setup();
+		static LogicMgr* GetLogicMgr();
 
 		static Sexy::LogicMgr* IncNumBalls(int top_count, int bottom_count, bool bottom);
 		static int BeginShot(bool doGetReplayPoint);
