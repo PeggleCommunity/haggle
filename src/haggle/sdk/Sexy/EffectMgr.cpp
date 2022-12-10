@@ -40,3 +40,18 @@ void Sexy::EffectMgr::AddPyramid(float a2, float a3)
 	if (!Sexy::EffectMgr::check_exists() || !address) return;
 	reinterpret_cast<void(__thiscall*)(Sexy::EffectMgr*, float, float)>(address)(Sexy::EffectMgr::effect_mgr, a2, a3);
 }
+
+void Sexy::EffectMgr::AddJimmy(bool a2, int a3, int a4)
+{
+	std::uint32_t address;
+
+	switch (version)
+	{
+	case PeggleVersion::Deluxe101:
+		address = 0x00450FF0;
+		break;
+	}
+
+	if (!Sexy::EffectMgr::check_exists() || !address) return;
+	reinterpret_cast<void(__thiscall*)(Sexy::EffectMgr*, bool, int, int)>(address)(Sexy::EffectMgr::effect_mgr, a2, a3, a4);
+}

@@ -40,6 +40,7 @@ void init()
 		Sexy::LevelScreen::setup();
 		Sexy::StageMgr::setup();
 		Sexy::MainMenu::setup();
+		Sexy::Graphics::setup();
 
 		MH_EnableHook(MH_ALL_HOOKS);
 	}
