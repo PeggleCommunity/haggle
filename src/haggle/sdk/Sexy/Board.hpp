@@ -18,5 +18,6 @@ namespace Sexy
 		static void KeyDown(KeyCode keyCodePressed);
 		static void SetSlowMo(bool a2, int a3);
 		static int Reset();
+		static void SyncColorblind();
 	};
 };
