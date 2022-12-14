@@ -15,5 +15,6 @@ namespace Sexy
 		static int ShowLevelScreen(bool a2);
 		static int ShowBoard(bool a2, bool a3);
 		static int ShowBoard(Sexy::ThunderballApp* thudnerball, bool a2, bool a3);
+		static void SetColorblind(bool what);
 	};
 };

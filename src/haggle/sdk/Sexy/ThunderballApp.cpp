@@ -124,3 +124,18 @@ int Sexy::ThunderballApp::ShowBoard(bool a2, bool a3)
 {
 	return Sexy::ThunderballApp::ShowBoard(Sexy::ThunderballApp::thunderball, a2, a3);
 }
+
+void Sexy::ThunderballApp::SetColorblind(bool what)
+{
+	std::uint32_t address;
+
+	switch (version)
+	{
+	case PeggleVersion::Deluxe101:
+		address = 0x0041C810;
+		break;
+	}
+
+	if (!thunderball) return;
+	reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool)>(address)(thunderball, what);
+}
