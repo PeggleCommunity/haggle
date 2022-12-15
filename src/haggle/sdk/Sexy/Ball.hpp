@@ -13,6 +13,7 @@ namespace Sexy
 		static bool check_exists();
 
 
-		static void SetPos(float a2, float a3);
+		static void SetPos(float x_pos, float y_pos);
+		static void SetVelocity(float x_velo, float y_velo);
 	};
 };
