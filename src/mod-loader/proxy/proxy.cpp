@@ -1,7 +1,7 @@
 #include "proxy.hpp"
 
-EXPORT(DirectDrawCreate)
-EXPORT(DirectDrawCreateEx)
+EXPORT("ddraw.dll", DirectDrawCreate)
+EXPORT("ddraw.dll", DirectDrawCreateEx)
 
 std::unordered_map<const char*, HMODULE> proxy::libs;
 
