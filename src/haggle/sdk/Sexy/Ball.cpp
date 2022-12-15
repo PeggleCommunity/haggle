@@ -26,7 +26,7 @@ bool Sexy::Ball::check_exists()
 	return true;
 }
 
-void Sexy::Ball::SetPos(float a2, float a3)
+void Sexy::Ball::SetPos(float x_pos, float y_pos)
 {
 	std::uint32_t address = 0x0;
 
@@ -39,5 +39,22 @@ void Sexy::Ball::SetPos(float a2, float a3)
 	}
 
 	if (!Sexy::Ball::check_exists() || !address) return;
-	reinterpret_cast<void(__thiscall*)(Sexy::Ball*, float, float)>(address)(Sexy::Ball::ball, a2, a3);
+	reinterpret_cast<void(__thiscall*)(Sexy::Ball*, float, float)>(address)(Sexy::Ball::ball, x_pos, y_pos);
+}
+
+
+void Sexy::Ball::SetVelocity(float x_velo, float y_velo)
+{
+	std::uint32_t address = 0x0;
+
+	switch (version)
+	{
+	case PeggleVersion::Deluxe101:
+	{
+		address = 0x00475600;
+	} break;
+	}
+
+	if (!Sexy::Ball::check_exists() || !address) return;
+	reinterpret_cast<void(__thiscall*)(Sexy::Ball*, float, float)>(address)(Sexy::Ball::ball, x_velo, y_velo);
 }
