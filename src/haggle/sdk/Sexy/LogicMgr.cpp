@@ -330,11 +330,6 @@ Sexy::FloatingText* Sexy::LogicMgr::AddStandardText(std::string& string, float x
 		(logic_mgr, string, x_pos, y_pos, type);
 }
 
-Sexy::FloatingText* Sexy::LogicMgr::AddStandardText(const char* string, float pos_x, float pos_y, int type)
-{
-	return Sexy::LogicMgr::AddStandardText(std::string(string), pos_x, pos_y, type);
-}
-
 void Sexy::LogicMgr::DoExploder(Sexy::Ball* ball, Sexy::PhysObj* phys_obj)
 {
 	std::uint32_t address = 0x0;
