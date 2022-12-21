@@ -2,7 +2,7 @@
 <p align="center"> For Peggle Deluxe and Peggle Nights </p>
 
 <p align="center">
-  <img src="./docs/images/example-mod.png">
+  <img src="/../assets/images/example-mod.png">
 </p>
 
 ## Haggle?
@@ -33,7 +33,7 @@ The Mod Loader performs this operation. Follow these steps to install the Mod Lo
       <details>
         <summary><i>Steam Mod Loader Install Location - Image</i></summary>
         <p>
-          <img src="./docs/images/Steam_Loader_InstallLocation.png">
+          <img src="/../assets/images/Steam_Loader_InstallLocation.png">
         </p>
       </details>
 
@@ -47,7 +47,7 @@ The Mod Loader performs this operation. Follow these steps to install the Mod Lo
       <details>
         <summary><i>EA Mod Loader Install Location - Image</i></summary>
         <p>
-          <img src="./docs/images/EA_InstallLocation.png">
+          <img src="/../assets/images/EA_InstallLocation.png">
         </p>
       </details>
 
@@ -71,7 +71,7 @@ The Mod Loader performs this operation. Follow these steps to install the Mod Lo
       <details>
         <summary><i>Steam Mod Folder Install Location - Image</i></summary>
         <p>
-          <img src="./docs/images/Steam_Mods_InstallLocation.png">
+          <img src="/../assets/images/Steam_Mods_InstallLocation.png">
         </p>
       </details>
    2. For the **EA launcher**, you can find this location by following the same steps in the [Installing the Mod Loader](#installing-the-mod-loader) section for the EA launcher.
@@ -84,7 +84,7 @@ The Mod Loader performs this operation. Follow these steps to install the Mod Lo
       <details>
         <summary><i>Haggle Mod Loader with mod loaded successfully - Image</i></summary>
         <p>
-          <img src="./docs/images/Haggle_Mod_Loader_with_Example_Mod_loaded.png">
+          <img src="/../assets/images/Haggle_Mod_Loader_with_Example_Mod_loaded.png">
         </p>
       </details>
 
