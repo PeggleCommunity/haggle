@@ -2,7 +2,7 @@
 <p align="center"> For Peggle Deluxe and Peggle Nights </p>
 
 <p align="center">
-  <img src="/../assets/images/example-mod.png">
+  <img src="/../assets/images/example-mod.png" width="400">
 </p>
 
 ## Haggle?
