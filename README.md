@@ -9,6 +9,9 @@
 ### Hack Peggle
 Haggle exposes a bunch of SexyFramework and Peggle functions in a wrapper to be used from outside of the game to do whatever you want with it!
 
+## Noteable Uses
+- [CrowdControl](https://crowdcontrol.live/item-pricing/Peggle)
+
 ## Installing
 To run a mod, you must perform the following steps:
 - [Install the Mod Loader](#installing-the-mod-loader)
