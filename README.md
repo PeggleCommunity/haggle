@@ -1,5 +1,5 @@
 <h1 align="center"> Haggle Mod SDK </h1>
-<p align="center"> For Peggle Deluxe and Peggle Nights </p>
+<p align="center"> For Peggle Deluxe (and Peggle Nights soon) </p>
 
 <p align="center">
   <img src="/../assets/images/example-mod.png" width="400">
