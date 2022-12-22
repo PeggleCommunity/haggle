@@ -9,7 +9,7 @@
 ### Hack Peggle
 Haggle exposes a bunch of SexyFramework and Peggle functions in a wrapper to be used from outside of the game to do whatever you want with it!
 
-## Noteable Uses
+## Notable Uses
 - [CrowdControl](https://crowdcontrol.live/item-pricing/Peggle)
 
 ## Installing
