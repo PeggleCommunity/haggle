@@ -14,9 +14,18 @@ workspace "Mod Loader"
 	warnings "extra"
 
 	flags {
+		"noincrementallink",
+		"no64bitchecks",
 		"shadowedvariables",
 		"undefinedidentifiers",
 		"multiprocessorcompile",
+	}
+
+	defines {
+		"NOMINMAX",
+		"WIN32_LEAN_AND_MEAN",
+		"_CRT_SECURE_NO_WARNINGS",
+		"_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS",
 	}
 
 	platforms {
@@ -26,10 +35,6 @@ workspace "Mod Loader"
 	configurations {
 		"Release",
 		"Debug",
-	}
-
-	defines {
-		"_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS",
 	}
 
 	--x86
@@ -50,10 +55,10 @@ workspace "Mod Loader"
 		symbols "on"
 
 project "Mod Loader"
-		targetname "ddraw"
+		targetname "Haggle"
 		language "c++"
 		cppdialect "c++17"
-		kind "sharedlib"
+		kind "consoleapp"
 		warnings "off"
 
 		pchheader "stdafx.hpp"
@@ -66,4 +71,13 @@ project "Mod Loader"
 
 		files {
 			"../src/mod-loader/**",
+		}
+
+		linkoptions {
+			"/NXCOMPAT:NO",
+			"/IGNORE:4254",
+			"/DYNAMICBASE:NO",
+			"/SAFESEH:NO",
+			"/LARGEADDRESSAWARE",
+			"/LAST:.main",
 		}
