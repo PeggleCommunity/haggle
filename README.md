@@ -20,10 +20,10 @@ To run a mod, you must perform the following steps:
 ### Installing the Mod Loader
 When Haggle mods are used with Peggle, they are loaded into the Peggle executable code on startup.
 The Mod Loader performs this operation. Follow these steps to install the Mod Loader.
-1. Obtain the Mod Loader `ddraw.dll` file:
-   1. Download from the [Haggle Github releases page](https://github.com/PeggleCommunity/haggle/releases) or
-   2. Compile from the [`mod-loader` project files](src/mod-loader/). Refer to the [Compiling](#compiling) section for details.
-2. Copy the `ddraw.dll` file into the directory that the Peggle executable is run from.
+1. Obtain the Mod Loader `Haggle.exe` file:
+   1. Download from the [Haggle Mod Loader Github releases page](https://github.com/PeggleCommunity/haggle-mod-loader/releases) or
+   2. Compile from the [`mod-loader` project files](https://github.com/PeggleCommunity/haggle-mod-loader/tree/main/src/). Refer to the [Compiling](#compiling) section for details.
+2. Copy the `Haggle.exe` file into the directory that the Peggle executable is run from.
    1. For **Steam**, Peggle executes from a location like `C:\ProgramData\PopCap Games\Peggle` (drive letter may vary).
       Note that the install location for Steam games is not the same as this ProgramData location.
       The Mod Loader must be placed inside this ProgramData location due to Steam's DRM check.
