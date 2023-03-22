@@ -1,4 +1,6 @@
-#include "logger/logger.hpp"
+#include "utils/logger/logger.hpp"
+#include "utils/memory.hpp"
+#include "utils/loader/loader.hpp"
 #include <sstream>
 
 std::initializer_list<std::string> ext_whitelist
@@ -18,9 +20,7 @@ void init()
 	logger::init("Haggle Mod Loader");
 	std::printf("----- Haggle Mod Loader -----\n");
 
-	std::stringstream dirDescription;
-	dirDescription << "In directory \"" << std::filesystem::absolute(std::filesystem::path("./")).string() << "\"";
-	PRINT_INFO("%s", dirDescription.str().c_str());
+	PRINT_INFO("In directory \"%s\"", std::filesystem::absolute(std::filesystem::path("./")).string().c_str());
 
 	if (!std::filesystem::exists("./mods/"))
 	{
@@ -29,11 +29,8 @@ void init()
 	}
 	else
 	{
-		std::filesystem::path orig_path = std::filesystem::current_path();
-		std::filesystem::current_path("./mods/");
-
 		std::vector<std::string> files;
-		for (const auto& entry : std::filesystem::directory_iterator("./"))
+		for (const auto& entry : std::filesystem::directory_iterator("./mods/"))
 		{
 			if (!entry.is_directory())
 			{
@@ -49,7 +46,7 @@ void init()
 			{
 				if (ends_with(bin, ext))
 				{
-					LoadLibraryA(bin.c_str());
+					auto mod = LoadLibraryA(bin.c_str());
 
 					if (GetLastError() != 0)
 					{
@@ -63,8 +60,6 @@ void init()
 				}
 			}
 		}
-
-		std::filesystem::current_path(orig_path);
 
 		if (count == 1)
 		{
@@ -83,35 +78,96 @@ void init()
 	}
 }
 
-DWORD WINAPI OnAttachImpl(LPVOID lpParameter)
+DWORD find_proc_id(const std::wstring& processName)
 {
+	PROCESSENTRY32 processInfo;
+	processInfo.dwSize = sizeof(processInfo);
+
+	HANDLE processesSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
+	if (processesSnapshot == INVALID_HANDLE_VALUE) {
+		return 0;
+	}
+
+	Process32First(processesSnapshot, &processInfo);
+	if (!processName.compare(processInfo.szExeFile))
+	{
+		CloseHandle(processesSnapshot);
+		return processInfo.th32ProcessID;
+	}
+
+	while (Process32Next(processesSnapshot, &processInfo))
+	{
+		if (!processName.compare(processInfo.szExeFile))
+		{
+			CloseHandle(processesSnapshot);
+			return processInfo.th32ProcessID;
+		}
+	}
+
+	CloseHandle(processesSnapshot);
+	return 0;
+}
+
+bool terminate_process(const std::wstring& processName)
+{
+	bool success = false;
+
+	if (auto pid = find_proc_id(processName))
+	{
+		auto handle = OpenProcess(PROCESS_TERMINATE, false, pid);
+		success = TerminateProcess(handle, 1);
+		CloseHandle(handle);
+	}
+
+	return success;
+}
+
+int main(int argc, char* argv[])
+{
+	if (!std::filesystem::exists("./mods/"))
+	{
+		std::filesystem::create_directory("./mods/");
+	}
+
+	if (!std::filesystem::exists("./mods/cache.bin"))
+	{
+		if (terminate_process(L"Peggle.exe"))
+		{
+			if (terminate_process(L"popcapgame1.exe"))
+			{
+				std::filesystem::path cache = std::filesystem::absolute(std::filesystem::current_path() / "mods/cache.bin");
+				std::filesystem::rename("C:/ProgramData/PopCap Games/Peggle/popcapgame1.exe", cache.c_str());
+				ShellExecuteA(nullptr, "open", "Haggle.exe", 0, 0, SW_SHOWNORMAL);
+				return 0;
+			}
+			else
+			{
+				MessageBoxA(nullptr, "Haggle was unable to extract the data necessary to run, please try again.", "Haggle Mod Loader", 0);
+				return 0;
+			}
+		}
+		else
+		{
+			auto resp = MessageBoxA(nullptr, "Since this is your first time launching Haggle, please launch Peggle through Steam first then launch Haggle.exe.\n\nPress retry to atempt automagic installation.\nPress cancel to stop the process and try again manually.", "Haggle Mod Loader", MB_RETRYCANCEL);
+
+			if (resp == IDRETRY)
+			{
+				ShellExecuteA(0, "open", "steam://run/3480/", 0, 0, 0);
+				while (!find_proc_id(L"Peggle.exe"))
+				{
+					Sleep(1000);
+				}
+				ShellExecuteA(nullptr, "open", "Haggle.exe", 0, 0, SW_SHOWNORMAL);
+				return 0;
+			}
+			else if (resp == IDCANCEL)
+			{
+				return 0;
+			}
+		}
+	}
+
+	loader::load("./mods/cache.bin");
 	init();
-	return 0;
-}
-
-DWORD WINAPI OnAttach(LPVOID lpParameter)
-{
-	__try
-	{
-		return OnAttachImpl(lpParameter);
-	}
-	__except (0)
-	{
-		FreeLibraryAndExitThread((HMODULE)lpParameter, 0xDECEA5ED);
-	}
-
-	return 0;
-}
-
-BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
-{
-	switch (dwReason)
-	{
-	case DLL_PROCESS_ATTACH:
-		DisableThreadLibraryCalls(hModule);
-		CreateThread(nullptr, 0, OnAttach, hModule, 0, nullptr);
-		return true;
-	}
-
-	return false;
+	return loader::run(argc, argv);
 }
