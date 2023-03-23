@@ -53,6 +53,37 @@ void __fastcall Sexy__ThunderballApp__ShowLevelScreen(Sexy::ThunderballApp* this
 	callbacks::run_basic_callbacks(callbacks::type::after_show_level_screen);
 }
 
+static bool(__fastcall* Sexy__ThunderballApp__IsTrialOver_)(Sexy::ThunderballApp*, char*);
+bool __fastcall Sexy__ThunderballApp__IsTrialOver(Sexy::ThunderballApp* this_, char* edx)
+{
+#ifdef DEBUG
+	return false;
+#else
+	return Sexy__ThunderballApp__IsTrialOver_(this_, edx);
+#endif
+}
+
+static bool(__fastcall* Sexy__ThunderballApp__IsLevelLockedTrial_)(Sexy::ThunderballApp*, char*);
+bool __fastcall Sexy__ThunderballApp__IsLevelLockedTrial(Sexy::ThunderballApp* this_, char* edx)
+{
+#ifdef DEBUG
+	return false;
+#else
+	return Sexy__ThunderballApp__IsLevelLockedTrial_(this_, edx);
+#endif
+}
+
+static bool(__fastcall* Sexy__ThunderballApp__IsRegistered_)(Sexy::ThunderballApp*, char*);
+bool __fastcall Sexy__ThunderballApp__IsRegistered(Sexy::ThunderballApp* this_, char* edx)
+{
+#ifdef DEBUG
+	return true;
+#else
+	return Sexy__ThunderballApp__IsRegistered_(this_, edx);
+#endif
+}
+
+
 void Sexy::ThunderballApp::setup()
 {
 	switch (version)
@@ -65,6 +96,9 @@ void Sexy::ThunderballApp::setup()
 			MH_CreateHook((void*)0x0040C210, Sexy__ThunderballApp__DoOptionsDialog, (void**)&Sexy__ThunderballApp__DoOptionsDialog_);
 			MH_CreateHook((void*)0x0041C840, Sexy__ThunderballApp__FinishOptionsDialog, (void**)&Sexy__ThunderballApp__FinishOptionsDialog_);
 			MH_CreateHook((void*)0x0042D350, Sexy__ThunderballApp__ShowLevelScreen, (void**)&Sexy__ThunderballApp__ShowLevelScreen_);
+			MH_CreateHook((void*)0x00405D90, Sexy__ThunderballApp__IsTrialOver, (void**)&Sexy__ThunderballApp__IsTrialOver_);
+			MH_CreateHook((void*)0x00405860, Sexy__ThunderballApp__IsLevelLockedTrial, (void**)&Sexy__ThunderballApp__IsLevelLockedTrial_);
+			MH_CreateHook((void*)0x004057D0, Sexy__ThunderballApp__IsRegistered, (void**)&Sexy__ThunderballApp__IsRegistered_);
 		} break;
 	}
 }
