@@ -28,14 +28,6 @@ namespace Sexy
 		LuckySpin,
 	};
 
-	struct LogicMgr_
-	{
-		int unk;
-		int state;
-		int state_0;
-		char data[916];
-	};
-
 	class __declspec(dllexport) LogicMgr
 	{
 	public:
@@ -104,5 +96,15 @@ namespace Sexy
 		static bool check_exists();
 		static bool TryPointerRefresh(void);
 		static void SetGunAngle(float newAngleDegrees);
+	};
+
+	struct LogicMgr_
+	{
+		int unk;
+		Sexy::LogicMgr::State state;
+		int state_0;
+		char padding_0[280];
+		bool is_duel;
+		char padding_1[635];
 	};
 }
