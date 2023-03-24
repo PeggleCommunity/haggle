@@ -1,4 +1,5 @@
 #include "sdk/SexySDK.hpp"
+#include "sdk/SexyNightsSDK.hpp"
 #include "callbacks/callbacks.hpp"
 
 HMODULE self = 0;
@@ -26,21 +27,46 @@ void init()
 	{
 		callbacks::init();	//Although not related to minhook starting, its useless without it
 
-		Sexy::ThunderballApp::setup();
-		Sexy::Board::setup();
-		Sexy::LogicMgr::setup();
-		Sexy::Ball::setup();
-		Sexy::PhysObj::setup();
-		Sexy::SoundMgr::setup();
-		Sexy::CharacterMgr::setup();
-		Sexy::EffectMgr::setup();
-		Sexy::CollisionMgr::setup();
-		Sexy::InterfaceMgr::setup();
-		Sexy::PlayerInfo::setup();
-		Sexy::LevelScreen::setup();
-		Sexy::StageMgr::setup();
-		Sexy::MainMenu::setup();
-		Sexy::Graphics::setup();
+		switch (version)
+		{
+			case PeggleVersion::Deluxe101:
+			{
+				Sexy::ThunderballApp::setup();
+				Sexy::Board::setup();
+				Sexy::LogicMgr::setup();
+				Sexy::Ball::setup();
+				Sexy::PhysObj::setup();
+				Sexy::SoundMgr::setup();
+				Sexy::CharacterMgr::setup();
+				Sexy::EffectMgr::setup();
+				Sexy::CollisionMgr::setup();
+				Sexy::InterfaceMgr::setup();
+				Sexy::PlayerInfo::setup();
+				Sexy::LevelScreen::setup();
+				Sexy::StageMgr::setup();
+				Sexy::MainMenu::setup();
+				Sexy::Graphics::setup();
+			} break;
+
+			case PeggleVersion::NightsDeluxe10:
+			{
+				SexyNights::ThunderballApp::setup();
+				SexyNights::Board::setup();
+				SexyNights::LogicMgr::setup();
+				SexyNights::Ball::setup();
+				SexyNights::PhysObj::setup();
+				SexyNights::SoundMgr::setup();
+				SexyNights::CharacterMgr::setup();
+				SexyNights::EffectMgr::setup();
+				SexyNights::CollisionMgr::setup();
+				SexyNights::InterfaceMgr::setup();
+				SexyNights::PlayerInfo::setup();
+				SexyNights::LevelScreen::setup();
+				SexyNights::StageMgr::setup();
+				SexyNights::MainMenu::setup();
+				SexyNights::Graphics::setup();
+			} break;
+		}
 
 		MH_EnableHook(MH_ALL_HOOKS);
 	}
