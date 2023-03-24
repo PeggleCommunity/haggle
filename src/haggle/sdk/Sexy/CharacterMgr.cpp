@@ -11,13 +11,7 @@ char* __fastcall Sexy__CharacterMgr__CharacterMgr(Sexy::CharacterMgr* this_, cha
 
 void Sexy::CharacterMgr::setup()
 {
-	switch (version)
-	{
-		case PeggleVersion::Deluxe101:
-		{
-			MH_CreateHook((void*)0x00473C30, Sexy__CharacterMgr__CharacterMgr, (void**)&Sexy__CharacterMgr__CharacterMgr_);
-		} break;
-	}
+	MH_CreateHook((void*)0x00473C30, Sexy__CharacterMgr__CharacterMgr, (void**)&Sexy__CharacterMgr__CharacterMgr_);
 }
 
 bool Sexy::CharacterMgr::check_exists()

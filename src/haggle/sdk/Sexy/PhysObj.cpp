@@ -10,13 +10,7 @@ Sexy::PhysObj __fastcall Sexy__PhysObj__PhysObj(Sexy::PhysObj* this_, char* edx)
 
 void Sexy::PhysObj::setup()
 {
-	switch (version)
-	{
-		case PeggleVersion::Deluxe101:
-		{
-			MH_CreateHook((void*)0x00480660, Sexy__PhysObj__PhysObj, (void**)&Sexy__PhysObj__PhysObj_);
-		} break;
-	}
+	MH_CreateHook((void*)0x00480660, Sexy__PhysObj__PhysObj, (void**)&Sexy__PhysObj__PhysObj_);
 }
 
 bool Sexy::PhysObj::check_exists()

@@ -24,15 +24,9 @@ void __fastcall Sexy__InterfaceMgr__DrawOnePlayer(Sexy::InterfaceMgr* this_, cha
 
 void Sexy::InterfaceMgr::setup()
 {
-	switch (version)
-	{
-		case PeggleVersion::Deluxe101:
-		{
-			MH_CreateHook((void*)0x004515A0, Sexy__InterfaceMgr__InterfaceMgr, (void**)&Sexy__InterfaceMgr__InterfaceMgr_);
-			MH_CreateHook((void*)0x00447F60, Sexy__InterfaceMgr__DrawBack, (void**)&Sexy__InterfaceMgr__DrawBack_);
-			MH_CreateHook((void*)0x004474B0, Sexy__InterfaceMgr__DrawOnePlayer, (void**)&Sexy__InterfaceMgr__DrawOnePlayer_);
-		} break;
-	}
+	MH_CreateHook((void*)0x004515A0, Sexy__InterfaceMgr__InterfaceMgr, (void**)&Sexy__InterfaceMgr__InterfaceMgr_);
+	MH_CreateHook((void*)0x00447F60, Sexy__InterfaceMgr__DrawBack, (void**)&Sexy__InterfaceMgr__DrawBack_);
+	MH_CreateHook((void*)0x004474B0, Sexy__InterfaceMgr__DrawOnePlayer, (void**)&Sexy__InterfaceMgr__DrawOnePlayer_);
 }
 
 bool Sexy::InterfaceMgr::check_exists()
@@ -43,46 +37,19 @@ bool Sexy::InterfaceMgr::check_exists()
 
 Sexy::InterfaceMgr* Sexy::InterfaceMgr::UpdateBalls()
 {
-	std::uint32_t address;
-
-	switch (version)
-	{
-	case PeggleVersion::Deluxe101:
-		address = 0x00443CF0;
-		break;
-	}
-
-	if (!Sexy::InterfaceMgr::check_exists() || !address) return 0;
-	return reinterpret_cast<Sexy::InterfaceMgr*(__thiscall*)(Sexy::InterfaceMgr*)>(address)(Sexy::InterfaceMgr::interface_mgr);
+	if (!Sexy::InterfaceMgr::check_exists()) return 0;
+	return reinterpret_cast<Sexy::InterfaceMgr*(__thiscall*)(Sexy::InterfaceMgr*)>(0x00443CF0)(Sexy::InterfaceMgr::interface_mgr);
 }
 
 Sexy::InterfaceMgr* Sexy::InterfaceMgr::LoadGun()
 {
-	std::uint32_t address;
-
-	switch (version)
-	{
-	case PeggleVersion::Deluxe101:
-		address = 0x0043C9B0;
-		break;
-	}
-
-	if (!Sexy::InterfaceMgr::check_exists() || !address) return 0;
-	return reinterpret_cast<Sexy::InterfaceMgr*(__thiscall*)(Sexy::InterfaceMgr*)>(address)(Sexy::InterfaceMgr::interface_mgr);
+	if (!Sexy::InterfaceMgr::check_exists()) return 0;
+	return reinterpret_cast<Sexy::InterfaceMgr*(__thiscall*)(Sexy::InterfaceMgr*)>(0x0043C9B0)(Sexy::InterfaceMgr::interface_mgr);
 }
 
 Sexy::InterfaceMgr* Sexy::InterfaceMgr::AddTopBalls(Sexy::InterfaceMgr* input, int count)
 {
-	std::uint32_t address;
-
-	switch (version)
-	{
-	case PeggleVersion::Deluxe101:
-		address = 0x0045C860;
-		break;
-	}
-
-	return reinterpret_cast<Sexy::InterfaceMgr*(__thiscall*)(Sexy::InterfaceMgr*, int)>(address)(input, count);
+	return reinterpret_cast<Sexy::InterfaceMgr*(__thiscall*)(Sexy::InterfaceMgr*, int)>(0x0045C860)(input, count);
 }
 
 Sexy::InterfaceMgr* Sexy::InterfaceMgr::AddTopBalls(int count)
@@ -92,16 +59,7 @@ Sexy::InterfaceMgr* Sexy::InterfaceMgr::AddTopBalls(int count)
 
 Sexy::InterfaceMgr* Sexy::InterfaceMgr::SetNumBalls(Sexy::InterfaceMgr* input, int count)
 {
-	std::uint32_t address;
-
-	switch (version)
-	{
-	case PeggleVersion::Deluxe101:
-		address = 0x00457870;
-		break;
-	}
-
-	return reinterpret_cast<Sexy::InterfaceMgr * (__thiscall*)(Sexy::InterfaceMgr*, int)>(address)(input, count);
+	return reinterpret_cast<Sexy::InterfaceMgr * (__thiscall*)(Sexy::InterfaceMgr*, int)>(0x00457870)(input, count);
 }
 
 Sexy::InterfaceMgr* Sexy::InterfaceMgr::SetNumBalls(int count)

@@ -86,21 +86,15 @@ bool __fastcall Sexy__ThunderballApp__IsRegistered(Sexy::ThunderballApp* this_, 
 
 void Sexy::ThunderballApp::setup()
 {
-	switch (version)
-	{
-		case PeggleVersion::Deluxe101:
-		{
-			MH_CreateHook((void*)0x00429890, Sexy__ThunderballApp__ShowAdventureScreen, (void**)&Sexy__ThunderballApp__ShowAdventureScreen_);
-			MH_CreateHook((void*)0x0042FF70, Sexy__ThunderballApp__StartAdventureGame, (void**)&Sexy__ThunderballApp__StartAdventureGame_);
-			MH_CreateHook((void*)0x0042D7A0, Sexy__ThunderballApp__DoToMenu, (void**)&Sexy__ThunderballApp__DoToMenu_);
-			MH_CreateHook((void*)0x0040C210, Sexy__ThunderballApp__DoOptionsDialog, (void**)&Sexy__ThunderballApp__DoOptionsDialog_);
-			MH_CreateHook((void*)0x0041C840, Sexy__ThunderballApp__FinishOptionsDialog, (void**)&Sexy__ThunderballApp__FinishOptionsDialog_);
-			MH_CreateHook((void*)0x0042D350, Sexy__ThunderballApp__ShowLevelScreen, (void**)&Sexy__ThunderballApp__ShowLevelScreen_);
-			MH_CreateHook((void*)0x00405D90, Sexy__ThunderballApp__IsTrialOver, (void**)&Sexy__ThunderballApp__IsTrialOver_);
-			MH_CreateHook((void*)0x00405860, Sexy__ThunderballApp__IsLevelLockedTrial, (void**)&Sexy__ThunderballApp__IsLevelLockedTrial_);
-			MH_CreateHook((void*)0x004057D0, Sexy__ThunderballApp__IsRegistered, (void**)&Sexy__ThunderballApp__IsRegistered_);
-		} break;
-	}
+	MH_CreateHook((void*)0x00429890, Sexy__ThunderballApp__ShowAdventureScreen, (void**)&Sexy__ThunderballApp__ShowAdventureScreen_);
+	MH_CreateHook((void*)0x0042FF70, Sexy__ThunderballApp__StartAdventureGame, (void**)&Sexy__ThunderballApp__StartAdventureGame_);
+	MH_CreateHook((void*)0x0042D7A0, Sexy__ThunderballApp__DoToMenu, (void**)&Sexy__ThunderballApp__DoToMenu_);
+	MH_CreateHook((void*)0x0040C210, Sexy__ThunderballApp__DoOptionsDialog, (void**)&Sexy__ThunderballApp__DoOptionsDialog_);
+	MH_CreateHook((void*)0x0041C840, Sexy__ThunderballApp__FinishOptionsDialog, (void**)&Sexy__ThunderballApp__FinishOptionsDialog_);
+	MH_CreateHook((void*)0x0042D350, Sexy__ThunderballApp__ShowLevelScreen, (void**)&Sexy__ThunderballApp__ShowLevelScreen_);
+	MH_CreateHook((void*)0x00405D90, Sexy__ThunderballApp__IsTrialOver, (void**)&Sexy__ThunderballApp__IsTrialOver_);
+	MH_CreateHook((void*)0x00405860, Sexy__ThunderballApp__IsLevelLockedTrial, (void**)&Sexy__ThunderballApp__IsLevelLockedTrial_);
+	MH_CreateHook((void*)0x004057D0, Sexy__ThunderballApp__IsRegistered, (void**)&Sexy__ThunderballApp__IsRegistered_);
 }
 
 bool Sexy::ThunderballApp::check_exists()
@@ -111,47 +105,20 @@ bool Sexy::ThunderballApp::check_exists()
 
 void Sexy::ThunderballApp::DoToMenu()
 {
-	std::uint32_t address;
-
-	switch (version)
-	{
-	case PeggleVersion::Deluxe101:
-		address = 0x0042D7A0;
-		break;
-	}
-
-	if (!Sexy::ThunderballApp::check_exists() || !address) return;
-	return reinterpret_cast<void(__thiscall*)(Sexy::ThunderballApp*)>(address)(Sexy::ThunderballApp::thunderball);
+	if (!Sexy::ThunderballApp::check_exists()) return;
+	return reinterpret_cast<void(__thiscall*)(Sexy::ThunderballApp*)>(0x0042D7A0)(Sexy::ThunderballApp::thunderball);
 }
 
 int Sexy::ThunderballApp::ShowLevelScreen(bool a2)
 {
-	std::uint32_t address;
-
-	switch (version)
-	{
-	case PeggleVersion::Deluxe101:
-		address = 0x0042D350;
-		break;
-	}
-
-	if (!Sexy::ThunderballApp::check_exists() || !address) return -1;
-	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool)>(address)(Sexy::ThunderballApp::thunderball, a2);
+	if (!Sexy::ThunderballApp::check_exists()) return -1;
+	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool)>(0x0042D350)(Sexy::ThunderballApp::thunderball, a2);
 }
 
 int Sexy::ThunderballApp::ShowBoard(Sexy::ThunderballApp* thunderball, bool a2, bool a3)
 {
-	std::uint32_t address;
-
-	switch (version)
-	{
-	case PeggleVersion::Deluxe101:
-		address = 0x0042F860;
-		break;
-	}
-
 	if (!thunderball) return -1;
-	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool, bool)>(address)(thunderball, a2, a3);
+	return reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool, bool)>(0x0042F860)(thunderball, a2, a3);
 }
 
 int Sexy::ThunderballApp::ShowBoard(bool a2, bool a3)
@@ -161,15 +128,6 @@ int Sexy::ThunderballApp::ShowBoard(bool a2, bool a3)
 
 void Sexy::ThunderballApp::SetColorblind(bool what)
 {
-	std::uint32_t address;
-
-	switch (version)
-	{
-	case PeggleVersion::Deluxe101:
-		address = 0x0041C810;
-		break;
-	}
-
 	if (!thunderball) return;
-	reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool)>(address)(thunderball, what);
+	reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool)>(0x0041C810)(thunderball, what);
 }
