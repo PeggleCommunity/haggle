@@ -8,21 +8,7 @@ Haggle::PeggleVersion Haggle::version = Haggle::PeggleVersion::Unknown;
 
 void init()
 {
-	if (!strcmp(reinterpret_cast<char*>(0x005D675C), "Peggle Deluxe "))
-	{
-		Haggle::version = Haggle::PeggleVersion::Deluxe101;
-		std::printf("[ HAGGLE ]: Detected Peggle Deluxe 1.01\n");
-	}
-	else if (!strcmp(reinterpret_cast<char*>(0x006851D0), "Peggle Nights"))
-	{
-		Haggle::version = Haggle::PeggleVersion::NightsDeluxe10;
-		std::printf("[ HAGGLE ]: Detected Peggle Nights Deluxe 1.0\n");
-	}
-	else
-	{
-		Haggle::version = Haggle::PeggleVersion::Unknown;
-		std::printf("[ HAGGLE ]: Unable to detect game!\n");
-	}
+	Haggle::version = Haggle::get_game_version();
 
 	if (MH_Initialize() == MH_OK);
 	{
