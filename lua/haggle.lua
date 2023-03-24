@@ -81,10 +81,6 @@ workspace "Haggle"
 			"../src/haggle/**",
 		}
 
-		excludes {
-			"../src/haggle/sdk/template.*",
-		}
-
 if _OPTIONS["example-mod"] then
 	project "Example-Mod"
 		targetname "example-mod"
