@@ -10,13 +10,7 @@ SexyNights::PhysObj __fastcall SexyNights__PhysObj__PhysObj(SexyNights::PhysObj*
 
 void SexyNights::PhysObj::setup()
 {
-	switch (version)
-	{
-		case PeggleVersion::Deluxe101:
-		{
-			MH_CreateHook((void*)0x00480660, SexyNights__PhysObj__PhysObj, (void**)&SexyNights__PhysObj__PhysObj_);
-		} break;
-	}
+
 }
 
 bool SexyNights::PhysObj::check_exists()
