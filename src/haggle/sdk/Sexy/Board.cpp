@@ -13,7 +13,7 @@ char* __fastcall Sexy__Board__Board(Sexy::Board* this_, char* edx, char* thunder
 static int (__fastcall* Sexy__Board__LoadLevel_)(Sexy::Board*, char*, std::string&);
 int __fastcall Sexy__Board__LoadLevel(Sexy::Board* this_, char* edx, std::string& level_name)
 {
-	callbacks::run_load_level_callbacks(this_, level_name);
+	Sexy::callbacks::run_load_level_callbacks(this_, level_name);
 	auto retn = Sexy__Board__LoadLevel_(this_, edx, level_name);
 	return retn;
 }

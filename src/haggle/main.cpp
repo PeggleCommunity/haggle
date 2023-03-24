@@ -1,36 +1,37 @@
 #include "sdk/SexySDK.hpp"
 #include "sdk/SexyNightsSDK.hpp"
-#include "callbacks/callbacks.hpp"
+#include "sdk/HaggleSDK.hpp"
+#include "sdk/Sexy/callbacks/callbacks.hpp"
 
 HMODULE self = 0;
-PeggleVersion version = PeggleVersion::Unknown;
+Haggle::PeggleVersion Haggle::version = Haggle::PeggleVersion::Unknown;
 
 void init()
 {
 	if (!strcmp(reinterpret_cast<char*>(0x005D675C), "Peggle Deluxe "))
 	{
-		version = PeggleVersion::Deluxe101;
+		Haggle::version = Haggle::PeggleVersion::Deluxe101;
 		std::printf("[ HAGGLE ]: Detected Peggle Deluxe 1.01\n");
 	}
 	else if (!strcmp(reinterpret_cast<char*>(0x006851D0), "Peggle Nights"))
 	{
-		version = PeggleVersion::NightsDeluxe10;
+		Haggle::version = Haggle::PeggleVersion::NightsDeluxe10;
 		std::printf("[ HAGGLE ]: Detected Peggle Nights Deluxe 1.0\n");
 	}
 	else
 	{
-		version = PeggleVersion::Unknown;
+		Haggle::version = Haggle::PeggleVersion::Unknown;
 		std::printf("[ HAGGLE ]: Unable to detect game!\n");
 	}
 
 	if (MH_Initialize() == MH_OK);
 	{
-		callbacks::init();	//Although not related to minhook starting, its useless without it
-
-		switch (version)
+		switch (Haggle::version)
 		{
-			case PeggleVersion::Deluxe101:
+			case Haggle::PeggleVersion::Deluxe101:
 			{
+				Sexy::callbacks::init();
+
 				Sexy::ThunderballApp::setup();
 				Sexy::Board::setup();
 				Sexy::LogicMgr::setup();
@@ -48,7 +49,7 @@ void init()
 				Sexy::Graphics::setup();
 			} break;
 
-			case PeggleVersion::NightsDeluxe10:
+			case Haggle::PeggleVersion::NightsDeluxe10:
 			{
 				SexyNights::ThunderballApp::setup();
 				SexyNights::Board::setup();

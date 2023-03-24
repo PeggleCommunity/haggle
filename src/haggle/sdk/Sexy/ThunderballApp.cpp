@@ -8,9 +8,9 @@ Sexy::ThunderballApp* Sexy::ThunderballApp::thunderball = *reinterpret_cast<Sexy
 static int (__fastcall* Sexy__ThunderballApp__ShowAdventureScreen_)(Sexy::ThunderballApp*, char*);
 int __fastcall Sexy__ThunderballApp__ShowAdventureScreen(Sexy::ThunderballApp* this_, char* edx)
 {
-	callbacks::run_basic_callbacks(callbacks::type::show_adventure_screen);
+	Sexy::callbacks::run_basic_callbacks(Sexy::callbacks::type::show_adventure_screen);
 	auto retn = Sexy__ThunderballApp__ShowAdventureScreen_(this_, edx);
-	callbacks::run_basic_callbacks(callbacks::type::after_show_adventure_screen);
+	Sexy::callbacks::run_basic_callbacks(Sexy::callbacks::type::after_show_adventure_screen);
 	return retn;
 }
 
@@ -18,39 +18,39 @@ int __fastcall Sexy__ThunderballApp__ShowAdventureScreen(Sexy::ThunderballApp* t
 static int(__fastcall* Sexy__ThunderballApp__StartAdventureGame_)(Sexy::ThunderballApp*, char*);
 int __fastcall Sexy__ThunderballApp__StartAdventureGame(Sexy::ThunderballApp* this_, char* edx)
 {
-	callbacks::run_basic_callbacks(callbacks::type::start_adventure_game);
+	Sexy::callbacks::run_basic_callbacks(Sexy::callbacks::type::start_adventure_game);
 	auto retn = Sexy__ThunderballApp__StartAdventureGame_(this_, edx);
-	callbacks::run_basic_callbacks(callbacks::type::after_start_adventure_game);
+	Sexy::callbacks::run_basic_callbacks(Sexy::callbacks::type::after_start_adventure_game);
 	return retn;
 }
 
 static void(__fastcall* Sexy__ThunderballApp__DoToMenu_)(Sexy::ThunderballApp*, char*);
 void __fastcall Sexy__ThunderballApp__DoToMenu(Sexy::ThunderballApp* this_, char* edx)
 {
-	callbacks::run_basic_callbacks(callbacks::type::do_to_menu);
+	Sexy::callbacks::run_basic_callbacks(Sexy::callbacks::type::do_to_menu);
 	Sexy__ThunderballApp__DoToMenu_(this_, edx);
 }
 
 static int(__fastcall* Sexy__ThunderballApp__DoOptionsDialog_)(Sexy::ThunderballApp*, char*);
 int __fastcall Sexy__ThunderballApp__DoOptionsDialog(Sexy::ThunderballApp* this_, char* edx)
 {
-	callbacks::run_basic_callbacks(callbacks::type::do_options_dialog);
+	Sexy::callbacks::run_basic_callbacks(Sexy::callbacks::type::do_options_dialog);
 	return Sexy__ThunderballApp__DoOptionsDialog_(this_, edx);
 }
 
 static int(__fastcall* Sexy__ThunderballApp__FinishOptionsDialog_)(Sexy::ThunderballApp*, char*, bool, bool);
 int __fastcall Sexy__ThunderballApp__FinishOptionsDialog(Sexy::ThunderballApp* this_, char* edx, bool a2, bool a3)
 {
-	callbacks::run_basic_callbacks(callbacks::type::finish_options_dialog);
+	Sexy::callbacks::run_basic_callbacks(Sexy::callbacks::type::finish_options_dialog);
 	return Sexy__ThunderballApp__FinishOptionsDialog_(this_, edx, a2, a3);
 }
 
 static void(__fastcall* Sexy__ThunderballApp__ShowLevelScreen_)(Sexy::ThunderballApp*, char*, bool);
 void __fastcall Sexy__ThunderballApp__ShowLevelScreen(Sexy::ThunderballApp* this_, char* edx, bool a2)
 {
-	callbacks::run_basic_callbacks(callbacks::type::show_level_screen);
+	Sexy::callbacks::run_basic_callbacks(Sexy::callbacks::type::show_level_screen);
 	Sexy__ThunderballApp__ShowLevelScreen_(this_, edx, a2);
-	callbacks::run_basic_callbacks(callbacks::type::after_show_level_screen);
+	Sexy::callbacks::run_basic_callbacks(Sexy::callbacks::type::after_show_level_screen);
 }
 
 static bool(__fastcall* Sexy__ThunderballApp__IsTrialOver_)(Sexy::ThunderballApp*, char*);
