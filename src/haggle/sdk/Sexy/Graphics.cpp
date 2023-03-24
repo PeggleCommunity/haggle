@@ -12,11 +12,5 @@ char* __fastcall Sexy__Graphics__Graphics(Sexy::Graphics* this_, char* edx, Sexy
 
 void Sexy::Graphics::setup()
 {
-	switch (version)
-	{
-		case PeggleVersion::Deluxe101:
-		{
-			MH_CreateHook((void*)0x004DD230, Sexy__Graphics__Graphics, (void**)&Sexy__Graphics__Graphics_);
-		} break;
-	}
+	MH_CreateHook((void*)0x004DD230, Sexy__Graphics__Graphics, (void**)&Sexy__Graphics__Graphics_);
 }

@@ -23,14 +23,8 @@ unsigned int __fastcall Sexy__LevelScreen__DoPlay(Sexy::LevelScreen* this_, char
 
 void Sexy::LevelScreen::setup()
 {
-	switch (version)
-	{
-		case PeggleVersion::Deluxe101:
-		{
-			MH_CreateHook((void*)0x004AF150, Sexy__LevelScreen__LevelScreen, (void**)&Sexy__LevelScreen__LevelScreen_);
-			MH_CreateHook((void*)0x00493530, Sexy__LevelScreen__DoPlay, (void**)&Sexy__LevelScreen__DoPlay_);
-		} break;
-	}
+	MH_CreateHook((void*)0x004AF150, Sexy__LevelScreen__LevelScreen, (void**)&Sexy__LevelScreen__LevelScreen_);
+	MH_CreateHook((void*)0x00493530, Sexy__LevelScreen__DoPlay, (void**)&Sexy__LevelScreen__DoPlay_);
 }
 
 bool Sexy::LevelScreen::check_exists()
@@ -41,15 +35,6 @@ bool Sexy::LevelScreen::check_exists()
 
 int Sexy::LevelScreen::DoPlay(int a3)
 {
-	std::uint32_t address;
-
-	switch (version)
-	{
-	case PeggleVersion::Deluxe101:
-		address = 0x00493530;
-		break;
-	}
-
-	if (!Sexy::LevelScreen::check_exists() || !address) return -1;
-	return reinterpret_cast<int(__thiscall*)(Sexy::LevelScreen*, int)>(address)(Sexy::LevelScreen::level_screen, a3);
+	if (!Sexy::LevelScreen::check_exists()) return -1;
+	return reinterpret_cast<int(__thiscall*)(Sexy::LevelScreen*, int)>(0x00493530)(Sexy::LevelScreen::level_screen, a3);
 }

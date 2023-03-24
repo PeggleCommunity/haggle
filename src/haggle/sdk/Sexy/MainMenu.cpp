@@ -25,15 +25,9 @@ void __fastcall Sexy__MainMenu__StartGame(Sexy::MainMenu* this_, char* edx)
 
 void Sexy::MainMenu::setup()
 {
-	switch (version)
-	{
-		case PeggleVersion::Deluxe101:
-		{
-			MH_CreateHook((void*)0x004A79E0, Sexy__MainMenu__MainMenu, (void**)&Sexy__MainMenu__MainMenu_);
-			MH_CreateHook((void*)0x004AF680, Sexy__MainMenu__Update, (void**)&Sexy__MainMenu__Update_);
-			MH_CreateHook((void*)0x004A9190, Sexy__MainMenu__StartGame, (void**)&Sexy__MainMenu__StartGame_);
-		} break;
-	}
+	MH_CreateHook((void*)0x004A79E0, Sexy__MainMenu__MainMenu, (void**)&Sexy__MainMenu__MainMenu_);
+	MH_CreateHook((void*)0x004AF680, Sexy__MainMenu__Update, (void**)&Sexy__MainMenu__Update_);
+	MH_CreateHook((void*)0x004A9190, Sexy__MainMenu__StartGame, (void**)&Sexy__MainMenu__StartGame_);
 }
 
 bool Sexy::MainMenu::check_exists()
@@ -44,15 +38,6 @@ bool Sexy::MainMenu::check_exists()
 
 void Sexy::MainMenu::StartGame()
 {
-	std::uint32_t address;
-
-	switch (version)
-	{
-	case PeggleVersion::Deluxe101:
-		address = 0x004A9190;
-		break;
-	}
-
-	if (!Sexy::MainMenu::check_exists() || !address) return;
-	reinterpret_cast<void(__thiscall*)(Sexy::MainMenu*)>(address)(Sexy::MainMenu::main_menu);
+	if (!Sexy::MainMenu::check_exists()) return;
+	reinterpret_cast<void(__thiscall*)(Sexy::MainMenu*)>(0x004A9190)(Sexy::MainMenu::main_menu);
 }

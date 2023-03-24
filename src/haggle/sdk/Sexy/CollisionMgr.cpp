@@ -11,13 +11,7 @@ char* __fastcall Sexy__CollisionMgr__CollisionMgr(Sexy::CollisionMgr* this_, cha
 
 void Sexy::CollisionMgr::setup()
 {
-	switch (version)
-	{
-		case PeggleVersion::Deluxe101:
-		{
-			MH_CreateHook((void*)0x0044D870, Sexy__CollisionMgr__CollisionMgr, (void**)&Sexy__CollisionMgr__CollisionMgr_);
-		} break;
-	}
+	MH_CreateHook((void*)0x0044D870, Sexy__CollisionMgr__CollisionMgr, (void**)&Sexy__CollisionMgr__CollisionMgr_);
 }
 
 bool Sexy::CollisionMgr::check_exists()
