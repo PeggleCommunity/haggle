@@ -62,6 +62,12 @@ void SexyNights::LogicMgr::DoPowerup(SexyNights::Ball* ball, SexyNights::PhysObj
 		(logic_mgr, ball, phys_obj, powerup, a5);
 }
 
+void SexyNights::LogicMgr::ActivatePowerup(int powerup, int a3)
+{
+	if (!check_exists()) return;
+	reinterpret_cast<void(__thiscall*)(LogicMgr*, int, int)>(0x0046AA40)(logic_mgr, powerup, a3);
+}
+
 SexyNights::FloatingText* SexyNights::LogicMgr::AddStandardText(std::string& string, float x_pos, float y_pos, int type)
 {
 	if (!check_exists()) return 0;

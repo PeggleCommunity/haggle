@@ -7,7 +7,7 @@
 #include "EffectMgr.hpp"
 #include "FloatingText.hpp"
 
-//Size: 924
+//Size: 1108
 namespace SexyNights
 {
 	enum PowerupType : int
