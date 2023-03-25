@@ -18,15 +18,29 @@ char* __fastcall SexyNights__LogicMgr__LogicMgr_dtor(SexyNights::LogicMgr* this_
 	return SexyNights__LogicMgr__LogicMgr_dtor_(this_, edx);
 }
 
+static void(__fastcall* SexyNights__LogicMgr__DoPowerup_)(SexyNights::LogicMgr*, char*, SexyNights::Ball*, SexyNights::PhysObj*, int, int);
+void __fastcall SexyNights__LogicMgr__DoPowerup(SexyNights::LogicMgr* this_, char* edx, SexyNights::Ball* a2, SexyNights::PhysObj* a3, int powerup, int a5)
+{
+	return SexyNights__LogicMgr__DoPowerup_(this_, edx, a2, a3, powerup, a5);
+}
+
+static void(__fastcall* SexyNights__LogicMgr__BeginTurn2_)(SexyNights::LogicMgr*, char*);
+void __fastcall SexyNights__LogicMgr__BeginTurn2(SexyNights::LogicMgr* this_, char* edx)
+{
+	SexyNights::callbacks::run_basic_callbacks(SexyNights::callbacks::type::begin_turn_2);
+	SexyNights__LogicMgr__BeginTurn2_(this_, edx);
+	SexyNights::callbacks::run_after_begin_turn_2_callbacks(this_);
+}
+
 void SexyNights::LogicMgr::setup()
 {
 	MH_CreateHook((void*)0x00466C30, SexyNights__LogicMgr__LogicMgr, (void**)&SexyNights__LogicMgr__LogicMgr_);
 	MH_CreateHook((void*)0x00466E80, SexyNights__LogicMgr__LogicMgr_dtor, (void**)&SexyNights__LogicMgr__LogicMgr_dtor_);
-	//MH_CreateHook((void*)0x0046E9C0, SexyNights__LogicMgr__DoPowerup, (void**)&SexyNights__LogicMgr__DoPowerup_);
+	MH_CreateHook((void*)0x0046E9C0, SexyNights__LogicMgr__DoPowerup, (void**)&SexyNights__LogicMgr__DoPowerup_);
 	//MH_CreateHook((void*)0x004701B0, SexyNights__LogicMgr__PegHit, (void**)&SexyNights__LogicMgr__PegHit_);
 
 	//MH_CreateHook((void*)0x0046C230, SexyNights__LogicMgr__BeginShot, (void**)&SexyNights__LogicMgr__BeginShot_);
-	//MH_CreateHook((void*)0x0046B950, SexyNights__LogicMgr__BeginTurn2, (void**)&SexyNights__LogicMgr__BeginTurn2_);
+	MH_CreateHook((void*)0x0046B950, SexyNights__LogicMgr__BeginTurn2, (void**)&SexyNights__LogicMgr__BeginTurn2_);
 	//MH_CreateHook((void*)0x0046C220, SexyNights__LogicMgr__FinishInitLevelText, (void**)&SexyNights__LogicMgr__FinishInitLevelText_);
 	//MH_CreateHook((void*)0x0046BE60, SexyNights__LogicMgr__DoLevelDone, (void**)&SexyNights__LogicMgr__DoLevelDone_);
 	//MH_CreateHook((void*)0x0046BA90, SexyNights__LogicMgr__BeatLevel, (void**)&SexyNights__LogicMgr__BeatLevel_);
