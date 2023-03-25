@@ -1,0 +1,3 @@
+int* checkPtr = reinterpret_cast<int*>(0x00687394);  // ThunderballApp pointer (static)
+checkPtr = reinterpret_cast<int*>(*checkPtr + 0x7B8);  // Board pointer (dynamic)
+checkPtr = reinterpret_cast<int*>(*checkPtr + 0x154);  // LogicMgr pointer (dynamic)
