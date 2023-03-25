@@ -11,6 +11,13 @@ char* __fastcall Sexy__LogicMgr__LogicMgr(Sexy::LogicMgr* this_, char* edx, char
 	return Sexy__LogicMgr__LogicMgr_(this_, edx, thunderball);
 }
 
+static char* (__fastcall* Sexy__LogicMgr__LogicMgr_dtor_)(Sexy::LogicMgr*, char*);
+char* __fastcall Sexy__LogicMgr__LogicMgr_dtor(Sexy::LogicMgr* this_, char* edx)
+{
+	Sexy::LogicMgr::logic_mgr = nullptr;
+	return Sexy__LogicMgr__LogicMgr_dtor_(this_, edx);
+}
+
 static char* (__stdcall* Nights__Sexy__LogicMgr__LogicMgr_)(Sexy::LogicMgr*, int);
 char* __stdcall Nights__Sexy__LogicMgr__LogicMgr(Sexy::LogicMgr* this_, int a2)
 {
@@ -77,6 +84,7 @@ bool __fastcall Sexy__LogicMgr__BeatLevel(Sexy::LogicMgr* this_, char* edx)
 void Sexy::LogicMgr::setup()
 {
 	MH_CreateHook((void*)0x004610D0, Sexy__LogicMgr__LogicMgr, (void**)&Sexy__LogicMgr__LogicMgr_);
+	MH_CreateHook((void*)0x0045C990, Sexy__LogicMgr__LogicMgr_dtor, (void**)&Sexy__LogicMgr__LogicMgr_dtor_);
 	MH_CreateHook((void*)0x0046EDF0, Sexy__LogicMgr__DoPowerup, (void**)&Sexy__LogicMgr__DoPowerup_);
 	MH_CreateHook((void*)0x0046F480, Sexy__LogicMgr__PegHit, (void**)&Sexy__LogicMgr__PegHit_);
 	MH_CreateHook((void*)0x0046AC70, Sexy__LogicMgr__BeginShot, (void**)&Sexy__LogicMgr__BeginShot_);
@@ -92,59 +100,7 @@ bool Sexy::LogicMgr::check_exists()
 	{
 		return true;
 	}
-
-	int* checkPtr = reinterpret_cast<int*>(0x00687394);  // ThunderballApp pointer (static)
-	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-	{
-		logic_mgr = nullptr;
-		return false;
-	}
-
-	checkPtr = reinterpret_cast<int*>(*checkPtr + 0x7B8);  // Board pointer (dynamic)
-	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-	{
-		logic_mgr = nullptr;
-		return false;
-	}
-
-	checkPtr = reinterpret_cast<int*>(*checkPtr + 0x154);  // LogicMgr pointer (dynamic)
-	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-	{
-		logic_mgr = nullptr;
-		return false;
-	}
-
-	return TryPointerRefresh();  // The static LogicMgr pointer was null, but it looks like the LogicMgr exists in the game memory. Try to retrieve it.
-}
-
-bool Sexy::LogicMgr::TryPointerRefresh()
-{
-	int* checkPtr = nullptr;
-
-	checkPtr = reinterpret_cast<int*>(0x00687394);  // ThunderballApp pointer (static)
-	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-	{
-		logic_mgr = nullptr;
-		return false;
-	}
-
-	checkPtr = reinterpret_cast<int*>(*checkPtr + 0x7B8);  // Board pointer (dynamic)
-	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-	{
-		logic_mgr = nullptr;
-		return false;
-	}
-
-	checkPtr = reinterpret_cast<int*>(*checkPtr + 0x154);  // LogicMgr pointer (dynamic)
-	if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-	{
-		logic_mgr = nullptr;
-		return false;
-	}
-
-	if (!checkPtr) return false;
-	logic_mgr = reinterpret_cast<LogicMgr*>(*checkPtr);
-	return logic_mgr != 0;
+	return false;
 }
 
 Sexy::LogicMgr* Sexy::LogicMgr::IncNumBalls(int top_count, int bottom_count, bool bottom)

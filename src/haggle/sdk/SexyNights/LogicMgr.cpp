@@ -11,9 +11,17 @@ char* __stdcall SexyNights__LogicMgr__LogicMgr(SexyNights::LogicMgr* this_, int 
 	return SexyNights__LogicMgr__LogicMgr_(this_, a2);
 }
 
+static char* (__fastcall* SexyNights__LogicMgr__LogicMgr_dtor_)(SexyNights::LogicMgr*, char*);
+char* __fastcall SexyNights__LogicMgr__LogicMgr_dtor(SexyNights::LogicMgr* this_, char* edx)
+{
+	SexyNights::LogicMgr::logic_mgr = nullptr;
+	return SexyNights__LogicMgr__LogicMgr_dtor_(this_, edx);
+}
+
 void SexyNights::LogicMgr::setup()
 {
 	MH_CreateHook((void*)0x00466C30, SexyNights__LogicMgr__LogicMgr, (void**)&SexyNights__LogicMgr__LogicMgr_);
+	MH_CreateHook((void*)0x00466E80, SexyNights__LogicMgr__LogicMgr_dtor, (void**)&SexyNights__LogicMgr__LogicMgr_dtor_);
 	//MH_CreateHook((void*)0x0046E9C0, SexyNights__LogicMgr__DoPowerup, (void**)&SexyNights__LogicMgr__DoPowerup_);
 	//MH_CreateHook((void*)0x004701B0, SexyNights__LogicMgr__PegHit, (void**)&SexyNights__LogicMgr__PegHit_);
 
@@ -30,59 +38,7 @@ bool SexyNights::LogicMgr::check_exists()
 	{
 		return true;
 	}
-
-	//int* checkPtr = reinterpret_cast<int*>(0x00687394);  // ThunderballApp pointer (static)
-	//if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-	//{
-	//	logic_mgr = nullptr;
-	//	return false;
-	//}
-
-	//checkPtr = reinterpret_cast<int*>(*checkPtr + 0x7B8);  // Board pointer (dynamic)
-	//if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-	//{
-	//	logic_mgr = nullptr;
-	//	return false;
-	//}
-
-	//checkPtr = reinterpret_cast<int*>(*checkPtr + 0x154);  // LogicMgr pointer (dynamic)
-	//if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-	//{
-	//	logic_mgr = nullptr;
-	//	return false;
-	//}
-
-	return TryPointerRefresh();  // The static LogicMgr pointer was null, but it looks like the LogicMgr exists in the game memory. Try to retrieve it.
-}
-
-bool SexyNights::LogicMgr::TryPointerRefresh()
-{
-	int* checkPtr = nullptr;
-
-	//checkPtr = reinterpret_cast<int*>(0x00687394);  // ThunderballApp pointer (static)
-	//if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-	//{
-	//	logic_mgr = nullptr;
-	//	return false;
-	//}
-
-	//checkPtr = reinterpret_cast<int*>(*checkPtr + 0x7B8);  // Board pointer (dynamic)
-	//if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-	//{
-	//	logic_mgr = nullptr;
-	//	return false;
-	//}
-
-	//checkPtr = reinterpret_cast<int*>(*checkPtr + 0x154);  // LogicMgr pointer (dynamic)
-	//if (reinterpret_cast<int*>(*checkPtr) == nullptr)
-	//{
-	//	logic_mgr = nullptr;
-	//	return false;
-	//}
-
-	if (!checkPtr) return false;
-	logic_mgr = reinterpret_cast<LogicMgr*>(*checkPtr);
-	return logic_mgr != 0;
+	return false;
 }
 
 void SexyNights::LogicMgr::DoPowerup(SexyNights::Ball* ball, SexyNights::PhysObj* phys_obj, int powerup, int a5)
