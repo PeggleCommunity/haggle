@@ -2,7 +2,7 @@
 #include "callbacks/callbacks.hpp"
 
 //For implementation later
-SexyNights::ThunderballApp* SexyNights::ThunderballApp::thunderball /*= *reinterpret_cast<SexyNights::ThunderballApp**>(0x00687394)*/;
+SexyNights::ThunderballApp* SexyNights::ThunderballApp::thunderball = *reinterpret_cast<SexyNights::ThunderballApp**>(0x006CBE04);
 
 void SexyNights::ThunderballApp::setup()
 {
