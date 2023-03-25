@@ -47,13 +47,12 @@ void __fastcall Sexy__LogicMgr__BeginShot(Sexy::LogicMgr* this_, char* edx, bool
 	Sexy::callbacks::run_after_begin_shot_callbacks(this_, doGetReplayPoint);
 }
 
-static char* (__fastcall* Sexy__LogicMgr__BeginTurn2_)(Sexy::LogicMgr*, char*);
-char* __fastcall Sexy__LogicMgr__BeginTurn2(Sexy::LogicMgr* this_, char* edx)
+static void (__fastcall* Sexy__LogicMgr__BeginTurn2_)(Sexy::LogicMgr*, char*);
+void __fastcall Sexy__LogicMgr__BeginTurn2(Sexy::LogicMgr* this_, char* edx)
 {
 	Sexy::callbacks::run_basic_callbacks(Sexy::callbacks::type::begin_turn_2);
-	auto retn = Sexy__LogicMgr__BeginTurn2_(this_, edx);
+	Sexy__LogicMgr__BeginTurn2_(this_, edx);
 	Sexy::callbacks::run_after_begin_turn_2_callbacks(this_);
-	return retn;
 }
 
 static void (__fastcall* Sexy__LogicMgr__FinishInitLevelText_)(Sexy::LogicMgr*, char*);
