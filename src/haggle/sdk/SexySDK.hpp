@@ -18,3 +18,4 @@
 #include "Sexy/LevelScreen.hpp"
 #include "Sexy/StageMgr.hpp"
 #include "Sexy/MainMenu.hpp"
+#include "Sexy/callbacks/callbacks.hpp"
