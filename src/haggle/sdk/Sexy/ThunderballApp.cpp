@@ -142,7 +142,7 @@ void Sexy::ThunderballApp::SetColorblind(bool what)
 void Sexy::ThunderballApp::PlaySong(Sexy::ThunderballApp* thunderball, int a2, char a3)
 {
 	if (!Sexy::ThunderballApp::thunderball) return;
-	return reinterpret_cast<void(__thiscall*)(Sexy::ThunderballApp*, bool, bool)>(0x0040BDD0)(thunderball, a2, a3);
+	return reinterpret_cast<void(__thiscall*)(Sexy::ThunderballApp*, int, char)>(0x0040BDD0)(thunderball, a2, a3);
 }
 
 void Sexy::ThunderballApp::PlaySong(int a2, char a3)
