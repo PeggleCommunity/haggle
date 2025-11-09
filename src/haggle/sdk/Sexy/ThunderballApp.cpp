@@ -2,7 +2,7 @@
 #include "callbacks/callbacks.hpp"
 
 //For implementation later
-Sexy::ThunderballApp* Sexy::ThunderballApp::thunderball = *reinterpret_cast<Sexy::ThunderballApp**>(0x00687394);
+Sexy::ThunderballApp* Sexy::ThunderballApp::thunderball = reinterpret_cast<Sexy::ThunderballApp*>(0x0019F3D4);
 
 //Runs on adventure restart
 static int (__fastcall* Sexy__ThunderballApp__ShowAdventureScreen_)(Sexy::ThunderballApp*, char*);
@@ -53,6 +53,12 @@ void __fastcall Sexy__ThunderballApp__ShowLevelScreen(Sexy::ThunderballApp* this
 	Sexy::callbacks::run_basic_callbacks(Sexy::callbacks::type::after_show_level_screen);
 }
 
+static void(__fastcall* Sexy__ThunderballApp__PlaySong_)(Sexy::ThunderballApp*, char*, int, char);
+void __fastcall Sexy__ThunderballApp__PlaySong(Sexy::ThunderballApp* this_, char* edx, int a2, char a3)
+{
+	Sexy__ThunderballApp__PlaySong_(this_, edx, a2, a3);
+}
+
 static bool(__fastcall* Sexy__ThunderballApp__IsTrialOver_)(Sexy::ThunderballApp*, char*);
 bool __fastcall Sexy__ThunderballApp__IsTrialOver(Sexy::ThunderballApp* this_, char* edx)
 {
@@ -92,6 +98,7 @@ void Sexy::ThunderballApp::setup()
 	MH_CreateHook((void*)0x0040C210, Sexy__ThunderballApp__DoOptionsDialog, (void**)&Sexy__ThunderballApp__DoOptionsDialog_);
 	MH_CreateHook((void*)0x0041C840, Sexy__ThunderballApp__FinishOptionsDialog, (void**)&Sexy__ThunderballApp__FinishOptionsDialog_);
 	MH_CreateHook((void*)0x0042D350, Sexy__ThunderballApp__ShowLevelScreen, (void**)&Sexy__ThunderballApp__ShowLevelScreen_);
+	MH_CreateHook((void*)0x0040BDD0, Sexy__ThunderballApp__PlaySong, (void**)&Sexy__ThunderballApp__PlaySong_);
 	MH_CreateHook((void*)0x00405D90, Sexy__ThunderballApp__IsTrialOver, (void**)&Sexy__ThunderballApp__IsTrialOver_);
 	MH_CreateHook((void*)0x00405860, Sexy__ThunderballApp__IsLevelLockedTrial, (void**)&Sexy__ThunderballApp__IsLevelLockedTrial_);
 	MH_CreateHook((void*)0x004057D0, Sexy__ThunderballApp__IsRegistered, (void**)&Sexy__ThunderballApp__IsRegistered_);
@@ -130,4 +137,15 @@ void Sexy::ThunderballApp::SetColorblind(bool what)
 {
 	if (!thunderball) return;
 	reinterpret_cast<int(__thiscall*)(Sexy::ThunderballApp*, bool)>(0x0041C810)(thunderball, what);
+}
+
+void Sexy::ThunderballApp::PlaySong(Sexy::ThunderballApp* thunderball, int a2, char a3)
+{
+	if (!Sexy::ThunderballApp::thunderball) return;
+	return reinterpret_cast<void(__thiscall*)(Sexy::ThunderballApp*, int, char)>(0x0040BDD0)(thunderball, a2, a3);
+}
+
+void Sexy::ThunderballApp::PlaySong(int a2, char a3)
+{
+	return Sexy::ThunderballApp::PlaySong(Sexy::ThunderballApp::thunderball, a2, a3);
 }
