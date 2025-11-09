@@ -33,6 +33,7 @@ void init()
 				Sexy::StageMgr::setup();
 				Sexy::MainMenu::setup();
 				Sexy::Graphics::setup();
+				Sexy::LevelEditor::setup();
 			} break;
 
 			case Haggle::PeggleVersion::NightsDeluxe10:
