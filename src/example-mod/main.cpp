@@ -1,8 +1,10 @@
 #include <random>
 #include "sdk/SexySDK.hpp"
-#include "callbacks/callbacks.hpp"
+#include "sdk/Sexy/callbacks/callbacks.hpp"
 
 HMODULE self = 0;
+
+using namespace Sexy;
 
 void Example_Callbacks(void);
 void Example_AutoShoot(void);
@@ -10,7 +12,7 @@ void Example_AutoShoot(void);
 void init()
 {
 	// Example Mod stuff
-
+    callbacks::init();
 	Example_Callbacks();
 	Example_AutoShoot();
 }
@@ -20,12 +22,12 @@ void Example_Callbacks(void)
 	// Example generic callback
 	callbacks::on(callbacks::type::begin_turn_2, []()
 	{
-		Sexy::LogicMgr::AddStandardText("Begin Turn!", 330.0f, 150.0f, 48);
+		Sexy::LogicMgr::AddStandardText(std::string("Begin Turn!"), 330.0f, 150.0f, 48);
 	});
 
 	callbacks::on_begin_shot([](auto logic_mgr, auto a2)
 	{
-		Sexy::LogicMgr::AddStandardText("Shoot!", 100.0f, 25.0f, 48);
+		Sexy::LogicMgr::AddStandardText(std::string("Shoot!"), 100.0f, 25.0f, 48);
 	});
 
 	// Example callback for peg hit
@@ -34,7 +36,7 @@ void Example_Callbacks(void)
 		Sexy::PhysObj_* phys_obj_ = (Sexy::PhysObj_*)phys_obj;
 		double pos_x = ((double(__thiscall*)(Sexy::PhysObj*)) * (std::uint32_t*)(*(std::uint32_t*)phys_obj_->data + 120))(phys_obj);
 		double pos_y = ((double(__thiscall*)(Sexy::PhysObj*)) * (std::uint32_t*)(*(std::uint32_t*)phys_obj_->data + 124))(phys_obj);
-		Sexy::LogicMgr::AddStandardText("Peg Hit!", pos_x, pos_y, 50);
+		Sexy::LogicMgr::AddStandardText(std::string("Peg Hit!"), pos_x, pos_y, 50);
 	});
 
 	callbacks::on_load_level([](auto board, auto level_name)
@@ -57,7 +59,7 @@ void Example_AutoShoot(void)
 {
 	callbacks::on(callbacks::type::main_loop, []()
 	{
-		static float angleIncrement = 8.0f;
+		static float angleIncrement = 1.0f;
 		static constexpr int MOVE_DELAY_MS = 1000 / 60;
 		static constexpr float ANGLE_BOUNDS[] = { -93.0f, 93.0f };
 		static bool isMovingLeft = false;
