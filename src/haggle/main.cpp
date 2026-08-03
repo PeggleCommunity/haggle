@@ -34,6 +34,7 @@ void init()
 				Sexy::MainMenu::setup();
 				Sexy::Graphics::setup();
 				Sexy::LevelEditor::setup();
+				Sexy::Gun::setup();
 			} break;
 
 			case Haggle::PeggleVersion::NightsDeluxe10:

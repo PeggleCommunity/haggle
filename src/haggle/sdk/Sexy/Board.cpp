@@ -59,3 +59,9 @@ void Sexy::Board::SyncColorblind()
 	if (!Sexy::Board::check_exists()) return;
 	reinterpret_cast<int(__thiscall*)(Sexy::Board*)>(0x004098B0)(Sexy::Board::board);
 }
+
+void Sexy::Board::SyncState(Sexy::DataSync* theSync)
+{
+	if (!Sexy::Board::check_exists()) return;
+	reinterpret_cast<void(__thiscall*)(Sexy::Board*, Sexy::DataSync*)>(0x00424090)(Sexy::Board::board, theSync);
+}

@@ -149,3 +149,8 @@ void Sexy::ThunderballApp::PlaySong(int a2, char a3)
 {
 	return Sexy::ThunderballApp::PlaySong(Sexy::ThunderballApp::thunderball, a2, a3);
 }
+
+int* Sexy::ThunderballApp::DoDialogScroll(Sexy::ThunderballApp* a1, int a2, bool a3, std::string& a4, std::string& a5, std::string& a6, int a7)
+{
+	return reinterpret_cast<int*(__thiscall*)(Sexy::ThunderballApp*, int, bool, std::string&, std::string&, std::string&, int)>(0x00405f20)(a1, a2, a3, a4, a5, a6, a7);
+}

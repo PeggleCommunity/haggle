@@ -5,6 +5,7 @@
 namespace Sexy
 {
 	using KeyCode = unsigned int;
+	class DataSync;
 
 	class __declspec(dllexport) Board
 	{
@@ -19,5 +20,6 @@ namespace Sexy
 		static void SetSlowMo(bool a2, int a3);
 		static int Reset();
 		static void SyncColorblind();
+		static void SyncState(DataSync* theSync);
 	};
 };

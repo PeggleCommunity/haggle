@@ -18,5 +18,6 @@ namespace Sexy
 		static void PlaySong(Sexy::ThunderballApp* thunderball, int a2, char a3);
 		static int ShowBoard(Sexy::ThunderballApp* thudnerball, bool a2, bool a3);
 		static void SetColorblind(bool what);
+		static int* DoDialogScroll(Sexy::ThunderballApp* a1, int a2, bool a3, std::string& a4, std::string& a5, std::string& a6, int a7);
 	};
 };

@@ -1,6 +1,11 @@
 #pragma once
 
+#include <string>
+#include <stdarg.h>
+
 #include "Sexy/Sexy.hpp"
+#include "Sexy/Buffer.hpp"
+#include "Sexy/DataSync.hpp"
 #include "Sexy/ThunderballApp.hpp"
 #include "Sexy/Graphics.hpp"
 #include "Sexy/Image.hpp"
@@ -9,6 +14,7 @@
 #include "Sexy/Board.hpp"
 #include "Sexy/LogicMgr.hpp"
 #include "Sexy/Ball.hpp"
+#include "Sexy/Gun.hpp"
 #include "Sexy/PhysObj.hpp"
 #include "Sexy/SoundMgr.hpp"
 #include "Sexy/CharacterMgr.hpp"
